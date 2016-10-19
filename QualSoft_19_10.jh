@@ -1,0 +1,57 @@
+#title: QualSoft_19/10
+
+entity Aluno{
+	nome String required,
+    previsaoFormatura LocalDate
+}
+
+entity Professor{
+	nome String required,
+    departamento String
+}
+
+entity Departamento{
+	nome String required
+}
+
+entity Tese{
+	status Situacao
+}
+
+entity Proposta{
+	status Situacao
+    dataApresentacao LocalDate
+}
+entity Comite{
+	tipo TipoComite,
+    dataOcorrencia LocalDate
+}
+
+entity Publicacao{
+	dataPublicacao LocalDate,
+    dataApresentacao LocalDate
+}
+
+//
+enum Situacao{
+	REJEITADA, APROVADA, EM_ANDAMENTO
+}
+enum TipoComite{
+	PROPOSTA,
+    TESE
+}
+// Relacionamentos
+relationship OneToMany{
+	Professor to Aluno,
+    Departamento to Professor,
+    Aluno to Proposta
+}
+relationship ManyToMany{
+	Aluno to Publicacao,
+    Comite to Professor
+}
+relationship OneToOne{
+	Aluno to Tese,
+    Tese to Comite,
+    Proposta to Comite
+}
