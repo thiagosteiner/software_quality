@@ -1,4 +1,4 @@
-#title: QualSoft_19/10
+#title: qsoftware_entities
 
 entity Aluno{
 	nome String required,
@@ -42,16 +42,21 @@ enum TipoComite{
 }
 // Relacionamentos
 relationship OneToMany{
-	Professor to Aluno,
-    Departamento to Professor,
-    Aluno to Proposta
+	Professor{aluno} to Aluno,
+    Departamento{professor} to Professor,
+    Aluno{proposta} to Proposta
 }
 relationship ManyToMany{
-	Aluno to Publicacao,
-    Comite to Professor
+	Aluno{publicacao} to Publicacao,
+    Comite{professor} to Professor
 }
 relationship OneToOne{
-	Aluno to Tese,
-    Tese to Comite,
-    Proposta to Comite
+	Aluno{tese} to Tese,
+    Tese{comite} to Comite,
+    Proposta{comite} to Comite
 }
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Departamento
