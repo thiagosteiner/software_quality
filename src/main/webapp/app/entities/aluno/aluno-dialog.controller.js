@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('AlunoDialogController', AlunoDialogController);
 
-    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Aluno', 'Tese', 'Proposta', 'Publicacao', 'Professor'];
+    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Aluno', 'Monografia', 'Proposta', 'Publicacao', 'Professor'];
 
-    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Aluno, Tese, Proposta, Publicacao, Professor) {
+    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Aluno, Monografia, Proposta, Publicacao, Professor) {
         var vm = this;
 
         vm.aluno = entity;
@@ -15,14 +15,14 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.tese = Tese.query({filter: 'aluno-is-null'});
-        $q.all([vm.aluno.$promise, vm.tese.$promise]).then(function() {
-            if (!vm.aluno.teseId) {
+        vm.monografias = Monografia.query({filter: 'aluno-is-null'});
+        $q.all([vm.aluno.$promise, vm.monografias.$promise]).then(function() {
+            if (!vm.aluno.monografiaId) {
                 return $q.reject();
             }
-            return Tese.get({id : vm.aluno.teseId}).$promise;
-        }).then(function(tese) {
-            vm.tese.push(tese);
+            return Monografia.get({id : vm.aluno.monografiaId}).$promise;
+        }).then(function(monografia) {
+            vm.monografias.push(monografia);
         });
         vm.propostas = Proposta.query();
         vm.publicacaos = Publicacao.query();

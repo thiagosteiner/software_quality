@@ -12,26 +12,26 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {PublicacaoMapper.class, })
 public interface AlunoMapper {
 
-    @Mapping(source = "tese.id", target = "teseId")
+    @Mapping(source = "monografia.id", target = "monografiaId")
     @Mapping(source = "professor.id", target = "professorId")
     AlunoDTO alunoToAlunoDTO(Aluno aluno);
 
     List<AlunoDTO> alunosToAlunoDTOs(List<Aluno> alunos);
 
-    @Mapping(source = "teseId", target = "tese")
+    @Mapping(source = "monografiaId", target = "monografia")
     @Mapping(target = "propostas", ignore = true)
     @Mapping(source = "professorId", target = "professor")
     Aluno alunoDTOToAluno(AlunoDTO alunoDTO);
 
     List<Aluno> alunoDTOsToAlunos(List<AlunoDTO> alunoDTOs);
 
-    default Tese teseFromId(Long id) {
+    default Monografia monografiaFromId(Long id) {
         if (id == null) {
             return null;
         }
-        Tese tese = new Tese();
-        tese.setId(id);
-        return tese;
+        Monografia monografia = new Monografia();
+        monografia.setId(id);
+        return monografia;
     }
 
     default Publicacao publicacaoFromId(Long id) {

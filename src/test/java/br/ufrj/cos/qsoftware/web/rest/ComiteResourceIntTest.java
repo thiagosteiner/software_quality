@@ -45,7 +45,7 @@ import br.ufrj.cos.qsoftware.domain.enumeration.TipoComite;
 public class ComiteResourceIntTest {
 
     private static final TipoComite DEFAULT_TIPO = TipoComite.PROPOSTA;
-    private static final TipoComite UPDATED_TIPO = TipoComite.TESE;
+    private static final TipoComite UPDATED_TIPO = TipoComite.MONOGRAFIA;
 
     private static final LocalDate DEFAULT_DATA_OCORRENCIA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA_OCORRENCIA = LocalDate.now(ZoneId.systemDefault());

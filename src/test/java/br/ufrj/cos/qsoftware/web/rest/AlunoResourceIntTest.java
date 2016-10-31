@@ -34,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import br.ufrj.cos.qsoftware.domain.enumeration.TipoAluno;
 /**
  * Test class for the AlunoResource REST controller.
  *
@@ -46,8 +47,14 @@ public class AlunoResourceIntTest {
     private static final String DEFAULT_NOME = "AAAAA";
     private static final String UPDATED_NOME = "BBBBB";
 
+    private static final String DEFAULT_DRE = "AAAAA";
+    private static final String UPDATED_DRE = "BBBBB";
+
     private static final LocalDate DEFAULT_PREVISAO_FORMATURA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PREVISAO_FORMATURA = LocalDate.now(ZoneId.systemDefault());
+
+    private static final TipoAluno DEFAULT_TIPO = TipoAluno.MESTRADO;
+    private static final TipoAluno UPDATED_TIPO = TipoAluno.DOUTORADO;
 
     @Inject
     private AlunoRepository alunoRepository;
@@ -90,7 +97,9 @@ public class AlunoResourceIntTest {
     public static Aluno createEntity(EntityManager em) {
         Aluno aluno = new Aluno()
                 .nome(DEFAULT_NOME)
-                .previsaoFormatura(DEFAULT_PREVISAO_FORMATURA);
+                .dre(DEFAULT_DRE)
+                .previsaoFormatura(DEFAULT_PREVISAO_FORMATURA)
+                .tipo(DEFAULT_TIPO);
         return aluno;
     }
 
@@ -117,7 +126,9 @@ public class AlunoResourceIntTest {
         assertThat(alunos).hasSize(databaseSizeBeforeCreate + 1);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(DEFAULT_NOME);
+        assertThat(testAluno.getDre()).isEqualTo(DEFAULT_DRE);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(DEFAULT_PREVISAO_FORMATURA);
+        assertThat(testAluno.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
 
     @Test
@@ -126,6 +137,25 @@ public class AlunoResourceIntTest {
         int databaseSizeBeforeTest = alunoRepository.findAll().size();
         // set the field null
         aluno.setNome(null);
+
+        // Create the Aluno, which fails.
+        AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
+
+        restAlunoMockMvc.perform(post("/api/alunos")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+                .andExpect(status().isBadRequest());
+
+        List<Aluno> alunos = alunoRepository.findAll();
+        assertThat(alunos).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDreIsRequired() throws Exception {
+        int databaseSizeBeforeTest = alunoRepository.findAll().size();
+        // set the field null
+        aluno.setDre(null);
 
         // Create the Aluno, which fails.
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
@@ -151,7 +181,9 @@ public class AlunoResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(aluno.getId().intValue())))
                 .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-                .andExpect(jsonPath("$.[*].previsaoFormatura").value(hasItem(DEFAULT_PREVISAO_FORMATURA.toString())));
+                .andExpect(jsonPath("$.[*].dre").value(hasItem(DEFAULT_DRE.toString())))
+                .andExpect(jsonPath("$.[*].previsaoFormatura").value(hasItem(DEFAULT_PREVISAO_FORMATURA.toString())))
+                .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
     }
 
     @Test
@@ -166,7 +198,9 @@ public class AlunoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(aluno.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.previsaoFormatura").value(DEFAULT_PREVISAO_FORMATURA.toString()));
+            .andExpect(jsonPath("$.dre").value(DEFAULT_DRE.toString()))
+            .andExpect(jsonPath("$.previsaoFormatura").value(DEFAULT_PREVISAO_FORMATURA.toString()))
+            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
     }
 
     @Test
@@ -188,7 +222,9 @@ public class AlunoResourceIntTest {
         Aluno updatedAluno = alunoRepository.findOne(aluno.getId());
         updatedAluno
                 .nome(UPDATED_NOME)
-                .previsaoFormatura(UPDATED_PREVISAO_FORMATURA);
+                .dre(UPDATED_DRE)
+                .previsaoFormatura(UPDATED_PREVISAO_FORMATURA)
+                .tipo(UPDATED_TIPO);
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(updatedAluno);
 
         restAlunoMockMvc.perform(put("/api/alunos")
@@ -201,7 +237,9 @@ public class AlunoResourceIntTest {
         assertThat(alunos).hasSize(databaseSizeBeforeUpdate);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testAluno.getDre()).isEqualTo(UPDATED_DRE);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(UPDATED_PREVISAO_FORMATURA);
+        assertThat(testAluno.getTipo()).isEqualTo(UPDATED_TIPO);
     }
 
     @Test

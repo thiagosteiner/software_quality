@@ -2,7 +2,9 @@
 
 entity Aluno{
 	nome String required,
-    previsaoFormatura LocalDate
+    dre String required,
+    previsaoFormatura LocalDate,
+    tipo TipoAluno
 }
 
 entity Professor{
@@ -13,8 +15,10 @@ entity Departamento{
 	nome String required
 }
 
-entity Tese{
-	status Situacao
+entity Monografia{
+	status Situacao,
+    tipo TipoMonografia
+    tema String
 }
 
 entity Proposta{
@@ -37,7 +41,15 @@ enum Situacao{
 }
 enum TipoComite{
 	PROPOSTA,
+    MONOGRAFIA
+}
+enum TipoMonografia{
+	DISSERTACAO,
     TESE
+}
+enum TipoAluno{
+	MESTRADO,
+    DOUTORADO
 }
 // Relacionamentos
 relationship OneToMany{
@@ -51,8 +63,8 @@ relationship ManyToMany{
     Professor{orientadorpublicacao} to Publicacao
 }
 relationship OneToOne{
-	Aluno{tese} to Tese,
-    Tese{comite} to Comite,
+	Aluno{monografia} to Monografia,
+    Monografia{comite} to Comite,
     Proposta{comite} to Comite
 }
 

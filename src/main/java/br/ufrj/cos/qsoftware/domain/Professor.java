@@ -34,6 +34,13 @@ public class Professor implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Aluno> alunos = new HashSet<>();
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "professor_orientadorpublicacao",
+               joinColumns = @JoinColumn(name="professors_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="orientadorpublicacaos_id", referencedColumnName="ID"))
+    private Set<Publicacao> orientadorpublicacaos = new HashSet<>();
+
     @ManyToOne
     private Departamento departamento;
 
@@ -81,6 +88,29 @@ public class Professor implements Serializable {
 
     public void setAlunos(Set<Aluno> alunos) {
         this.alunos = alunos;
+    }
+
+    public Set<Publicacao> getOrientadorpublicacaos() {
+        return orientadorpublicacaos;
+    }
+
+    public Professor orientadorpublicacaos(Set<Publicacao> publicacaos) {
+        this.orientadorpublicacaos = publicacaos;
+        return this;
+    }
+
+    public Professor addOrientadorpublicacao(Publicacao publicacao) {
+        orientadorpublicacaos.add(publicacao);
+        return this;
+    }
+
+    public Professor removeOrientadorpublicacao(Publicacao publicacao) {
+        orientadorpublicacaos.remove(publicacao);
+        return this;
+    }
+
+    public void setOrientadorpublicacaos(Set<Publicacao> publicacaos) {
+        this.orientadorpublicacaos = publicacaos;
     }
 
     public Departamento getDepartamento() {

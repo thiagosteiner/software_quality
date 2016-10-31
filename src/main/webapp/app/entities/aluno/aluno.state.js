@@ -96,7 +96,9 @@
                         entity: function () {
                             return {
                                 nome: null,
+                                dre: null,
                                 previsaoFormatura: null,
+                                tipo: null,
                                 id: null
                             };
                         }

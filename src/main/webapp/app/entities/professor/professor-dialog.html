@@ -27,6 +27,10 @@
         </div>
 
         <div class="form-group">
+            <label for="field_orientadorpublicacao">Orientadorpublicacao</label>
+            <select class="form-control" id="field_orientadorpublicacao" multiple name="orientadorpublicacao" ng-model="vm.professor.orientadorpublicacaos" ng-options="publicacao as publicacao.id for publicacao in vm.publicacaos track by publicacao.id"></select>
+        </div>
+        <div class="form-group">
             <label for="field_departamento">Departamento</label>
             <select class="form-control" id="field_departamento" name="departamento" ng-model="vm.professor.departamentoId" ng-options="departamento.id as departamento.id for departamento in vm.departamentos"            >
                 <option value=""></option>

@@ -8,13 +8,21 @@
         <dd>
             <span>{{vm.aluno.nome}}</span>
         </dd>
+        <dt><span>Dre</span></dt>
+        <dd>
+            <span>{{vm.aluno.dre}}</span>
+        </dd>
         <dt><span>Previsao Formatura</span></dt>
         <dd>
             <span>{{vm.aluno.previsaoFormatura | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Tese</span></dt>
+        <dt><span>Tipo</span></dt>
         <dd>
-            <a ui-sref="tese-detail({id:vm.aluno.teseId})">{{vm.aluno.teseId}}</a>
+            <span>{{vm.aluno.tipo}}</span>
+        </dd>
+        <dt><span>Monografia</span></dt>
+        <dd>
+            <a ui-sref="monografia-detail({id:vm.aluno.monografiaId})">{{vm.aluno.monografiaId}}</a>
         </dd>
         <dt><span>Publicacao</span></dt>
         <dd>

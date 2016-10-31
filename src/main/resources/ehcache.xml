@@ -57,6 +57,10 @@
         timeToLiveSeconds="3600">
     </cache>
 
+    <cache name="br.ufrj.cos.qsoftware.domain.Professor.orientadorpublicacaos"
+        timeToLiveSeconds="3600">
+    </cache>
+
     <cache name="br.ufrj.cos.qsoftware.domain.Departamento"
         timeToLiveSeconds="3600">
     </cache>
@@ -65,7 +69,7 @@
         timeToLiveSeconds="3600">
     </cache>
 
-    <cache name="br.ufrj.cos.qsoftware.domain.Tese"
+    <cache name="br.ufrj.cos.qsoftware.domain.Monografia"
         timeToLiveSeconds="3600">
     </cache>
 

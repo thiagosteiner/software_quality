@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import br.ufrj.cos.qsoftware.domain.enumeration.TipoAluno;
+
 /**
  * A Aluno.
  */
@@ -30,12 +32,20 @@ public class Aluno implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
 
+    @NotNull
+    @Column(name = "dre", nullable = false)
+    private String dre;
+
     @Column(name = "previsao_formatura")
     private LocalDate previsaoFormatura;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private TipoAluno tipo;
+
     @OneToOne
     @JoinColumn(unique = true)
-    private Tese tese;
+    private Monografia monografia;
 
     @OneToMany(mappedBy = "aluno")
     @JsonIgnore
@@ -73,6 +83,19 @@ public class Aluno implements Serializable {
         this.nome = nome;
     }
 
+    public String getDre() {
+        return dre;
+    }
+
+    public Aluno dre(String dre) {
+        this.dre = dre;
+        return this;
+    }
+
+    public void setDre(String dre) {
+        this.dre = dre;
+    }
+
     public LocalDate getPrevisaoFormatura() {
         return previsaoFormatura;
     }
@@ -86,17 +109,30 @@ public class Aluno implements Serializable {
         this.previsaoFormatura = previsaoFormatura;
     }
 
-    public Tese getTese() {
-        return tese;
+    public TipoAluno getTipo() {
+        return tipo;
     }
 
-    public Aluno tese(Tese tese) {
-        this.tese = tese;
+    public Aluno tipo(TipoAluno tipo) {
+        this.tipo = tipo;
         return this;
     }
 
-    public void setTese(Tese tese) {
-        this.tese = tese;
+    public void setTipo(TipoAluno tipo) {
+        this.tipo = tipo;
+    }
+
+    public Monografia getMonografia() {
+        return monografia;
+    }
+
+    public Aluno monografia(Monografia monografia) {
+        this.monografia = monografia;
+        return this;
+    }
+
+    public void setMonografia(Monografia monografia) {
+        this.monografia = monografia;
     }
 
     public Set<Proposta> getPropostas() {
@@ -185,7 +221,9 @@ public class Aluno implements Serializable {
         return "Aluno{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", dre='" + dre + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +
+            ", tipo='" + tipo + "'" +
             '}';
     }
 }

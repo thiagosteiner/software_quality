@@ -5,18 +5,18 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124404_added_entity_Aluno.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124405_added_entity_Professor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124406_added_entity_Departamento.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124407_added_entity_Tese.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124408_added_entity_Proposta.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124409_added_entity_Comite.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124410_added_entity_Publicacao.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172227_added_entity_Aluno.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172228_added_entity_Professor.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172229_added_entity_Departamento.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172230_added_entity_Monografia.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172231_added_entity_Proposta.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172232_added_entity_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172233_added_entity_Publicacao.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="classpath:config/liquibase/changelog/20161031124404_added_entity_constraints_Aluno.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124405_added_entity_constraints_Professor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124407_added_entity_constraints_Tese.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124408_added_entity_constraints_Proposta.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161031124409_added_entity_constraints_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172227_added_entity_constraints_Aluno.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172228_added_entity_constraints_Professor.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172230_added_entity_constraints_Monografia.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172231_added_entity_constraints_Proposta.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161031172232_added_entity_constraints_Comite.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

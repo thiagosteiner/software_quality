@@ -5,15 +5,16 @@
         .module('qsoftwareApp')
         .controller('ProfessorDialogController', ProfessorDialogController);
 
-    ProfessorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Professor', 'Aluno', 'Departamento'];
+    ProfessorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Professor', 'Aluno', 'Publicacao', 'Departamento'];
 
-    function ProfessorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Professor, Aluno, Departamento) {
+    function ProfessorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Professor, Aluno, Publicacao, Departamento) {
         var vm = this;
 
         vm.professor = entity;
         vm.clear = clear;
         vm.save = save;
         vm.alunos = Aluno.query();
+        vm.publicacaos = Publicacao.query();
         vm.departamentos = Departamento.query();
 
         $timeout(function (){

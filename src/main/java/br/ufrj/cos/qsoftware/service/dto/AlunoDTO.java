@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import br.ufrj.cos.qsoftware.domain.enumeration.TipoAluno;
 
 /**
  * A DTO for the Aluno entity.
@@ -18,10 +19,15 @@ public class AlunoDTO implements Serializable {
     @NotNull
     private String nome;
 
+    @NotNull
+    private String dre;
+
     private LocalDate previsaoFormatura;
 
+    private TipoAluno tipo;
 
-    private Long teseId;
+
+    private Long monografiaId;
     
     private Set<PublicacaoDTO> publicacaos = new HashSet<>();
 
@@ -41,6 +47,13 @@ public class AlunoDTO implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    public String getDre() {
+        return dre;
+    }
+
+    public void setDre(String dre) {
+        this.dre = dre;
+    }
     public LocalDate getPrevisaoFormatura() {
         return previsaoFormatura;
     }
@@ -48,13 +61,20 @@ public class AlunoDTO implements Serializable {
     public void setPrevisaoFormatura(LocalDate previsaoFormatura) {
         this.previsaoFormatura = previsaoFormatura;
     }
-
-    public Long getTeseId() {
-        return teseId;
+    public TipoAluno getTipo() {
+        return tipo;
     }
 
-    public void setTeseId(Long teseId) {
-        this.teseId = teseId;
+    public void setTipo(TipoAluno tipo) {
+        this.tipo = tipo;
+    }
+
+    public Long getMonografiaId() {
+        return monografiaId;
+    }
+
+    public void setMonografiaId(Long monografiaId) {
+        this.monografiaId = monografiaId;
     }
 
     public Set<PublicacaoDTO> getPublicacaos() {
@@ -99,7 +119,9 @@ public class AlunoDTO implements Serializable {
         return "AlunoDTO{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", dre='" + dre + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +
+            ", tipo='" + tipo + "'" +
             '}';
     }
 }

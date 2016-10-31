@@ -20,8 +20,10 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Nome</span></th>
+                    <th><span>Dre</span></th>
                     <th><span>Previsao Formatura</span></th>
-                    <th><span>Tese</span></th>
+                    <th><span>Tipo</span></th>
+                    <th><span>Monografia</span></th>
                     <th><span>Publicacao</span></th>
                     <th><span>Professor</span></th>
                     <th></th>
@@ -31,9 +33,11 @@
                 <tr ng-repeat="aluno in vm.alunos track by aluno.id">
                     <td><a ui-sref="aluno-detail({id:aluno.id})">{{aluno.id}}</a></td>
                     <td>{{aluno.nome}}</td>
+                    <td>{{aluno.dre}}</td>
                         <td>{{aluno.previsaoFormatura | date:'mediumDate'}}</td>
+                    <td>{{aluno.tipo}}</td>
                     <td>
-                        <a ui-sref="tese-detail({id:aluno.teseId})">{{aluno.teseId}}</a>
+                        <a ui-sref="monografia-detail({id:aluno.monografiaId})">{{aluno.monografiaId}}</a>
                     </td>
                     <td>
                         <span ng-repeat="publicacao in aluno.publicacaos">

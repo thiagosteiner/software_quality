@@ -26,6 +26,18 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label" for="field_dre">Dre</label>
+            <input type="text" class="form-control" name="dre" id="field_dre"
+                    ng-model="vm.aluno.dre"
+                    required />
+            <div ng-show="editForm.dre.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.dre.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label" for="field_previsaoFormatura">Previsao Formatura</label>
                 <div class="input-group">
                     <input id="field_previsaoFormatura" type="text" class="form-control" name="previsaoFormatura" uib-datepicker-popup="{{dateformat}}" ng-model="vm.aluno.previsaoFormatura" is-open="vm.datePickerOpenStatus.previsaoFormatura"
@@ -35,10 +47,17 @@
                     </span>
                 </div>
         </div>
+        <div class="form-group">
+            <label class="control-label" for="field_tipo">Tipo</label>
+            <select class="form-control" name="tipo" ng-model="vm.aluno.tipo" id="field_tipo">
+                <option value="MESTRADO">MESTRADO</option>
+                <option value="DOUTORADO">DOUTORADO</option>
+            </select>
+        </div>
 
         <div class="form-group">
-            <label for="field_tese">Tese</label>
-            <select class="form-control" id="field_tese" name="tese" ng-model="vm.aluno.teseId" ng-options="tese.id as tese.id for tese in vm.tese | orderBy:'id'">
+            <label for="field_monografia">Monografia</label>
+            <select class="form-control" id="field_monografia" name="monografia" ng-model="vm.aluno.monografiaId" ng-options="monografia.id as monografia.id for monografia in vm.monografias | orderBy:'id'">
                 <option value=""></option>
             </select>
         </div>
