@@ -1,15 +1,12 @@
 #title: qsoftware_entities
 
 entity Aluno{
-	dre String required,
-    nome String required,
+	nome String required,
     previsaoFormatura LocalDate
-    
 }
 
 entity Professor{
-	nome String required,
-    departamento String
+	nome String required
 }
 
 entity Departamento{

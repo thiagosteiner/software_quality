@@ -1,0 +1,64 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myAlunoLabel">Create or edit a Aluno</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.aluno.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.aluno.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome"
+                    ng-model="vm.aluno.nome"
+                    required />
+            <div ng-show="editForm.nome.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.nome.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_previsaoFormatura">Previsao Formatura</label>
+                <div class="input-group">
+                    <input id="field_previsaoFormatura" type="text" class="form-control" name="previsaoFormatura" uib-datepicker-popup="{{dateformat}}" ng-model="vm.aluno.previsaoFormatura" is-open="vm.datePickerOpenStatus.previsaoFormatura"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('previsaoFormatura')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_tese">Tese</label>
+            <select class="form-control" id="field_tese" name="tese" ng-model="vm.aluno.teseId" ng-options="tese.id as tese.id for tese in vm.tese | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_publicacao">Publicacao</label>
+            <select class="form-control" id="field_publicacao" multiple name="publicacao" ng-model="vm.aluno.publicacaos" ng-options="publicacao as publicacao.id for publicacao in vm.publicacaos track by publicacao.id"></select>
+        </div>
+        <div class="form-group">
+            <label for="field_professor">Professor</label>
+            <select class="form-control" id="field_professor" name="professor" ng-model="vm.aluno.professorId" ng-options="professor.id as professor.id for professor in vm.professors"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
