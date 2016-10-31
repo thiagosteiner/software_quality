@@ -1,8 +1,10 @@
 #title: qsoftware_entities
 
 entity Aluno{
-	nome String required,
+	dre String required,
+    nome String required,
     previsaoFormatura LocalDate
+    
 }
 
 entity Professor{
@@ -48,7 +50,8 @@ relationship OneToMany{
 }
 relationship ManyToMany{
 	Aluno{publicacao} to Publicacao,
-    Comite{professor} to Professor
+    Comite{professor} to Professor,
+    Professor{orientadorpublicacao} to Publicacao
 }
 relationship OneToOne{
 	Aluno{tese} to Tese,
