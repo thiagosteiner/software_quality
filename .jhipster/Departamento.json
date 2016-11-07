@@ -1,0 +1,25 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "professor",
+            "otherEntityName": "professor",
+            "otherEntityRelationshipName": "departamento"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20161031172229",
+    "entityTableName": "departamento",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

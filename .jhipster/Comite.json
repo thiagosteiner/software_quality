@@ -1,0 +1,29 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "professor",
+            "otherEntityName": "professor",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "tipo",
+            "fieldType": "TipoComite",
+            "fieldValues": "PROPOSTA,MONOGRAFIA"
+        },
+        {
+            "fieldName": "dataOcorrencia",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20161031172232",
+    "entityTableName": "comite",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

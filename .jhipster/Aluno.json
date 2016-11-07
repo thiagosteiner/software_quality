@@ -1,0 +1,63 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "monografia",
+            "otherEntityName": "monografia",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "aluno"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "proposta",
+            "otherEntityName": "proposta",
+            "otherEntityRelationshipName": "aluno"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "publicacao",
+            "otherEntityName": "publicacao",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "professor",
+            "otherEntityName": "professor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dre",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "previsaoFormatura",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "tipo",
+            "fieldType": "TipoAluno",
+            "fieldValues": "MESTRADO,DOUTORADO"
+        }
+    ],
+    "changelogDate": "20161031172227",
+    "entityTableName": "aluno",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}
