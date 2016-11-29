@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('AlunoDialogController', AlunoDialogController);
 
-    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Aluno', 'Monografia', 'Proposta', 'Publicacao', 'Professor'];
+    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Aluno', 'Documento', 'Convite'];
 
-    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Aluno, Monografia, Proposta, Publicacao, Professor) {
+    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Aluno, Documento, Convite) {
         var vm = this;
 
         vm.aluno = entity;
@@ -15,18 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.monografias = Monografia.query({filter: 'aluno-is-null'});
-        $q.all([vm.aluno.$promise, vm.monografias.$promise]).then(function() {
-            if (!vm.aluno.monografiaId) {
-                return $q.reject();
-            }
-            return Monografia.get({id : vm.aluno.monografiaId}).$promise;
-        }).then(function(monografia) {
-            vm.monografias.push(monografia);
-        });
-        vm.propostas = Proposta.query();
-        vm.publicacaos = Publicacao.query();
-        vm.professors = Professor.query();
+        vm.documentos = Documento.query();
+        vm.convites = Convite.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -55,6 +45,7 @@
             vm.isSaving = false;
         }
 
+        vm.datePickerOpenStatus.dataIngresso = false;
         vm.datePickerOpenStatus.previsaoFormatura = false;
 
         function openCalendar (date) {

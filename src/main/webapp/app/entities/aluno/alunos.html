@@ -20,12 +20,11 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Nome</span></th>
+                    <th><span>Senha</span></th>
                     <th><span>Dre</span></th>
+                    <th><span>Data Ingresso</span></th>
                     <th><span>Previsao Formatura</span></th>
                     <th><span>Tipo</span></th>
-                    <th><span>Monografia</span></th>
-                    <th><span>Publicacao</span></th>
-                    <th><span>Professor</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -33,20 +32,11 @@
                 <tr ng-repeat="aluno in vm.alunos track by aluno.id">
                     <td><a ui-sref="aluno-detail({id:aluno.id})">{{aluno.id}}</a></td>
                     <td>{{aluno.nome}}</td>
+                    <td>{{aluno.senha}}</td>
                     <td>{{aluno.dre}}</td>
+                        <td>{{aluno.dataIngresso | date:'mediumDate'}}</td>
                         <td>{{aluno.previsaoFormatura | date:'mediumDate'}}</td>
                     <td>{{aluno.tipo}}</td>
-                    <td>
-                        <a ui-sref="monografia-detail({id:aluno.monografiaId})">{{aluno.monografiaId}}</a>
-                    </td>
-                    <td>
-                        <span ng-repeat="publicacao in aluno.publicacaos">
-                            <a class="form-control-static" ui-sref="publicacao-detail({id: publicacao.id})">{{publicacao.id}}</a>{{$last ? '' : ', '}}
-                        </span>
-                    </td>
-                    <td>
-                        <a ui-sref="professor-detail({id:aluno.professorId})">{{aluno.professorId}}</a>
-                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

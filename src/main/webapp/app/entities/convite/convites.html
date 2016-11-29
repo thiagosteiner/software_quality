@@ -1,0 +1,80 @@
+<div>
+    <h2>Convites</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="convite.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Convite
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Status</span></th>
+                    <th><span>Data Criacao</span></th>
+                    <th><span>Tipo Convite</span></th>
+                    <th><span>Aluno</span></th>
+                    <th><span>Professor</span></th>
+                    <th><span>Conviteprofessor</span></th>
+                    <th><span>Convite Comite</span></th>
+                    <th><span>Convite Documento</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="convite in vm.convites track by convite.id">
+                    <td><a ui-sref="convite-detail({id:convite.id})">{{convite.id}}</a></td>
+                    <td>{{convite.status}}</td>
+                        <td>{{convite.dataCriacao | date:'mediumDate'}}</td>
+                    <td>{{convite.tipoConvite}}</td>
+                    <td>
+                        <a ui-sref="aluno-detail({id:convite.alunoId})">{{convite.alunoId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="professor-detail({id:convite.professorId})">{{convite.professorId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="professor-detail({id:convite.conviteprofessorId})">{{convite.conviteprofessorId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="comite-detail({id:convite.conviteComiteId})">{{convite.conviteComiteId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="documento-detail({id:convite.conviteDocumentoId})">{{convite.conviteDocumentoId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="convite-detail({id:convite.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="convite.edit({id:convite.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="convite.delete({id:convite.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -52,7 +52,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     @Transactional(readOnly = true) 
     public List<ProfessorDTO> findAll() {
         log.debug("Request to get all Professors");
-        List<ProfessorDTO> result = professorRepository.findAllWithEagerRelationships().stream()
+        List<ProfessorDTO> result = professorRepository.findAll().stream()
             .map(professorMapper::professorToProfessorDTO)
             .collect(Collectors.toCollection(LinkedList::new));
 
@@ -68,7 +68,7 @@ public class ProfessorServiceImpl implements ProfessorService{
     @Transactional(readOnly = true) 
     public ProfessorDTO findOne(Long id) {
         log.debug("Request to get Professor : {}", id);
-        Professor professor = professorRepository.findOneWithEagerRelationships(id);
+        Professor professor = professorRepository.findOne(id);
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
         return professorDTO;
     }

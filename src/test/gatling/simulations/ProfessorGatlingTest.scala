@@ -67,7 +67,7 @@ class ProfessorGatlingTest extends Simulation {
             .exec(http("Create new professor")
             .post("/api/professors")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT", "senha":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_professor_url"))).exitHereIfFailed
             .pause(10)

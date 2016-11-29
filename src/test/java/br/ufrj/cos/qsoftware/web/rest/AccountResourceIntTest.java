@@ -1,6 +1,7 @@
 package br.ufrj.cos.qsoftware.web.rest;
 
 import br.ufrj.cos.qsoftware.QsoftwareApp;
+import br.ufrj.cos.qsoftware.config.JHipsterProperties;
 import br.ufrj.cos.qsoftware.domain.Authority;
 import br.ufrj.cos.qsoftware.domain.User;
 import br.ufrj.cos.qsoftware.repository.AuthorityRepository;
@@ -45,6 +46,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AccountResourceIntTest {
 
     @Inject
+    private JHipsterProperties jHipsterProperties;
+
+    @Inject
     private UserRepository userRepository;
 
     @Inject
@@ -69,6 +73,7 @@ public class AccountResourceIntTest {
         doNothing().when(mockMailService).sendActivationEmail((User) anyObject(), anyString());
 
         AccountResource accountResource = new AccountResource();
+        ReflectionTestUtils.setField(accountResource, "jHipsterProperties", jHipsterProperties);
         ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);
         ReflectionTestUtils.setField(accountResource, "userService", userService);
         ReflectionTestUtils.setField(accountResource, "mailService", mockMailService);

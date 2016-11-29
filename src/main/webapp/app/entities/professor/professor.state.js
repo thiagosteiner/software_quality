@@ -96,6 +96,7 @@
                         entity: function () {
                             return {
                                 nome: null,
+                                senha: null,
                                 id: null
                             };
                         }

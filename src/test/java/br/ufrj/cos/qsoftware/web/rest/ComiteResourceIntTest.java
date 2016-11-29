@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -44,11 +43,17 @@ import br.ufrj.cos.qsoftware.domain.enumeration.TipoComite;
 @SpringBootTest(classes = QsoftwareApp.class)
 public class ComiteResourceIntTest {
 
+    private static final String DEFAULT_LOCAL = "AAAAAAAAAA";
+    private static final String UPDATED_LOCAL = "BBBBBBBBBB";
+
     private static final TipoComite DEFAULT_TIPO = TipoComite.PROPOSTA;
     private static final TipoComite UPDATED_TIPO = TipoComite.MONOGRAFIA;
 
     private static final LocalDate DEFAULT_DATA_OCORRENCIA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA_OCORRENCIA = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_ATA_COMITE = "AAAAAAAAAA";
+    private static final String UPDATED_ATA_COMITE = "BBBBBBBBBB";
 
     @Inject
     private ComiteRepository comiteRepository;
@@ -72,7 +77,7 @@ public class ComiteResourceIntTest {
 
     private Comite comite;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ComiteResource comiteResource = new ComiteResource();
@@ -90,8 +95,10 @@ public class ComiteResourceIntTest {
      */
     public static Comite createEntity(EntityManager em) {
         Comite comite = new Comite()
+                .local(DEFAULT_LOCAL)
                 .tipo(DEFAULT_TIPO)
-                .dataOcorrencia(DEFAULT_DATA_OCORRENCIA);
+                .dataOcorrencia(DEFAULT_DATA_OCORRENCIA)
+                .ataComite(DEFAULT_ATA_COMITE);
         return comite;
     }
 
@@ -117,8 +124,10 @@ public class ComiteResourceIntTest {
         List<Comite> comites = comiteRepository.findAll();
         assertThat(comites).hasSize(databaseSizeBeforeCreate + 1);
         Comite testComite = comites.get(comites.size() - 1);
+        assertThat(testComite.getLocal()).isEqualTo(DEFAULT_LOCAL);
         assertThat(testComite.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testComite.getDataOcorrencia()).isEqualTo(DEFAULT_DATA_OCORRENCIA);
+        assertThat(testComite.getAtaComite()).isEqualTo(DEFAULT_ATA_COMITE);
     }
 
     @Test
@@ -132,8 +141,10 @@ public class ComiteResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(comite.getId().intValue())))
+                .andExpect(jsonPath("$.[*].local").value(hasItem(DEFAULT_LOCAL.toString())))
                 .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
-                .andExpect(jsonPath("$.[*].dataOcorrencia").value(hasItem(DEFAULT_DATA_OCORRENCIA.toString())));
+                .andExpect(jsonPath("$.[*].dataOcorrencia").value(hasItem(DEFAULT_DATA_OCORRENCIA.toString())))
+                .andExpect(jsonPath("$.[*].ataComite").value(hasItem(DEFAULT_ATA_COMITE.toString())));
     }
 
     @Test
@@ -147,8 +158,10 @@ public class ComiteResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(comite.getId().intValue()))
+            .andExpect(jsonPath("$.local").value(DEFAULT_LOCAL.toString()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()))
-            .andExpect(jsonPath("$.dataOcorrencia").value(DEFAULT_DATA_OCORRENCIA.toString()));
+            .andExpect(jsonPath("$.dataOcorrencia").value(DEFAULT_DATA_OCORRENCIA.toString()))
+            .andExpect(jsonPath("$.ataComite").value(DEFAULT_ATA_COMITE.toString()));
     }
 
     @Test
@@ -169,8 +182,10 @@ public class ComiteResourceIntTest {
         // Update the comite
         Comite updatedComite = comiteRepository.findOne(comite.getId());
         updatedComite
+                .local(UPDATED_LOCAL)
                 .tipo(UPDATED_TIPO)
-                .dataOcorrencia(UPDATED_DATA_OCORRENCIA);
+                .dataOcorrencia(UPDATED_DATA_OCORRENCIA)
+                .ataComite(UPDATED_ATA_COMITE);
         ComiteDTO comiteDTO = comiteMapper.comiteToComiteDTO(updatedComite);
 
         restComiteMockMvc.perform(put("/api/comites")
@@ -182,8 +197,10 @@ public class ComiteResourceIntTest {
         List<Comite> comites = comiteRepository.findAll();
         assertThat(comites).hasSize(databaseSizeBeforeUpdate);
         Comite testComite = comites.get(comites.size() - 1);
+        assertThat(testComite.getLocal()).isEqualTo(UPDATED_LOCAL);
         assertThat(testComite.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testComite.getDataOcorrencia()).isEqualTo(UPDATED_DATA_OCORRENCIA);
+        assertThat(testComite.getAtaComite()).isEqualTo(UPDATED_ATA_COMITE);
     }
 
     @Test

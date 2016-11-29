@@ -20,19 +20,18 @@ public class AlunoDTO implements Serializable {
     private String nome;
 
     @NotNull
+    private String senha;
+
+    @NotNull
     private String dre;
+
+    private LocalDate dataIngresso;
 
     private LocalDate previsaoFormatura;
 
     private TipoAluno tipo;
 
 
-    private Long monografiaId;
-    
-    private Set<PublicacaoDTO> publicacaos = new HashSet<>();
-
-    private Long professorId;
-    
     public Long getId() {
         return id;
     }
@@ -47,12 +46,26 @@ public class AlunoDTO implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
     public String getDre() {
         return dre;
     }
 
     public void setDre(String dre) {
         this.dre = dre;
+    }
+    public LocalDate getDataIngresso() {
+        return dataIngresso;
+    }
+
+    public void setDataIngresso(LocalDate dataIngresso) {
+        this.dataIngresso = dataIngresso;
     }
     public LocalDate getPrevisaoFormatura() {
         return previsaoFormatura;
@@ -67,30 +80,6 @@ public class AlunoDTO implements Serializable {
 
     public void setTipo(TipoAluno tipo) {
         this.tipo = tipo;
-    }
-
-    public Long getMonografiaId() {
-        return monografiaId;
-    }
-
-    public void setMonografiaId(Long monografiaId) {
-        this.monografiaId = monografiaId;
-    }
-
-    public Set<PublicacaoDTO> getPublicacaos() {
-        return publicacaos;
-    }
-
-    public void setPublicacaos(Set<PublicacaoDTO> publicacaos) {
-        this.publicacaos = publicacaos;
-    }
-
-    public Long getProfessorId() {
-        return professorId;
-    }
-
-    public void setProfessorId(Long professorId) {
-        this.professorId = professorId;
     }
 
     @Override
@@ -119,7 +108,9 @@ public class AlunoDTO implements Serializable {
         return "AlunoDTO{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", senha='" + senha + "'" +
             ", dre='" + dre + "'" +
+            ", dataIngresso='" + dataIngresso + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +
             ", tipo='" + tipo + "'" +
             '}';

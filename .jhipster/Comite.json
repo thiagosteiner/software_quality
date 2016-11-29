@@ -4,13 +4,17 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "professor",
+            "relationshipName": "comiteprofessor",
             "otherEntityName": "professor",
             "otherEntityField": "id",
             "ownerSide": true
         }
     ],
     "fields": [
+        {
+            "fieldName": "local",
+            "fieldType": "String"
+        },
         {
             "fieldName": "tipo",
             "fieldType": "TipoComite",
@@ -19,9 +23,13 @@
         {
             "fieldName": "dataOcorrencia",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "ataComite",
+            "fieldType": "String"
         }
     ],
-    "changelogDate": "20161031172232",
+    "changelogDate": "20161128043133",
     "entityTableName": "comite",
     "dto": "mapstruct",
     "pagination": "no",

@@ -52,7 +52,7 @@ public class AlunoServiceImpl implements AlunoService{
     @Transactional(readOnly = true) 
     public List<AlunoDTO> findAll() {
         log.debug("Request to get all Alunos");
-        List<AlunoDTO> result = alunoRepository.findAllWithEagerRelationships().stream()
+        List<AlunoDTO> result = alunoRepository.findAll().stream()
             .map(alunoMapper::alunoToAlunoDTO)
             .collect(Collectors.toCollection(LinkedList::new));
 
@@ -68,7 +68,7 @@ public class AlunoServiceImpl implements AlunoService{
     @Transactional(readOnly = true) 
     public AlunoDTO findOne(Long id) {
         log.debug("Request to get Aluno : {}", id);
-        Aluno aluno = alunoRepository.findOneWithEagerRelationships(id);
+        Aluno aluno = alunoRepository.findOne(id);
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
         return alunoDTO;
     }

@@ -8,11 +8,9 @@
         <dd>
             <span>{{vm.professor.nome}}</span>
         </dd>
-        <dt><span>Orientadorpublicacao</span></dt>
+        <dt><span>Senha</span></dt>
         <dd>
-            <span ng-repeat="orientadorpublicacao in vm.professor.orientadorpublicacaos">
-                <a ui-sref="publicacao-detail({id: orientadorpublicacao.id})">{{orientadorpublicacao.id}}</a>{{$last ? '' : ', '}}
-            </span>
+            <span>{{vm.professor.senha}}</span>
         </dd>
         <dt><span>Departamento</span></dt>
         <dd>

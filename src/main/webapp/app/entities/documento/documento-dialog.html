@@ -1,0 +1,112 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myDocumentoLabel">Create or edit a Documento</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.documento.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.documento.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_titulo">Titulo</label>
+            <input type="text" class="form-control" name="titulo" id="field_titulo"
+                    ng-model="vm.documento.titulo"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_resumo">Resumo</label>
+            <input type="text" class="form-control" name="resumo" id="field_resumo"
+                    ng-model="vm.documento.resumo"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dataCriacao">Data Criacao</label>
+                <div class="input-group">
+                    <input id="field_dataCriacao" type="text" class="form-control" name="dataCriacao" uib-datepicker-popup="{{dateformat}}" ng-model="vm.documento.dataCriacao" is-open="vm.datePickerOpenStatus.dataCriacao"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataCriacao')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.documento.status" id="field_status">
+                <option value="NULL">NULL</option>
+                <option value="REJEITADA">REJEITADA</option>
+                <option value="APROVADA">APROVADA</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_tipoDocumento">Tipo Documento</label>
+            <select class="form-control" name="tipoDocumento" ng-model="vm.documento.tipoDocumento" id="field_tipoDocumento">
+                <option value="MONOGRAFIA">MONOGRAFIA</option>
+                <option value="PROPOSTAMONOGRAFIA">PROPOSTAMONOGRAFIA</option>
+                <option value="ARTIGO">ARTIGO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_tipoMonografia">Tipo Monografia</label>
+            <select class="form-control" name="tipoMonografia" ng-model="vm.documento.tipoMonografia" id="field_tipoMonografia">
+                <option value="NULL">NULL</option>
+                <option value="DISSERTACAO">DISSERTACAO</option>
+                <option value="TESE">TESE</option>
+            </select>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setArquivo($file, vm.documento)">
+            <label class="control-label" for="field_arquivo">Arquivo</label>
+            <div>
+                <div ng-if="vm.documento.arquivo" class="help-block clearfix">
+                    <a class="pull-left" ng-click="vm.openFile(vm.documento.arquivoContentType, vm.documento.arquivo)">open</a><br>
+                    <span class="pull-left">{{vm.documento.arquivoContentType}}, {{vm.byteSize(vm.documento.arquivo)}}</span>
+                    <button type="button" ng-click="vm.documento.arquivo=null;vm.documento.arquivoContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setArquivo($file, vm.documento)">
+                    Add blob
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="arquivo" id="field_arquivo"
+                    ng-model="vm.documento.arquivo"
+                     />
+            <input type="hidden" class="form-control" name="arquivoContentType" id="field_arquivoContentType"
+                    ng-model="vm.documento.arquivoContentType" />
+        </div>
+
+        <div class="form-group">
+            <label for="field_aluno">Aluno</label>
+            <select class="form-control" id="field_aluno" name="aluno" ng-model="vm.documento.alunoId" ng-options="aluno.id as aluno.id for aluno in vm.alunos"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_documentocomite">Documentocomite</label>
+            <select class="form-control" id="field_documentocomite" name="documentocomite" ng-model="vm.documento.documentocomiteId" ng-options="comite.id as comite.id for comite in vm.documentocomites | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_documentoorientador">Documentoorientador</label>
+            <select class="form-control" id="field_documentoorientador" name="documentoorientador" ng-model="vm.documento.documentoorientadorId" ng-options="professor.id as professor.id for professor in vm.documentoorientadors | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

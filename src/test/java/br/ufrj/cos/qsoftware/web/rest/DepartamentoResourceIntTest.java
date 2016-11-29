@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -41,8 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = QsoftwareApp.class)
 public class DepartamentoResourceIntTest {
 
-    private static final String DEFAULT_NOME = "AAAAA";
-    private static final String UPDATED_NOME = "BBBBB";
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
 
     @Inject
     private DepartamentoRepository departamentoRepository;
@@ -66,7 +65,7 @@ public class DepartamentoResourceIntTest {
 
     private Departamento departamento;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         DepartamentoResource departamentoResource = new DepartamentoResource();

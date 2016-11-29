@@ -9,7 +9,7 @@
 
     function ComiteController ($scope, $state, Comite) {
         var vm = this;
-        
+
         vm.comites = [];
 
         loadAll();

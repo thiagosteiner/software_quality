@@ -8,9 +8,17 @@
         <dd>
             <span>{{vm.aluno.nome}}</span>
         </dd>
+        <dt><span>Senha</span></dt>
+        <dd>
+            <span>{{vm.aluno.senha}}</span>
+        </dd>
         <dt><span>Dre</span></dt>
         <dd>
             <span>{{vm.aluno.dre}}</span>
+        </dd>
+        <dt><span>Data Ingresso</span></dt>
+        <dd>
+            <span>{{vm.aluno.dataIngresso | date:'mediumDate'}}</span>
         </dd>
         <dt><span>Previsao Formatura</span></dt>
         <dd>
@@ -19,20 +27,6 @@
         <dt><span>Tipo</span></dt>
         <dd>
             <span>{{vm.aluno.tipo}}</span>
-        </dd>
-        <dt><span>Monografia</span></dt>
-        <dd>
-            <a ui-sref="monografia-detail({id:vm.aluno.monografiaId})">{{vm.aluno.monografiaId}}</a>
-        </dd>
-        <dt><span>Publicacao</span></dt>
-        <dd>
-            <span ng-repeat="publicacao in vm.aluno.publicacaos">
-                <a ui-sref="publicacao-detail({id: publicacao.id})">{{publicacao.id}}</a>{{$last ? '' : ', '}}
-            </span>
-        </dd>
-        <dt><span>Professor</span></dt>
-        <dd>
-            <a ui-sref="professor-detail({id:vm.aluno.professorId})">{{vm.aluno.professorId}}</a>
         </dd>
     </dl>
 

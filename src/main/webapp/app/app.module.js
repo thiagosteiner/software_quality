@@ -3,7 +3,7 @@
 
     angular
         .module('qsoftwareApp', [
-            'ngStorage', 
+            'ngStorage',
             'ngResource',
             'ngCookies',
             'ngAria',

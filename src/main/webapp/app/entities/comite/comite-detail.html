@@ -4,6 +4,10 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Local</span></dt>
+        <dd>
+            <span>{{vm.comite.local}}</span>
+        </dd>
         <dt><span>Tipo</span></dt>
         <dd>
             <span>{{vm.comite.tipo}}</span>
@@ -12,10 +16,14 @@
         <dd>
             <span>{{vm.comite.dataOcorrencia | date:'mediumDate'}}</span>
         </dd>
-        <dt><span>Professor</span></dt>
+        <dt><span>Ata Comite</span></dt>
         <dd>
-            <span ng-repeat="professor in vm.comite.professors">
-                <a ui-sref="professor-detail({id: professor.id})">{{professor.id}}</a>{{$last ? '' : ', '}}
+            <span>{{vm.comite.ataComite}}</span>
+        </dd>
+        <dt><span>Comiteprofessor</span></dt>
+        <dd>
+            <span ng-repeat="comiteprofessor in vm.comite.comiteprofessors">
+                <a ui-sref="professor-detail({id: comiteprofessor.id})">{{comiteprofessor.id}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>
     </dl>

@@ -29,17 +29,14 @@ public class Professor implements Serializable {
     @Column(name = "nome", nullable = false)
     private String nome;
 
+    @NotNull
+    @Column(name = "senha", nullable = false)
+    private String senha;
+
     @OneToMany(mappedBy = "professor")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Aluno> alunos = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "professor_orientadorpublicacao",
-               joinColumns = @JoinColumn(name="professors_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="orientadorpublicacaos_id", referencedColumnName="ID"))
-    private Set<Publicacao> orientadorpublicacaos = new HashSet<>();
+    private Set<Convite> orientadorconviteprofessorcomites = new HashSet<>();
 
     @ManyToOne
     private Departamento departamento;
@@ -65,52 +62,42 @@ public class Professor implements Serializable {
         this.nome = nome;
     }
 
-    public Set<Aluno> getAlunos() {
-        return alunos;
+    public String getSenha() {
+        return senha;
     }
 
-    public Professor alunos(Set<Aluno> alunos) {
-        this.alunos = alunos;
+    public Professor senha(String senha) {
+        this.senha = senha;
         return this;
     }
 
-    public Professor addAluno(Aluno aluno) {
-        alunos.add(aluno);
-        aluno.setProfessor(this);
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Set<Convite> getOrientadorconviteprofessorcomites() {
+        return orientadorconviteprofessorcomites;
+    }
+
+    public Professor orientadorconviteprofessorcomites(Set<Convite> convites) {
+        this.orientadorconviteprofessorcomites = convites;
         return this;
     }
 
-    public Professor removeAluno(Aluno aluno) {
-        alunos.remove(aluno);
-        aluno.setProfessor(null);
+    public Professor addOrientadorconviteprofessorcomite(Convite convite) {
+        orientadorconviteprofessorcomites.add(convite);
+        convite.setProfessor(this);
         return this;
     }
 
-    public void setAlunos(Set<Aluno> alunos) {
-        this.alunos = alunos;
-    }
-
-    public Set<Publicacao> getOrientadorpublicacaos() {
-        return orientadorpublicacaos;
-    }
-
-    public Professor orientadorpublicacaos(Set<Publicacao> publicacaos) {
-        this.orientadorpublicacaos = publicacaos;
+    public Professor removeOrientadorconviteprofessorcomite(Convite convite) {
+        orientadorconviteprofessorcomites.remove(convite);
+        convite.setProfessor(null);
         return this;
     }
 
-    public Professor addOrientadorpublicacao(Publicacao publicacao) {
-        orientadorpublicacaos.add(publicacao);
-        return this;
-    }
-
-    public Professor removeOrientadorpublicacao(Publicacao publicacao) {
-        orientadorpublicacaos.remove(publicacao);
-        return this;
-    }
-
-    public void setOrientadorpublicacaos(Set<Publicacao> publicacaos) {
-        this.orientadorpublicacaos = publicacaos;
+    public void setOrientadorconviteprofessorcomites(Set<Convite> convites) {
+        this.orientadorconviteprofessorcomites = convites;
     }
 
     public Departamento getDepartamento() {
@@ -151,6 +138,7 @@ public class Professor implements Serializable {
         return "Professor{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", senha='" + senha + "'" +
             '}';
     }
 }

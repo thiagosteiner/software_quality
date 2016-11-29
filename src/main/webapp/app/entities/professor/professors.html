@@ -20,7 +20,7 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Nome</span></th>
-                    <th><span>Orientadorpublicacao</span></th>
+                    <th><span>Senha</span></th>
                     <th><span>Departamento</span></th>
                     <th></th>
                 </tr>
@@ -29,11 +29,7 @@
                 <tr ng-repeat="professor in vm.professors track by professor.id">
                     <td><a ui-sref="professor-detail({id:professor.id})">{{professor.id}}</a></td>
                     <td>{{professor.nome}}</td>
-                    <td>
-                        <span ng-repeat="orientadorpublicacao in professor.orientadorpublicacaos">
-                            <a class="form-control-static" ui-sref="publicacao-detail({id: orientadorpublicacao.id})">{{orientadorpublicacao.id}}</a>{{$last ? '' : ', '}}
-                        </span>
-                    </td>
+                    <td>{{professor.senha}}</td>
                     <td>
                         <a ui-sref="departamento-detail({id:professor.departamentoId})">{{professor.departamentoId}}</a>
                     </td>

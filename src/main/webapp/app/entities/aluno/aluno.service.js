@@ -16,6 +16,7 @@
                 transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
+                        data.dataIngresso = DateUtils.convertLocalDateFromServer(data.dataIngresso);
                         data.previsaoFormatura = DateUtils.convertLocalDateFromServer(data.previsaoFormatura);
                     }
                     return data;
@@ -25,6 +26,7 @@
                 method: 'PUT',
                 transformRequest: function (data) {
                     var copy = angular.copy(data);
+                    copy.dataIngresso = DateUtils.convertLocalDateToServer(copy.dataIngresso);
                     copy.previsaoFormatura = DateUtils.convertLocalDateToServer(copy.previsaoFormatura);
                     return angular.toJson(copy);
                 }
@@ -33,6 +35,7 @@
                 method: 'POST',
                 transformRequest: function (data) {
                     var copy = angular.copy(data);
+                    copy.dataIngresso = DateUtils.convertLocalDateToServer(copy.dataIngresso);
                     copy.previsaoFormatura = DateUtils.convertLocalDateToServer(copy.previsaoFormatura);
                     return angular.toJson(copy);
                 }

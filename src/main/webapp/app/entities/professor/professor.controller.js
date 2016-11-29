@@ -9,7 +9,7 @@
 
     function ProfessorController ($scope, $state, Professor) {
         var vm = this;
-        
+
         vm.professors = [];
 
         loadAll();

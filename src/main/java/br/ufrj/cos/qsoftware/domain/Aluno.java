@@ -33,8 +33,15 @@ public class Aluno implements Serializable {
     private String nome;
 
     @NotNull
+    @Column(name = "senha", nullable = false)
+    private String senha;
+
+    @NotNull
     @Column(name = "dre", nullable = false)
     private String dre;
+
+    @Column(name = "data_ingresso")
+    private LocalDate dataIngresso;
 
     @Column(name = "previsao_formatura")
     private LocalDate previsaoFormatura;
@@ -43,24 +50,15 @@ public class Aluno implements Serializable {
     @Column(name = "tipo")
     private TipoAluno tipo;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Monografia monografia;
+    @OneToMany(mappedBy = "aluno")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Documento> alunodocumentos = new HashSet<>();
 
     @OneToMany(mappedBy = "aluno")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Proposta> propostas = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "aluno_publicacao",
-               joinColumns = @JoinColumn(name="alunos_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="publicacaos_id", referencedColumnName="ID"))
-    private Set<Publicacao> publicacaos = new HashSet<>();
-
-    @ManyToOne
-    private Professor professor;
+    private Set<Convite> conviteorientardocumentos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -83,6 +81,19 @@ public class Aluno implements Serializable {
         this.nome = nome;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public Aluno senha(String senha) {
+        this.senha = senha;
+        return this;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getDre() {
         return dre;
     }
@@ -94,6 +105,19 @@ public class Aluno implements Serializable {
 
     public void setDre(String dre) {
         this.dre = dre;
+    }
+
+    public LocalDate getDataIngresso() {
+        return dataIngresso;
+    }
+
+    public Aluno dataIngresso(LocalDate dataIngresso) {
+        this.dataIngresso = dataIngresso;
+        return this;
+    }
+
+    public void setDataIngresso(LocalDate dataIngresso) {
+        this.dataIngresso = dataIngresso;
     }
 
     public LocalDate getPrevisaoFormatura() {
@@ -122,78 +146,54 @@ public class Aluno implements Serializable {
         this.tipo = tipo;
     }
 
-    public Monografia getMonografia() {
-        return monografia;
+    public Set<Documento> getAlunodocumentos() {
+        return alunodocumentos;
     }
 
-    public Aluno monografia(Monografia monografia) {
-        this.monografia = monografia;
+    public Aluno alunodocumentos(Set<Documento> documentos) {
+        this.alunodocumentos = documentos;
         return this;
     }
 
-    public void setMonografia(Monografia monografia) {
-        this.monografia = monografia;
-    }
-
-    public Set<Proposta> getPropostas() {
-        return propostas;
-    }
-
-    public Aluno propostas(Set<Proposta> propostas) {
-        this.propostas = propostas;
+    public Aluno addAlunodocumento(Documento documento) {
+        alunodocumentos.add(documento);
+        documento.setAluno(this);
         return this;
     }
 
-    public Aluno addProposta(Proposta proposta) {
-        propostas.add(proposta);
-        proposta.setAluno(this);
+    public Aluno removeAlunodocumento(Documento documento) {
+        alunodocumentos.remove(documento);
+        documento.setAluno(null);
         return this;
     }
 
-    public Aluno removeProposta(Proposta proposta) {
-        propostas.remove(proposta);
-        proposta.setAluno(null);
+    public void setAlunodocumentos(Set<Documento> documentos) {
+        this.alunodocumentos = documentos;
+    }
+
+    public Set<Convite> getConviteorientardocumentos() {
+        return conviteorientardocumentos;
+    }
+
+    public Aluno conviteorientardocumentos(Set<Convite> convites) {
+        this.conviteorientardocumentos = convites;
         return this;
     }
 
-    public void setPropostas(Set<Proposta> propostas) {
-        this.propostas = propostas;
-    }
-
-    public Set<Publicacao> getPublicacaos() {
-        return publicacaos;
-    }
-
-    public Aluno publicacaos(Set<Publicacao> publicacaos) {
-        this.publicacaos = publicacaos;
+    public Aluno addConviteorientardocumento(Convite convite) {
+        conviteorientardocumentos.add(convite);
+        convite.setAluno(this);
         return this;
     }
 
-    public Aluno addPublicacao(Publicacao publicacao) {
-        publicacaos.add(publicacao);
+    public Aluno removeConviteorientardocumento(Convite convite) {
+        conviteorientardocumentos.remove(convite);
+        convite.setAluno(null);
         return this;
     }
 
-    public Aluno removePublicacao(Publicacao publicacao) {
-        publicacaos.remove(publicacao);
-        return this;
-    }
-
-    public void setPublicacaos(Set<Publicacao> publicacaos) {
-        this.publicacaos = publicacaos;
-    }
-
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public Aluno professor(Professor professor) {
-        this.professor = professor;
-        return this;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setConviteorientardocumentos(Set<Convite> convites) {
+        this.conviteorientardocumentos = convites;
     }
 
     @Override
@@ -221,7 +221,9 @@ public class Aluno implements Serializable {
         return "Aluno{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", senha='" + senha + "'" +
             ", dre='" + dre + "'" +
+            ", dataIngresso='" + dataIngresso + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +
             ", tipo='" + tipo + "'" +
             '}';

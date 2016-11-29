@@ -32,7 +32,7 @@ public class Departamento implements Serializable {
     @OneToMany(mappedBy = "departamento")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Professor> professors = new HashSet<>();
+    private Set<Professor> departamentoprofessors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -55,29 +55,29 @@ public class Departamento implements Serializable {
         this.nome = nome;
     }
 
-    public Set<Professor> getProfessors() {
-        return professors;
+    public Set<Professor> getDepartamentoprofessors() {
+        return departamentoprofessors;
     }
 
-    public Departamento professors(Set<Professor> professors) {
-        this.professors = professors;
+    public Departamento departamentoprofessors(Set<Professor> professors) {
+        this.departamentoprofessors = professors;
         return this;
     }
 
-    public Departamento addProfessor(Professor professor) {
-        professors.add(professor);
+    public Departamento addDepartamentoprofessor(Professor professor) {
+        departamentoprofessors.add(professor);
         professor.setDepartamento(this);
         return this;
     }
 
-    public Departamento removeProfessor(Professor professor) {
-        professors.remove(professor);
+    public Departamento removeDepartamentoprofessor(Professor professor) {
+        departamentoprofessors.remove(professor);
         professor.setDepartamento(null);
         return this;
     }
 
-    public void setProfessors(Set<Professor> professors) {
-        this.professors = professors;
+    public void setDepartamentoprofessors(Set<Professor> professors) {
+        this.departamentoprofessors = professors;
     }
 
     @Override

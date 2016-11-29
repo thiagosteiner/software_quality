@@ -17,8 +17,9 @@ public class ProfessorDTO implements Serializable {
     @NotNull
     private String nome;
 
+    @NotNull
+    private String senha;
 
-    private Set<PublicacaoDTO> orientadorpublicacaos = new HashSet<>();
 
     private Long departamentoId;
     
@@ -36,13 +37,12 @@ public class ProfessorDTO implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public Set<PublicacaoDTO> getOrientadorpublicacaos() {
-        return orientadorpublicacaos;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setOrientadorpublicacaos(Set<PublicacaoDTO> publicacaos) {
-        this.orientadorpublicacaos = publicacaos;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public Long getDepartamentoId() {
@@ -79,6 +79,7 @@ public class ProfessorDTO implements Serializable {
         return "ProfessorDTO{" +
             "id=" + id +
             ", nome='" + nome + "'" +
+            ", senha='" + senha + "'" +
             '}';
     }
 }

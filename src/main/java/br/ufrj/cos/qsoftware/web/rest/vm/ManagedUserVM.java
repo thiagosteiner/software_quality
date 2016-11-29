@@ -6,7 +6,6 @@ import java.util.Set;
 
 import br.ufrj.cos.qsoftware.domain.User;
 import br.ufrj.cos.qsoftware.service.dto.UserDTO;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**

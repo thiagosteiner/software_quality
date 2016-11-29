@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ComiteRepository extends JpaRepository<Comite,Long> {
 
-    @Query("select distinct comite from Comite comite left join fetch comite.professors")
+    @Query("select distinct comite from Comite comite left join fetch comite.comiteprofessors")
     List<Comite> findAllWithEagerRelationships();
 
-    @Query("select comite from Comite comite left join fetch comite.professors where comite.id =:id")
+    @Query("select comite from Comite comite left join fetch comite.comiteprofessors where comite.id =:id")
     Comite findOneWithEagerRelationships(@Param("id") Long id);
 
 }

@@ -1,0 +1,62 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "aluno",
+            "otherEntityName": "aluno",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "professor",
+            "otherEntityName": "professor",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "conviteprofessor",
+            "otherEntityName": "professor",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "convite"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "conviteComite",
+            "otherEntityName": "comite",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "convite"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "conviteDocumento",
+            "otherEntityName": "documento",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "convite"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "SituacaoConvite",
+            "fieldValues": "ACEITO,REJEITADO"
+        },
+        {
+            "fieldName": "dataCriacao",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "tipoConvite",
+            "fieldType": "TipoConvite",
+            "fieldValues": "ORIENTADOR,COMITE"
+        }
+    ],
+    "changelogDate": "20161128043132",
+    "entityTableName": "convite",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

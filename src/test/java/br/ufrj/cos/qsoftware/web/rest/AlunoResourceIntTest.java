@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -44,11 +43,17 @@ import br.ufrj.cos.qsoftware.domain.enumeration.TipoAluno;
 @SpringBootTest(classes = QsoftwareApp.class)
 public class AlunoResourceIntTest {
 
-    private static final String DEFAULT_NOME = "AAAAA";
-    private static final String UPDATED_NOME = "BBBBB";
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DRE = "AAAAA";
-    private static final String UPDATED_DRE = "BBBBB";
+    private static final String DEFAULT_SENHA = "AAAAAAAAAA";
+    private static final String UPDATED_SENHA = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DRE = "AAAAAAAAAA";
+    private static final String UPDATED_DRE = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_DATA_INGRESSO = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATA_INGRESSO = LocalDate.now(ZoneId.systemDefault());
 
     private static final LocalDate DEFAULT_PREVISAO_FORMATURA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PREVISAO_FORMATURA = LocalDate.now(ZoneId.systemDefault());
@@ -78,7 +83,7 @@ public class AlunoResourceIntTest {
 
     private Aluno aluno;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         AlunoResource alunoResource = new AlunoResource();
@@ -97,7 +102,9 @@ public class AlunoResourceIntTest {
     public static Aluno createEntity(EntityManager em) {
         Aluno aluno = new Aluno()
                 .nome(DEFAULT_NOME)
+                .senha(DEFAULT_SENHA)
                 .dre(DEFAULT_DRE)
+                .dataIngresso(DEFAULT_DATA_INGRESSO)
                 .previsaoFormatura(DEFAULT_PREVISAO_FORMATURA)
                 .tipo(DEFAULT_TIPO);
         return aluno;
@@ -126,7 +133,9 @@ public class AlunoResourceIntTest {
         assertThat(alunos).hasSize(databaseSizeBeforeCreate + 1);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(DEFAULT_NOME);
+        assertThat(testAluno.getSenha()).isEqualTo(DEFAULT_SENHA);
         assertThat(testAluno.getDre()).isEqualTo(DEFAULT_DRE);
+        assertThat(testAluno.getDataIngresso()).isEqualTo(DEFAULT_DATA_INGRESSO);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(DEFAULT_PREVISAO_FORMATURA);
         assertThat(testAluno.getTipo()).isEqualTo(DEFAULT_TIPO);
     }
@@ -137,6 +146,25 @@ public class AlunoResourceIntTest {
         int databaseSizeBeforeTest = alunoRepository.findAll().size();
         // set the field null
         aluno.setNome(null);
+
+        // Create the Aluno, which fails.
+        AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
+
+        restAlunoMockMvc.perform(post("/api/alunos")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+                .andExpect(status().isBadRequest());
+
+        List<Aluno> alunos = alunoRepository.findAll();
+        assertThat(alunos).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSenhaIsRequired() throws Exception {
+        int databaseSizeBeforeTest = alunoRepository.findAll().size();
+        // set the field null
+        aluno.setSenha(null);
 
         // Create the Aluno, which fails.
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
@@ -181,7 +209,9 @@ public class AlunoResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(aluno.getId().intValue())))
                 .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+                .andExpect(jsonPath("$.[*].senha").value(hasItem(DEFAULT_SENHA.toString())))
                 .andExpect(jsonPath("$.[*].dre").value(hasItem(DEFAULT_DRE.toString())))
+                .andExpect(jsonPath("$.[*].dataIngresso").value(hasItem(DEFAULT_DATA_INGRESSO.toString())))
                 .andExpect(jsonPath("$.[*].previsaoFormatura").value(hasItem(DEFAULT_PREVISAO_FORMATURA.toString())))
                 .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
     }
@@ -198,7 +228,9 @@ public class AlunoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(aluno.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
+            .andExpect(jsonPath("$.senha").value(DEFAULT_SENHA.toString()))
             .andExpect(jsonPath("$.dre").value(DEFAULT_DRE.toString()))
+            .andExpect(jsonPath("$.dataIngresso").value(DEFAULT_DATA_INGRESSO.toString()))
             .andExpect(jsonPath("$.previsaoFormatura").value(DEFAULT_PREVISAO_FORMATURA.toString()))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()));
     }
@@ -222,7 +254,9 @@ public class AlunoResourceIntTest {
         Aluno updatedAluno = alunoRepository.findOne(aluno.getId());
         updatedAluno
                 .nome(UPDATED_NOME)
+                .senha(UPDATED_SENHA)
                 .dre(UPDATED_DRE)
+                .dataIngresso(UPDATED_DATA_INGRESSO)
                 .previsaoFormatura(UPDATED_PREVISAO_FORMATURA)
                 .tipo(UPDATED_TIPO);
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(updatedAluno);
@@ -237,7 +271,9 @@ public class AlunoResourceIntTest {
         assertThat(alunos).hasSize(databaseSizeBeforeUpdate);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testAluno.getSenha()).isEqualTo(UPDATED_SENHA);
         assertThat(testAluno.getDre()).isEqualTo(UPDATED_DRE);
+        assertThat(testAluno.getDataIngresso()).isEqualTo(UPDATED_DATA_INGRESSO);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(UPDATED_PREVISAO_FORMATURA);
         assertThat(testAluno.getTipo()).isEqualTo(UPDATED_TIPO);
     }

@@ -1,0 +1,66 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "aluno",
+            "otherEntityName": "aluno",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "documentocomite",
+            "otherEntityName": "comite",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "documento"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "documentoorientador",
+            "otherEntityName": "professor",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "documento"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "titulo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "resumo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataCriacao",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "SituacaoPublicacao",
+            "fieldValues": "NULL,REJEITADA,APROVADA"
+        },
+        {
+            "fieldName": "tipoDocumento",
+            "fieldType": "TipoDocumento",
+            "fieldValues": "MONOGRAFIA,PROPOSTAMONOGRAFIA,ARTIGO"
+        },
+        {
+            "fieldName": "tipoMonografia",
+            "fieldType": "TipoMonografia",
+            "fieldValues": "NULL,DISSERTACAO,TESE"
+        },
+        {
+            "fieldName": "arquivo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "changelogDate": "20161128043131",
+    "entityTableName": "documento",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

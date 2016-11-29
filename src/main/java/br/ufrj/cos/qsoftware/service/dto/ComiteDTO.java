@@ -15,12 +15,16 @@ public class ComiteDTO implements Serializable {
 
     private Long id;
 
+    private String local;
+
     private TipoComite tipo;
 
     private LocalDate dataOcorrencia;
 
+    private String ataComite;
 
-    private Set<ProfessorDTO> professors = new HashSet<>();
+
+    private Set<ProfessorDTO> comiteprofessors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -28,6 +32,13 @@ public class ComiteDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
     }
     public TipoComite getTipo() {
         return tipo;
@@ -43,13 +54,20 @@ public class ComiteDTO implements Serializable {
     public void setDataOcorrencia(LocalDate dataOcorrencia) {
         this.dataOcorrencia = dataOcorrencia;
     }
-
-    public Set<ProfessorDTO> getProfessors() {
-        return professors;
+    public String getAtaComite() {
+        return ataComite;
     }
 
-    public void setProfessors(Set<ProfessorDTO> professors) {
-        this.professors = professors;
+    public void setAtaComite(String ataComite) {
+        this.ataComite = ataComite;
+    }
+
+    public Set<ProfessorDTO> getComiteprofessors() {
+        return comiteprofessors;
+    }
+
+    public void setComiteprofessors(Set<ProfessorDTO> professors) {
+        this.comiteprofessors = professors;
     }
 
     @Override
@@ -77,8 +95,10 @@ public class ComiteDTO implements Serializable {
     public String toString() {
         return "ComiteDTO{" +
             "id=" + id +
+            ", local='" + local + "'" +
             ", tipo='" + tipo + "'" +
             ", dataOcorrencia='" + dataOcorrencia + "'" +
+            ", ataComite='" + ataComite + "'" +
             '}';
     }
 }

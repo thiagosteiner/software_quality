@@ -2,37 +2,28 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "monografia",
-            "otherEntityName": "monografia",
-            "otherEntityField": "id",
-            "ownerSide": true,
+            "relationshipType": "one-to-many",
+            "relationshipName": "alunodocumento",
+            "otherEntityName": "documento",
             "otherEntityRelationshipName": "aluno"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "proposta",
-            "otherEntityName": "proposta",
+            "relationshipName": "conviteorientardocumento",
+            "otherEntityName": "convite",
             "otherEntityRelationshipName": "aluno"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "publicacao",
-            "otherEntityName": "publicacao",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipName": "professor",
-            "otherEntityName": "professor",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
         }
     ],
     "fields": [
         {
             "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "senha",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -46,6 +37,10 @@
             ]
         },
         {
+            "fieldName": "dataIngresso",
+            "fieldType": "LocalDate"
+        },
+        {
             "fieldName": "previsaoFormatura",
             "fieldType": "LocalDate"
         },
@@ -55,7 +50,7 @@
             "fieldValues": "MESTRADO,DOUTORADO"
         }
     ],
-    "changelogDate": "20161031172227",
+    "changelogDate": "20161128043128",
     "entityTableName": "aluno",
     "dto": "mapstruct",
     "pagination": "no",

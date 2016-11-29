@@ -3,17 +3,9 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "aluno",
-            "otherEntityName": "aluno",
+            "relationshipName": "orientadorconviteprofessorcomite",
+            "otherEntityName": "convite",
             "otherEntityRelationshipName": "professor"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "orientadorpublicacao",
-            "otherEntityName": "publicacao",
-            "otherEntityField": "id",
-            "ownerSide": true
         },
         {
             "relationshipName": "departamento",
@@ -29,9 +21,16 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "senha",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
-    "changelogDate": "20161031172228",
+    "changelogDate": "20161128043129",
     "entityTableName": "professor",
     "dto": "mapstruct",
     "pagination": "no",

@@ -26,6 +26,9 @@ public class Comite implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "local")
+    private String local;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoComite tipo;
@@ -33,12 +36,15 @@ public class Comite implements Serializable {
     @Column(name = "data_ocorrencia")
     private LocalDate dataOcorrencia;
 
+    @Column(name = "ata_comite")
+    private String ataComite;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "comite_professor",
+    @JoinTable(name = "comite_comiteprofessor",
                joinColumns = @JoinColumn(name="comites_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="professors_id", referencedColumnName="ID"))
-    private Set<Professor> professors = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="comiteprofessors_id", referencedColumnName="ID"))
+    private Set<Professor> comiteprofessors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -46,6 +52,19 @@ public class Comite implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public Comite local(String local) {
+        this.local = local;
+        return this;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public TipoComite getTipo() {
@@ -74,27 +93,40 @@ public class Comite implements Serializable {
         this.dataOcorrencia = dataOcorrencia;
     }
 
-    public Set<Professor> getProfessors() {
-        return professors;
+    public String getAtaComite() {
+        return ataComite;
     }
 
-    public Comite professors(Set<Professor> professors) {
-        this.professors = professors;
+    public Comite ataComite(String ataComite) {
+        this.ataComite = ataComite;
         return this;
     }
 
-    public Comite addProfessor(Professor professor) {
-        professors.add(professor);
+    public void setAtaComite(String ataComite) {
+        this.ataComite = ataComite;
+    }
+
+    public Set<Professor> getComiteprofessors() {
+        return comiteprofessors;
+    }
+
+    public Comite comiteprofessors(Set<Professor> professors) {
+        this.comiteprofessors = professors;
         return this;
     }
 
-    public Comite removeProfessor(Professor professor) {
-        professors.remove(professor);
+    public Comite addComiteprofessor(Professor professor) {
+        comiteprofessors.add(professor);
         return this;
     }
 
-    public void setProfessors(Set<Professor> professors) {
-        this.professors = professors;
+    public Comite removeComiteprofessor(Professor professor) {
+        comiteprofessors.remove(professor);
+        return this;
+    }
+
+    public void setComiteprofessors(Set<Professor> professors) {
+        this.comiteprofessors = professors;
     }
 
     @Override
@@ -121,8 +153,10 @@ public class Comite implements Serializable {
     public String toString() {
         return "Comite{" +
             "id=" + id +
+            ", local='" + local + "'" +
             ", tipo='" + tipo + "'" +
             ", dataOcorrencia='" + dataOcorrencia + "'" +
+            ", ataComite='" + ataComite + "'" +
             '}';
     }
 }

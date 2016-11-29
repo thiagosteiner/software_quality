@@ -9,7 +9,7 @@
 
     function AlunoController ($scope, $state, Aluno) {
         var vm = this;
-        
+
         vm.alunos = [];
 
         loadAll();

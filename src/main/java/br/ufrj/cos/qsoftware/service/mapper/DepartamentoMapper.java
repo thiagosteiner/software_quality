@@ -16,7 +16,7 @@ public interface DepartamentoMapper {
 
     List<DepartamentoDTO> departamentosToDepartamentoDTOs(List<Departamento> departamentos);
 
-    @Mapping(target = "professors", ignore = true)
+    @Mapping(target = "departamentoprofessors", ignore = true)
     Departamento departamentoDTOToDepartamento(DepartamentoDTO departamentoDTO);
 
     List<Departamento> departamentoDTOsToDepartamentos(List<DepartamentoDTO> departamentoDTOs);

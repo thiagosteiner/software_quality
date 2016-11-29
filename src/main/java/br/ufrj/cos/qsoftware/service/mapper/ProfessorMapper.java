@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Mapper for the entity Professor and its DTO ProfessorDTO.
  */
-@Mapper(componentModel = "spring", uses = {PublicacaoMapper.class, })
+@Mapper(componentModel = "spring", uses = {})
 public interface ProfessorMapper {
 
     @Mapping(source = "departamento.id", target = "departamentoId")
@@ -17,20 +17,11 @@ public interface ProfessorMapper {
 
     List<ProfessorDTO> professorsToProfessorDTOs(List<Professor> professors);
 
-    @Mapping(target = "alunos", ignore = true)
+    @Mapping(target = "orientadorconviteprofessorcomites", ignore = true)
     @Mapping(source = "departamentoId", target = "departamento")
     Professor professorDTOToProfessor(ProfessorDTO professorDTO);
 
     List<Professor> professorDTOsToProfessors(List<ProfessorDTO> professorDTOs);
-
-    default Publicacao publicacaoFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Publicacao publicacao = new Publicacao();
-        publicacao.setId(id);
-        return publicacao;
-    }
 
     default Departamento departamentoFromId(Long id) {
         if (id == null) {

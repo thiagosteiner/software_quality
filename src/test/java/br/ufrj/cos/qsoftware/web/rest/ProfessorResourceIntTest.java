@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -41,8 +40,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = QsoftwareApp.class)
 public class ProfessorResourceIntTest {
 
-    private static final String DEFAULT_NOME = "AAAAA";
-    private static final String UPDATED_NOME = "BBBBB";
+    private static final String DEFAULT_NOME = "AAAAAAAAAA";
+    private static final String UPDATED_NOME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SENHA = "AAAAAAAAAA";
+    private static final String UPDATED_SENHA = "BBBBBBBBBB";
 
     @Inject
     private ProfessorRepository professorRepository;
@@ -66,7 +68,7 @@ public class ProfessorResourceIntTest {
 
     private Professor professor;
 
-    @PostConstruct
+    @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         ProfessorResource professorResource = new ProfessorResource();
@@ -84,7 +86,8 @@ public class ProfessorResourceIntTest {
      */
     public static Professor createEntity(EntityManager em) {
         Professor professor = new Professor()
-                .nome(DEFAULT_NOME);
+                .nome(DEFAULT_NOME)
+                .senha(DEFAULT_SENHA);
         return professor;
     }
 
@@ -111,6 +114,7 @@ public class ProfessorResourceIntTest {
         assertThat(professors).hasSize(databaseSizeBeforeCreate + 1);
         Professor testProfessor = professors.get(professors.size() - 1);
         assertThat(testProfessor.getNome()).isEqualTo(DEFAULT_NOME);
+        assertThat(testProfessor.getSenha()).isEqualTo(DEFAULT_SENHA);
     }
 
     @Test
@@ -119,6 +123,25 @@ public class ProfessorResourceIntTest {
         int databaseSizeBeforeTest = professorRepository.findAll().size();
         // set the field null
         professor.setNome(null);
+
+        // Create the Professor, which fails.
+        ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
+
+        restProfessorMockMvc.perform(post("/api/professors")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+                .andExpect(status().isBadRequest());
+
+        List<Professor> professors = professorRepository.findAll();
+        assertThat(professors).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSenhaIsRequired() throws Exception {
+        int databaseSizeBeforeTest = professorRepository.findAll().size();
+        // set the field null
+        professor.setSenha(null);
 
         // Create the Professor, which fails.
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
@@ -143,7 +166,8 @@ public class ProfessorResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(professor.getId().intValue())))
-                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())));
+                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+                .andExpect(jsonPath("$.[*].senha").value(hasItem(DEFAULT_SENHA.toString())));
     }
 
     @Test
@@ -157,7 +181,8 @@ public class ProfessorResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(professor.getId().intValue()))
-            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()));
+            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
+            .andExpect(jsonPath("$.senha").value(DEFAULT_SENHA.toString()));
     }
 
     @Test
@@ -178,7 +203,8 @@ public class ProfessorResourceIntTest {
         // Update the professor
         Professor updatedProfessor = professorRepository.findOne(professor.getId());
         updatedProfessor
-                .nome(UPDATED_NOME);
+                .nome(UPDATED_NOME)
+                .senha(UPDATED_SENHA);
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(updatedProfessor);
 
         restProfessorMockMvc.perform(put("/api/professors")
@@ -191,6 +217,7 @@ public class ProfessorResourceIntTest {
         assertThat(professors).hasSize(databaseSizeBeforeUpdate);
         Professor testProfessor = professors.get(professors.size() - 1);
         assertThat(testProfessor.getNome()).isEqualTo(UPDATED_NOME);
+        assertThat(testProfessor.getSenha()).isEqualTo(UPDATED_SENHA);
     }
 
     @Test

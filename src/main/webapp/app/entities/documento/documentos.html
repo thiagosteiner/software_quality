@@ -1,0 +1,83 @@
+<div>
+    <h2>Documentos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="documento.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Documento
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Titulo</span></th>
+                    <th><span>Resumo</span></th>
+                    <th><span>Data Criacao</span></th>
+                    <th><span>Status</span></th>
+                    <th><span>Tipo Documento</span></th>
+                    <th><span>Tipo Monografia</span></th>
+                    <th><span>Arquivo</span></th>
+                    <th><span>Aluno</span></th>
+                    <th><span>Documentocomite</span></th>
+                    <th><span>Documentoorientador</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="documento in vm.documentos track by documento.id">
+                    <td><a ui-sref="documento-detail({id:documento.id})">{{documento.id}}</a></td>
+                    <td>{{documento.titulo}}</td>
+                    <td>{{documento.resumo}}</td>
+                        <td>{{documento.dataCriacao | date:'mediumDate'}}</td>
+                    <td>{{documento.status}}</td>
+                    <td>{{documento.tipoDocumento}}</td>
+                    <td>{{documento.tipoMonografia}}</td>
+                    <td>
+                        <a ng-if="documento.arquivo" ng-click="vm.openFile(documento.arquivoContentType, documento.arquivo)">open</a>
+                        <span ng-if="documento.arquivo">{{documento.arquivoContentType}}, {{vm.byteSize(documento.arquivo)}}</span>
+                    </td>
+                    <td>
+                        <a ui-sref="aluno-detail({id:documento.alunoId})">{{documento.alunoId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="comite-detail({id:documento.documentocomiteId})">{{documento.documentocomiteId}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="professor-detail({id:documento.documentoorientadorId})">{{documento.documentoorientadorId}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="documento-detail({id:documento.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="documento.edit({id:documento.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="documento.delete({id:documento.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

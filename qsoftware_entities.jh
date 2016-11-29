@@ -1,71 +1,104 @@
-#title: qsoftware_entities
+
+#title: entity_diagram
 
 entity Aluno{
 	nome String required,
+    senha String required,
     dre String required,
+    dataIngresso LocalDate
     previsaoFormatura LocalDate,
     tipo TipoAluno
 }
 
 entity Professor{
-	nome String required
+	nome String required,
+    senha String required
 }
 
 entity Departamento{
 	nome String required
 }
 
-entity Monografia{
-	status Situacao,
-    tipo TipoMonografia
-    tema String
+entity Documento{
+    titulo String,
+    resumo String,
+    dataCriacao LocalDate,
+	status SituacaoAprovacao,
+    status SituacaoPublicacao,
+    tipoDocumento TipoDocumento,
+    tipoMonografia TipoMonografia,
+    arquivo Blob
 }
 
-entity Proposta{
-	status Situacao
-    dataApresentacao LocalDate
+entity Convite{
+	status SituacaoConvite,
+    dataCriacao LocalDate,
+    tipoConvite TipoConvite
 }
+
 entity Comite{
+    local String,
 	tipo TipoComite,
-    dataOcorrencia LocalDate
+    dataOcorrencia LocalDate,
+    ataComite String
 }
 
-entity Publicacao{
-	dataPublicacao LocalDate,
-    dataApresentacao LocalDate
+// Enums
+enum SituacaoAprovacao{
+	REJEITADO, APROVADO, EM_ANDAMENTO
 }
 
-//
-enum Situacao{
-	REJEITADA, APROVADA, EM_ANDAMENTO
+enum SituacaoPublicacao{
+	NULL, REJEITADA, APROVADA
 }
+
 enum TipoComite{
 	PROPOSTA,
     MONOGRAFIA
 }
+
+enum TipoDocumento{
+	MONOGRAFIA,
+    PROPOSTAMONOGRAFIA,
+    ARTIGO
+}
+
 enum TipoMonografia{
+	NULL,
 	DISSERTACAO,
     TESE
 }
+
 enum TipoAluno{
 	MESTRADO,
     DOUTORADO
 }
+
+enum SituacaoConvite{
+	ACEITO, REJEITADO
+}
+
+enum TipoConvite{
+	ORIENTADOR,
+    COMITE
+}
+
 // Relacionamentos
 relationship OneToMany{
-	Professor{aluno} to Aluno,
-    Departamento{professor} to Professor,
-    Aluno{proposta} to Proposta
+	Departamento{departamentoprofessor} to Professor,
+    Aluno{alunodocumento} to Documento,
+    Professor{orientadorconviteprofessorcomite} to Convite,
+    Aluno{conviteorientardocumento} to Convite
 }
 relationship ManyToMany{
-	Aluno{publicacao} to Publicacao,
-    Comite{professor} to Professor,
-    Professor{orientadorpublicacao} to Publicacao
+	Comite{comiteprofessor} to Professor
 }
 relationship OneToOne{
-	Aluno{monografia} to Monografia,
-    Monografia{comite} to Comite,
-    Proposta{comite} to Comite
+	Convite{conviteprofessor} to Professor,
+    Documento{documentocomite} to Comite,
+    Documento{documentoorientador} to Professor,
+    Convite{conviteComite} to Comite,
+    Convite{conviteDocumento} to Documento
 }
 
 dto * with mapstruct

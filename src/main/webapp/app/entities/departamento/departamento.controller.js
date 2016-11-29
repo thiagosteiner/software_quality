@@ -9,7 +9,7 @@
 
     function DepartamentoController ($scope, $state, Departamento) {
         var vm = this;
-        
+
         vm.departamentos = [];
 
         loadAll();
