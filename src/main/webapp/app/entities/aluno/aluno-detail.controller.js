@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('AlunoDetailController', AlunoDetailController);
 
-    AlunoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Aluno', 'Documento', 'Convite'];
+    AlunoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Aluno', 'User', 'Documento'];
 
-    function AlunoDetailController($scope, $rootScope, $stateParams, previousState, entity, Aluno, Documento, Convite) {
+    function AlunoDetailController($scope, $rootScope, $stateParams, previousState, entity, Aluno, User, Documento) {
         var vm = this;
 
         vm.aluno = entity;

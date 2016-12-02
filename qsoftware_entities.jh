@@ -3,16 +3,15 @@
 
 entity Aluno{
 	nome String required,
-    senha String required,
-    dre String required,
-    dataIngresso LocalDate
-    previsaoFormatura LocalDate,
-    tipo TipoAluno
+	dre String required,
+	dataIngresso LocalDate
+	previsaoFormatura LocalDate,
+	tipo TipoAluno
 }
 
 entity Professor{
 	nome String required,
-    senha String required
+	codigo String required
 }
 
 entity Departamento{
@@ -30,11 +29,16 @@ entity Documento{
     arquivo Blob
 }
 
-entity Convite{
+entity ConviteComite{
 	status SituacaoConvite,
-    dataCriacao LocalDate,
-    tipoConvite TipoConvite
+    dataCriacao LocalDate
 }
+
+entity ConviteOrientador{
+	status SituacaoConvite,
+    dataCriacao LocalDate
+}
+
 
 entity Comite{
     local String,
@@ -78,29 +82,29 @@ enum SituacaoConvite{
 	ACEITO, REJEITADO
 }
 
-enum TipoConvite{
-	ORIENTADOR,
-    COMITE
-}
+
 
 // Relacionamentos
-relationship OneToMany{
-		Departamento{departamentoprofessor} to Professor {professordepartamento},
-    Professor{orientadorconviteprofessorcomite} to Convite{coviteorientadorcomite},
-    Aluno{alunoconviteorientardocumento} to Convite{convitealunoorientardocumento}
-}
 relationship ManyToMany{
-		Comite{comiteprofessor} to Professor,
-		Aluno{alunodocumento} to Documento
+		Comite{professor(codigo)} to Professor{comite},
+        Documento{orientador(codigo)} to Professor{documentosorientados(titulo)},
+		Aluno{documento} to Documento{aluno(dre)}
 }
 relationship OneToOne{
-		Professor{professoruser} to User,
-		Aluno{alunouser} to User,
-		Convite{conviteprofessor} to Professor,
-    Documento{documentocomite} to Comite,
-    Documento{documentoorientador} to Professor,
-    Convite{conviteComite} to Comite,
-    Convite{conviteDocumento} to Documento
+	Professor{user(email)} to User,
+	Aluno{user(email)} to User,
+	ConviteOrientador{orientadorconvidado(codigo)} to Professor,
+	ConviteComite{professorconvidadocomite(codigo)} to Professor,
+    Documento{comite} to Comite{documento(titulo)},
+    ConviteComite{comite} to Comite,
+    ConviteOrientador{documento(titulo)} to Documento,
+	ConviteComite{documento(titulo)} to Documento
+    }
+
+relationship ManyToOne{
+	ConviteComite{orientadorqueconvidou(codigo)} to Professor ,
+	ConviteOrientador{alunoqueconvidou(dre)} to Aluno,
+	Professor{departamento(nome)} to Departamento
 }
 
 dto * with mapstruct

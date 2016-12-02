@@ -18,11 +18,19 @@ public class ProfessorDTO implements Serializable {
     private String nome;
 
     @NotNull
-    private String senha;
+    private String codigo;
 
+
+    private Long userId;
+    
+
+    private String userEmail;
 
     private Long departamentoId;
     
+
+    private String departamentoNome;
+
     public Long getId() {
         return id;
     }
@@ -37,12 +45,29 @@ public class ProfessorDTO implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public String getSenha() {
-        return senha;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public Long getDepartamentoId() {
@@ -51,6 +76,15 @@ public class ProfessorDTO implements Serializable {
 
     public void setDepartamentoId(Long departamentoId) {
         this.departamentoId = departamentoId;
+    }
+
+
+    public String getDepartamentoNome() {
+        return departamentoNome;
+    }
+
+    public void setDepartamentoNome(String departamentoNome) {
+        this.departamentoNome = departamentoNome;
     }
 
     @Override
@@ -79,7 +113,7 @@ public class ProfessorDTO implements Serializable {
         return "ProfessorDTO{" +
             "id=" + id +
             ", nome='" + nome + "'" +
-            ", senha='" + senha + "'" +
+            ", codigo='" + codigo + "'" +
             '}';
     }
 }

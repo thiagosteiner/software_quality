@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('ComiteDialogController', ComiteDialogController);
 
-    ComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Comite', 'Professor'];
+    ComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Comite', 'Professor', 'Documento'];
 
-    function ComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Comite, Professor) {
+    function ComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Comite, Professor, Documento) {
         var vm = this;
 
         vm.comite = entity;
@@ -16,6 +16,7 @@
         vm.openCalendar = openCalendar;
         vm.save = save;
         vm.professors = Professor.query();
+        vm.documentos = Documento.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

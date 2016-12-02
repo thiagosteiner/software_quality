@@ -17,6 +17,7 @@
         function loadAll() {
             Aluno.query(function(result) {
                 vm.alunos = result;
+                vm.searchQuery = null;
             });
         }
     }

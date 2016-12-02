@@ -1,0 +1,70 @@
+<div>
+    <h2>Convite Orientadors</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="convite-orientador.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Create new Convite Orientador
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>ID</span></th>
+                    <th><span>Status</span></th>
+                    <th><span>Data Criacao</span></th>
+                    <th><span>Orientadorconvidado</span></th>
+                    <th><span>Documento</span></th>
+                    <th><span>Alunoqueconvidou</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="conviteOrientador in vm.conviteOrientadors track by conviteOrientador.id">
+                    <td><a ui-sref="convite-orientador-detail({id:conviteOrientador.id})">{{conviteOrientador.id}}</a></td>
+                    <td>{{conviteOrientador.status}}</td>
+                        <td>{{conviteOrientador.dataCriacao | date:'mediumDate'}}</td>
+                    <td>
+                        <a ui-sref="professor-detail({id:conviteOrientador.orientadorconvidadoId})">{{conviteOrientador.orientadorconvidadoCodigo}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="documento-detail({id:conviteOrientador.documentoId})">{{conviteOrientador.documentoTitulo}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="aluno-detail({id:conviteOrientador.alunoqueconvidouId})">{{conviteOrientador.alunoqueconvidouDre}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="convite-orientador-detail({id:conviteOrientador.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="convite-orientador.edit({id:conviteOrientador.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="convite-orientador.delete({id:conviteOrientador.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

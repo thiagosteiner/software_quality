@@ -24,7 +24,7 @@ public class ComiteDTO implements Serializable {
     private String ataComite;
 
 
-    private Set<ProfessorDTO> comiteprofessors = new HashSet<>();
+    private Set<ProfessorDTO> professors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,12 +62,12 @@ public class ComiteDTO implements Serializable {
         this.ataComite = ataComite;
     }
 
-    public Set<ProfessorDTO> getComiteprofessors() {
-        return comiteprofessors;
+    public Set<ProfessorDTO> getProfessors() {
+        return professors;
     }
 
-    public void setComiteprofessors(Set<ProfessorDTO> professors) {
-        this.comiteprofessors = professors;
+    public void setProfessors(Set<ProfessorDTO> professors) {
+        this.professors = professors;
     }
 
     @Override

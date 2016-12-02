@@ -9,31 +9,19 @@ import java.util.List;
 /**
  * Mapper for the entity Documento and its DTO DocumentoDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {ProfessorMapper.class, })
 public interface DocumentoMapper {
 
-    @Mapping(source = "aluno.id", target = "alunoId")
-    @Mapping(source = "documentocomite.id", target = "documentocomiteId")
-    @Mapping(source = "documentoorientador.id", target = "documentoorientadorId")
+    @Mapping(source = "comite.id", target = "comiteId")
     DocumentoDTO documentoToDocumentoDTO(Documento documento);
 
     List<DocumentoDTO> documentosToDocumentoDTOs(List<Documento> documentos);
 
-    @Mapping(source = "alunoId", target = "aluno")
-    @Mapping(source = "documentocomiteId", target = "documentocomite")
-    @Mapping(source = "documentoorientadorId", target = "documentoorientador")
+    @Mapping(source = "comiteId", target = "comite")
+    @Mapping(target = "alunos", ignore = true)
     Documento documentoDTOToDocumento(DocumentoDTO documentoDTO);
 
     List<Documento> documentoDTOsToDocumentos(List<DocumentoDTO> documentoDTOs);
-
-    default Aluno alunoFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Aluno aluno = new Aluno();
-        aluno.setId(id);
-        return aluno;
-    }
 
     default Comite comiteFromId(Long id) {
         if (id == null) {

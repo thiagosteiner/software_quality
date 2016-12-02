@@ -1,5 +1,6 @@
 package br.ufrj.cos.qsoftware.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -41,10 +42,14 @@ public class Comite implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "comite_comiteprofessor",
+    @JoinTable(name = "comite_professor",
                joinColumns = @JoinColumn(name="comites_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="comiteprofessors_id", referencedColumnName="ID"))
-    private Set<Professor> comiteprofessors = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="professors_id", referencedColumnName="ID"))
+    private Set<Professor> professors = new HashSet<>();
+
+    @OneToOne(mappedBy = "comite")
+    @JsonIgnore
+    private Documento documento;
 
     public Long getId() {
         return id;
@@ -106,27 +111,42 @@ public class Comite implements Serializable {
         this.ataComite = ataComite;
     }
 
-    public Set<Professor> getComiteprofessors() {
-        return comiteprofessors;
+    public Set<Professor> getProfessors() {
+        return professors;
     }
 
-    public Comite comiteprofessors(Set<Professor> professors) {
-        this.comiteprofessors = professors;
+    public Comite professors(Set<Professor> professors) {
+        this.professors = professors;
         return this;
     }
 
-    public Comite addComiteprofessor(Professor professor) {
-        comiteprofessors.add(professor);
+    public Comite addProfessor(Professor professor) {
+        professors.add(professor);
+        professor.getComites().add(this);
         return this;
     }
 
-    public Comite removeComiteprofessor(Professor professor) {
-        comiteprofessors.remove(professor);
+    public Comite removeProfessor(Professor professor) {
+        professors.remove(professor);
+        professor.getComites().remove(this);
         return this;
     }
 
-    public void setComiteprofessors(Set<Professor> professors) {
-        this.comiteprofessors = professors;
+    public void setProfessors(Set<Professor> professors) {
+        this.professors = professors;
+    }
+
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public Comite documento(Documento documento) {
+        this.documento = documento;
+        return this;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
     }
 
     @Override
@@ -138,7 +158,7 @@ public class Comite implements Serializable {
             return false;
         }
         Comite comite = (Comite) o;
-        if(comite.id == null || id == null) {
+        if (comite.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, comite.id);

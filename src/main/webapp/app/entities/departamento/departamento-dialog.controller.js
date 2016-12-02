@@ -5,15 +5,14 @@
         .module('qsoftwareApp')
         .controller('DepartamentoDialogController', DepartamentoDialogController);
 
-    DepartamentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Departamento', 'Professor'];
+    DepartamentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Departamento'];
 
-    function DepartamentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Departamento, Professor) {
+    function DepartamentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Departamento) {
         var vm = this;
 
         vm.departamento = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.professors = Professor.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

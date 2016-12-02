@@ -5,16 +5,18 @@
         .module('qsoftwareApp')
         .controller('ProfessorDialogController', ProfessorDialogController);
 
-    ProfessorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Professor', 'Convite', 'Departamento'];
+    ProfessorDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Professor', 'User', 'Departamento', 'Comite', 'Documento'];
 
-    function ProfessorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Professor, Convite, Departamento) {
+    function ProfessorDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Professor, User, Departamento, Comite, Documento) {
         var vm = this;
 
         vm.professor = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.convites = Convite.query();
+        vm.users = User.query();
         vm.departamentos = Departamento.query();
+        vm.comites = Comite.query();
+        vm.documentos = Documento.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

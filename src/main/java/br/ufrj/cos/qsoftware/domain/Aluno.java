@@ -1,6 +1,5 @@
 package br.ufrj.cos.qsoftware.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -33,10 +32,6 @@ public class Aluno implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "senha", nullable = false)
-    private String senha;
-
-    @NotNull
     @Column(name = "dre", nullable = false)
     private String dre;
 
@@ -50,15 +45,16 @@ public class Aluno implements Serializable {
     @Column(name = "tipo")
     private TipoAluno tipo;
 
-    @OneToMany(mappedBy = "aluno")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Documento> alunodocumentos = new HashSet<>();
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
 
-    @OneToMany(mappedBy = "aluno")
-    @JsonIgnore
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Convite> conviteorientardocumentos = new HashSet<>();
+    @JoinTable(name = "aluno_documento",
+               joinColumns = @JoinColumn(name="alunos_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="documentos_id", referencedColumnName="ID"))
+    private Set<Documento> documentos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -79,19 +75,6 @@ public class Aluno implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public Aluno senha(String senha) {
-        this.senha = senha;
-        return this;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getDre() {
@@ -146,54 +129,42 @@ public class Aluno implements Serializable {
         this.tipo = tipo;
     }
 
-    public Set<Documento> getAlunodocumentos() {
-        return alunodocumentos;
+    public User getUser() {
+        return user;
     }
 
-    public Aluno alunodocumentos(Set<Documento> documentos) {
-        this.alunodocumentos = documentos;
+    public Aluno user(User user) {
+        this.user = user;
         return this;
     }
 
-    public Aluno addAlunodocumento(Documento documento) {
-        alunodocumentos.add(documento);
-        documento.setAluno(this);
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Documento> getDocumentos() {
+        return documentos;
+    }
+
+    public Aluno documentos(Set<Documento> documentos) {
+        this.documentos = documentos;
         return this;
     }
 
-    public Aluno removeAlunodocumento(Documento documento) {
-        alunodocumentos.remove(documento);
-        documento.setAluno(null);
+    public Aluno addDocumento(Documento documento) {
+        documentos.add(documento);
+        documento.getAlunos().add(this);
         return this;
     }
 
-    public void setAlunodocumentos(Set<Documento> documentos) {
-        this.alunodocumentos = documentos;
-    }
-
-    public Set<Convite> getConviteorientardocumentos() {
-        return conviteorientardocumentos;
-    }
-
-    public Aluno conviteorientardocumentos(Set<Convite> convites) {
-        this.conviteorientardocumentos = convites;
+    public Aluno removeDocumento(Documento documento) {
+        documentos.remove(documento);
+        documento.getAlunos().remove(this);
         return this;
     }
 
-    public Aluno addConviteorientardocumento(Convite convite) {
-        conviteorientardocumentos.add(convite);
-        convite.setAluno(this);
-        return this;
-    }
-
-    public Aluno removeConviteorientardocumento(Convite convite) {
-        conviteorientardocumentos.remove(convite);
-        convite.setAluno(null);
-        return this;
-    }
-
-    public void setConviteorientardocumentos(Set<Convite> convites) {
-        this.conviteorientardocumentos = convites;
+    public void setDocumentos(Set<Documento> documentos) {
+        this.documentos = documentos;
     }
 
     @Override
@@ -205,7 +176,7 @@ public class Aluno implements Serializable {
             return false;
         }
         Aluno aluno = (Aluno) o;
-        if(aluno.id == null || id == null) {
+        if (aluno.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, aluno.id);
@@ -221,7 +192,6 @@ public class Aluno implements Serializable {
         return "Aluno{" +
             "id=" + id +
             ", nome='" + nome + "'" +
-            ", senha='" + senha + "'" +
             ", dre='" + dre + "'" +
             ", dataIngresso='" + dataIngresso + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +

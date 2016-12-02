@@ -2,28 +2,25 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "alunodocumento",
-            "otherEntityName": "documento",
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "email",
+            "ownerSide": true,
             "otherEntityRelationshipName": "aluno"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "conviteorientardocumento",
-            "otherEntityName": "convite",
-            "otherEntityRelationshipName": "aluno"
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "aluno",
+            "relationshipName": "documento",
+            "otherEntityName": "documento",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [
         {
             "fieldName": "nome",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "senha",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -50,7 +47,7 @@
             "fieldValues": "MESTRADO,DOUTORADO"
         }
     ],
-    "changelogDate": "20161128043128",
+    "changelogDate": "20161202222223",
     "entityTableName": "aluno",
     "dto": "mapstruct",
     "pagination": "no",

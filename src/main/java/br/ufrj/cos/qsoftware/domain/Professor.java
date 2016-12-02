@@ -30,16 +30,25 @@ public class Professor implements Serializable {
     private String nome;
 
     @NotNull
-    @Column(name = "senha", nullable = false)
-    private String senha;
+    @Column(name = "codigo", nullable = false)
+    private String codigo;
 
-    @OneToMany(mappedBy = "professor")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Convite> orientadorconviteprofessorcomites = new HashSet<>();
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
 
     @ManyToOne
     private Departamento departamento;
+
+    @ManyToMany(mappedBy = "professors")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Comite> comites = new HashSet<>();
+
+    @ManyToMany(mappedBy = "orientadors")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Documento> documentosorientados = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -62,42 +71,30 @@ public class Professor implements Serializable {
         this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public Professor senha(String senha) {
-        this.senha = senha;
+    public Professor codigo(String codigo) {
+        this.codigo = codigo;
         return this;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public Set<Convite> getOrientadorconviteprofessorcomites() {
-        return orientadorconviteprofessorcomites;
+    public User getUser() {
+        return user;
     }
 
-    public Professor orientadorconviteprofessorcomites(Set<Convite> convites) {
-        this.orientadorconviteprofessorcomites = convites;
+    public Professor user(User user) {
+        this.user = user;
         return this;
     }
 
-    public Professor addOrientadorconviteprofessorcomite(Convite convite) {
-        orientadorconviteprofessorcomites.add(convite);
-        convite.setProfessor(this);
-        return this;
-    }
-
-    public Professor removeOrientadorconviteprofessorcomite(Convite convite) {
-        orientadorconviteprofessorcomites.remove(convite);
-        convite.setProfessor(null);
-        return this;
-    }
-
-    public void setOrientadorconviteprofessorcomites(Set<Convite> convites) {
-        this.orientadorconviteprofessorcomites = convites;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Departamento getDepartamento() {
@@ -113,6 +110,56 @@ public class Professor implements Serializable {
         this.departamento = departamento;
     }
 
+    public Set<Comite> getComites() {
+        return comites;
+    }
+
+    public Professor comites(Set<Comite> comites) {
+        this.comites = comites;
+        return this;
+    }
+
+    public Professor addComite(Comite comite) {
+        comites.add(comite);
+        comite.getProfessors().add(this);
+        return this;
+    }
+
+    public Professor removeComite(Comite comite) {
+        comites.remove(comite);
+        comite.getProfessors().remove(this);
+        return this;
+    }
+
+    public void setComites(Set<Comite> comites) {
+        this.comites = comites;
+    }
+
+    public Set<Documento> getDocumentosorientados() {
+        return documentosorientados;
+    }
+
+    public Professor documentosorientados(Set<Documento> documentos) {
+        this.documentosorientados = documentos;
+        return this;
+    }
+
+    public Professor addDocumentosorientados(Documento documento) {
+        documentosorientados.add(documento);
+        documento.getOrientadors().add(this);
+        return this;
+    }
+
+    public Professor removeDocumentosorientados(Documento documento) {
+        documentosorientados.remove(documento);
+        documento.getOrientadors().remove(this);
+        return this;
+    }
+
+    public void setDocumentosorientados(Set<Documento> documentos) {
+        this.documentosorientados = documentos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -122,7 +169,7 @@ public class Professor implements Serializable {
             return false;
         }
         Professor professor = (Professor) o;
-        if(professor.id == null || id == null) {
+        if (professor.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, professor.id);
@@ -138,7 +185,7 @@ public class Professor implements Serializable {
         return "Professor{" +
             "id=" + id +
             ", nome='" + nome + "'" +
-            ", senha='" + senha + "'" +
+            ", codigo='" + codigo + "'" +
             '}';
     }
 }

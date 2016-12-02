@@ -11,12 +11,11 @@ import br.ufrj.cos.qsoftware.service.mapper.ComiteMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +29,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -116,9 +116,9 @@ public class ComiteResourceIntTest {
         ComiteDTO comiteDTO = comiteMapper.comiteToComiteDTO(comite);
 
         restComiteMockMvc.perform(post("/api/comites")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(comiteDTO)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(comiteDTO)))
+            .andExpect(status().isCreated());
 
         // Validate the Comite in the database
         List<Comite> comites = comiteRepository.findAll();
@@ -138,13 +138,13 @@ public class ComiteResourceIntTest {
 
         // Get all the comites
         restComiteMockMvc.perform(get("/api/comites?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(comite.getId().intValue())))
-                .andExpect(jsonPath("$.[*].local").value(hasItem(DEFAULT_LOCAL.toString())))
-                .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
-                .andExpect(jsonPath("$.[*].dataOcorrencia").value(hasItem(DEFAULT_DATA_OCORRENCIA.toString())))
-                .andExpect(jsonPath("$.[*].ataComite").value(hasItem(DEFAULT_ATA_COMITE.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(comite.getId().intValue())))
+            .andExpect(jsonPath("$.[*].local").value(hasItem(DEFAULT_LOCAL.toString())))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
+            .andExpect(jsonPath("$.[*].dataOcorrencia").value(hasItem(DEFAULT_DATA_OCORRENCIA.toString())))
+            .andExpect(jsonPath("$.[*].ataComite").value(hasItem(DEFAULT_ATA_COMITE.toString())));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class ComiteResourceIntTest {
     public void getNonExistingComite() throws Exception {
         // Get the comite
         restComiteMockMvc.perform(get("/api/comites/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -189,9 +189,9 @@ public class ComiteResourceIntTest {
         ComiteDTO comiteDTO = comiteMapper.comiteToComiteDTO(updatedComite);
 
         restComiteMockMvc.perform(put("/api/comites")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(comiteDTO)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(comiteDTO)))
+            .andExpect(status().isOk());
 
         // Validate the Comite in the database
         List<Comite> comites = comiteRepository.findAll();
@@ -212,8 +212,8 @@ public class ComiteResourceIntTest {
 
         // Get the comite
         restComiteMockMvc.perform(delete("/api/comites/{id}", comite.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Comite> comites = comiteRepository.findAll();

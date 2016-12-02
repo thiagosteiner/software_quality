@@ -17,6 +17,7 @@
         function loadAll() {
             Departamento.query(function(result) {
                 vm.departamentos = result;
+                vm.searchQuery = null;
             });
         }
     }

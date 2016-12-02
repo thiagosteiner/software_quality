@@ -1,0 +1,51 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "professorconvidadocomite",
+            "otherEntityName": "professor",
+            "otherEntityField": "codigo",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conviteComite"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "comite",
+            "otherEntityName": "comite",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conviteComite"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "documento",
+            "otherEntityName": "documento",
+            "otherEntityField": "titulo",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conviteComite"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "orientadorqueconvidou",
+            "otherEntityName": "professor",
+            "otherEntityField": "codigo"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "SituacaoConvite",
+            "fieldValues": "ACEITO,REJEITADO"
+        },
+        {
+            "fieldName": "dataCriacao",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20161202222227",
+    "entityTableName": "convite_comite",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

@@ -44,8 +44,8 @@
         </div>
 
         <div class="form-group">
-            <label for="field_comiteprofessor">Comiteprofessor</label>
-            <select class="form-control" id="field_comiteprofessor" multiple name="comiteprofessor" ng-model="vm.comite.comiteprofessors" ng-options="professor as professor.id for professor in vm.professors track by professor.id"></select>
+            <label for="field_professor">Professor</label>
+            <select class="form-control" id="field_professor" multiple name="professor" ng-model="vm.comite.professors" ng-options="professor as professor.codigo for professor in vm.professors track by professor.id"></select>
         </div>
     </div>
     <div class="modal-footer">

@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.11.0",
+    "jhipsterVersion": "3.12.0",
     "baseName": "qsoftware",
     "packageName": "br.ufrj.cos.qsoftware",
     "packageFolder": "br/ufrj/cos/qsoftware",
@@ -16,7 +16,7 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "b0af2f958fb02c2c3cf1f6eb7c6ca9e909fc7d8b",
+    "rememberMeKey": "6d1532af6361af28bc6623d5e7a3cff097493116",
     "useSass": true,
     "applicationType": "monolith",
     "testFrameworks": [

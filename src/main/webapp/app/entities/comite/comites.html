@@ -23,7 +23,7 @@
                     <th><span>Tipo</span></th>
                     <th><span>Data Ocorrencia</span></th>
                     <th><span>Ata Comite</span></th>
-                    <th><span>Comiteprofessor</span></th>
+                    <th><span>Professor</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -35,8 +35,8 @@
                         <td>{{comite.dataOcorrencia | date:'mediumDate'}}</td>
                     <td>{{comite.ataComite}}</td>
                     <td>
-                        <span ng-repeat="comiteprofessor in comite.comiteprofessors">
-                            <a class="form-control-static" ui-sref="professor-detail({id: comiteprofessor.id})">{{comiteprofessor.id}}</a>{{$last ? '' : ', '}}
+                        <span ng-repeat="professor in comite.professors">
+                            <a class="form-control-static" ui-sref="professor-detail({id: professor.id})">{{professor.codigo}}</a>{{$last ? '' : ', '}}
                         </span>
                     </td>
                     <td class="text-right">

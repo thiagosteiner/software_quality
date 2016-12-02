@@ -1,0 +1,61 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myConviteOrientadorLabel">Create or edit a Convite Orientador</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.conviteOrientador.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.conviteOrientador.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.conviteOrientador.status" id="field_status">
+                <option value="ACEITO">ACEITO</option>
+                <option value="REJEITADO">REJEITADO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_dataCriacao">Data Criacao</label>
+                <div class="input-group">
+                    <input id="field_dataCriacao" type="text" class="form-control" name="dataCriacao" uib-datepicker-popup="{{dateformat}}" ng-model="vm.conviteOrientador.dataCriacao" is-open="vm.datePickerOpenStatus.dataCriacao"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataCriacao')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_orientadorconvidado">Orientadorconvidado</label>
+            <select class="form-control" id="field_orientadorconvidado" name="orientadorconvidado" ng-model="vm.conviteOrientador.orientadorconvidadoId" ng-options="professor.id as professor.codigo for professor in vm.orientadorconvidados | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_documento">Documento</label>
+            <select class="form-control" id="field_documento" name="documento" ng-model="vm.conviteOrientador.documentoId" ng-options="documento.id as documento.titulo for documento in vm.documentos | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_alunoqueconvidou">Alunoqueconvidou</label>
+            <select class="form-control" id="field_alunoqueconvidou" name="alunoqueconvidou" ng-model="vm.conviteOrientador.alunoqueconvidouId" ng-options="aluno.id as aluno.dre for aluno in vm.alunos"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

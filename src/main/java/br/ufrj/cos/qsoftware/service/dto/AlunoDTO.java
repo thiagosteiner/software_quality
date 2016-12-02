@@ -20,9 +20,6 @@ public class AlunoDTO implements Serializable {
     private String nome;
 
     @NotNull
-    private String senha;
-
-    @NotNull
     private String dre;
 
     private LocalDate dataIngresso;
@@ -31,6 +28,13 @@ public class AlunoDTO implements Serializable {
 
     private TipoAluno tipo;
 
+
+    private Long userId;
+    
+
+    private String userEmail;
+
+    private Set<DocumentoDTO> documentos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -45,13 +49,6 @@ public class AlunoDTO implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
     public String getDre() {
         return dre;
@@ -82,6 +79,31 @@ public class AlunoDTO implements Serializable {
         this.tipo = tipo;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Set<DocumentoDTO> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(Set<DocumentoDTO> documentos) {
+        this.documentos = documentos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -108,7 +130,6 @@ public class AlunoDTO implements Serializable {
         return "AlunoDTO{" +
             "id=" + id +
             ", nome='" + nome + "'" +
-            ", senha='" + senha + "'" +
             ", dre='" + dre + "'" +
             ", dataIngresso='" + dataIngresso + "'" +
             ", previsaoFormatura='" + previsaoFormatura + "'" +

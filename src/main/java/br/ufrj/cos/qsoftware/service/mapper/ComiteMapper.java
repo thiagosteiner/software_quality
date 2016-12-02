@@ -16,6 +16,7 @@ public interface ComiteMapper {
 
     List<ComiteDTO> comitesToComiteDTOs(List<Comite> comites);
 
+    @Mapping(target = "documento", ignore = true)
     Comite comiteDTOToComite(ComiteDTO comiteDTO);
 
     List<Comite> comiteDTOsToComites(List<ComiteDTO> comiteDTOs);

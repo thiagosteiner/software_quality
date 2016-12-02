@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Documento.
+    -->
+    <changeSet id="20161202222226-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="comite_id"
+                                 baseTableName="documento"
+                                 constraintName="fk_documento_comite_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="comite"/>
+
+        <addForeignKeyConstraint baseColumnNames="documentos_id"
+                                 baseTableName="documento_orientador"
+                                 constraintName="fk_documento_orientador_documentos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="documento"/>
+        <addForeignKeyConstraint baseColumnNames="orientadors_id"
+                                 baseTableName="documento_orientador"
+                                 constraintName="fk_documento_orientador_orientadors_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="professor"/>
+        
+    </changeSet>
+</databaseChangeLog>

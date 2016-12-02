@@ -11,12 +11,11 @@ import br.ufrj.cos.qsoftware.service.mapper.DocumentoMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +30,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -134,9 +134,9 @@ public class DocumentoResourceIntTest {
         DocumentoDTO documentoDTO = documentoMapper.documentoToDocumentoDTO(documento);
 
         restDocumentoMockMvc.perform(post("/api/documentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(documentoDTO)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(documentoDTO)))
+            .andExpect(status().isCreated());
 
         // Validate the Documento in the database
         List<Documento> documentos = documentoRepository.findAll();
@@ -160,17 +160,17 @@ public class DocumentoResourceIntTest {
 
         // Get all the documentos
         restDocumentoMockMvc.perform(get("/api/documentos?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(documento.getId().intValue())))
-                .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO.toString())))
-                .andExpect(jsonPath("$.[*].resumo").value(hasItem(DEFAULT_RESUMO.toString())))
-                .andExpect(jsonPath("$.[*].dataCriacao").value(hasItem(DEFAULT_DATA_CRIACAO.toString())))
-                .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-                .andExpect(jsonPath("$.[*].tipoDocumento").value(hasItem(DEFAULT_TIPO_DOCUMENTO.toString())))
-                .andExpect(jsonPath("$.[*].tipoMonografia").value(hasItem(DEFAULT_TIPO_MONOGRAFIA.toString())))
-                .andExpect(jsonPath("$.[*].arquivoContentType").value(hasItem(DEFAULT_ARQUIVO_CONTENT_TYPE)))
-                .andExpect(jsonPath("$.[*].arquivo").value(hasItem(Base64Utils.encodeToString(DEFAULT_ARQUIVO))));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(documento.getId().intValue())))
+            .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO.toString())))
+            .andExpect(jsonPath("$.[*].resumo").value(hasItem(DEFAULT_RESUMO.toString())))
+            .andExpect(jsonPath("$.[*].dataCriacao").value(hasItem(DEFAULT_DATA_CRIACAO.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].tipoDocumento").value(hasItem(DEFAULT_TIPO_DOCUMENTO.toString())))
+            .andExpect(jsonPath("$.[*].tipoMonografia").value(hasItem(DEFAULT_TIPO_MONOGRAFIA.toString())))
+            .andExpect(jsonPath("$.[*].arquivoContentType").value(hasItem(DEFAULT_ARQUIVO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].arquivo").value(hasItem(Base64Utils.encodeToString(DEFAULT_ARQUIVO))));
     }
 
     @Test
@@ -199,7 +199,7 @@ public class DocumentoResourceIntTest {
     public void getNonExistingDocumento() throws Exception {
         // Get the documento
         restDocumentoMockMvc.perform(get("/api/documentos/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -223,9 +223,9 @@ public class DocumentoResourceIntTest {
         DocumentoDTO documentoDTO = documentoMapper.documentoToDocumentoDTO(updatedDocumento);
 
         restDocumentoMockMvc.perform(put("/api/documentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(documentoDTO)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(documentoDTO)))
+            .andExpect(status().isOk());
 
         // Validate the Documento in the database
         List<Documento> documentos = documentoRepository.findAll();
@@ -250,8 +250,8 @@ public class DocumentoResourceIntTest {
 
         // Get the documento
         restDocumentoMockMvc.perform(delete("/api/documentos/{id}", documento.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Documento> documentos = documentoRepository.findAll();

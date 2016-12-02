@@ -8,10 +8,6 @@
         <dd>
             <span>{{vm.aluno.nome}}</span>
         </dd>
-        <dt><span>Senha</span></dt>
-        <dd>
-            <span>{{vm.aluno.senha}}</span>
-        </dd>
         <dt><span>Dre</span></dt>
         <dd>
             <span>{{vm.aluno.dre}}</span>
@@ -27,6 +23,16 @@
         <dt><span>Tipo</span></dt>
         <dd>
             <span>{{vm.aluno.tipo}}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{vm.aluno.userEmail}}
+        </dd>
+        <dt><span>Documento</span></dt>
+        <dd>
+            <span ng-repeat="documento in vm.aluno.documentos">
+                <a ui-sref="documento-detail({id: documento.id})">{{documento.id}}</a>{{$last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 

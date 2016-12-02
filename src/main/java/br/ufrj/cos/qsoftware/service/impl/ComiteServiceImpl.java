@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Comite.
@@ -57,6 +58,21 @@ public class ComiteServiceImpl implements ComiteService{
             .collect(Collectors.toCollection(LinkedList::new));
 
         return result;
+    }
+
+
+    /**
+     *  get all the comites where Documento is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<ComiteDTO> findAllWhereDocumentoIsNull() {
+        log.debug("Request to get all comites where Documento is null");
+        return StreamSupport
+            .stream(comiteRepository.findAll().spliterator(), false)
+            .filter(comite -> comite.getDocumento() == null)
+            .map(comiteMapper::comiteToComiteDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

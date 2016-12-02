@@ -1,13 +1,6 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "departamentoprofessor",
-            "otherEntityName": "professor",
-            "otherEntityRelationshipName": "departamento"
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "nome",
@@ -17,7 +10,7 @@
             ]
         }
     ],
-    "changelogDate": "20161128043130",
+    "changelogDate": "20161202222225",
     "entityTableName": "departamento",
     "dto": "mapstruct",
     "pagination": "no",

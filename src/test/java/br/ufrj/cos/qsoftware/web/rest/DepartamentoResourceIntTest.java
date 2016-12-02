@@ -11,12 +11,11 @@ import br.ufrj.cos.qsoftware.service.mapper.DepartamentoMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +27,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -101,9 +101,9 @@ public class DepartamentoResourceIntTest {
         DepartamentoDTO departamentoDTO = departamentoMapper.departamentoToDepartamentoDTO(departamento);
 
         restDepartamentoMockMvc.perform(post("/api/departamentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
+            .andExpect(status().isCreated());
 
         // Validate the Departamento in the database
         List<Departamento> departamentos = departamentoRepository.findAll();
@@ -123,9 +123,9 @@ public class DepartamentoResourceIntTest {
         DepartamentoDTO departamentoDTO = departamentoMapper.departamentoToDepartamentoDTO(departamento);
 
         restDepartamentoMockMvc.perform(post("/api/departamentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
+            .andExpect(status().isBadRequest());
 
         List<Departamento> departamentos = departamentoRepository.findAll();
         assertThat(departamentos).hasSize(databaseSizeBeforeTest);
@@ -139,10 +139,10 @@ public class DepartamentoResourceIntTest {
 
         // Get all the departamentos
         restDepartamentoMockMvc.perform(get("/api/departamentos?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(departamento.getId().intValue())))
-                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(departamento.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())));
     }
 
     @Test
@@ -164,7 +164,7 @@ public class DepartamentoResourceIntTest {
     public void getNonExistingDepartamento() throws Exception {
         // Get the departamento
         restDepartamentoMockMvc.perform(get("/api/departamentos/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -181,9 +181,9 @@ public class DepartamentoResourceIntTest {
         DepartamentoDTO departamentoDTO = departamentoMapper.departamentoToDepartamentoDTO(updatedDepartamento);
 
         restDepartamentoMockMvc.perform(put("/api/departamentos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(departamentoDTO)))
+            .andExpect(status().isOk());
 
         // Validate the Departamento in the database
         List<Departamento> departamentos = departamentoRepository.findAll();
@@ -201,8 +201,8 @@ public class DepartamentoResourceIntTest {
 
         // Get the departamento
         restDepartamentoMockMvc.perform(delete("/api/departamentos/{id}", departamento.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Departamento> departamentos = departamentoRepository.findAll();

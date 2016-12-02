@@ -26,21 +26,27 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_senha">Senha</label>
-            <input type="text" class="form-control" name="senha" id="field_senha"
-                    ng-model="vm.professor.senha"
+            <label class="control-label" for="field_codigo">Codigo</label>
+            <input type="text" class="form-control" name="codigo" id="field_codigo"
+                    ng-model="vm.professor.codigo"
                     required />
-            <div ng-show="editForm.senha.$invalid">
+            <div ng-show="editForm.codigo.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.senha.$error.required">
+                    ng-show="editForm.codigo.$error.required">
                     This field is required.
                 </p>
             </div>
         </div>
 
         <div class="form-group">
+            <label for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" ng-model="vm.professor.userId" ng-options="user.id as user.email for user in vm.users"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="field_departamento">Departamento</label>
-            <select class="form-control" id="field_departamento" name="departamento" ng-model="vm.professor.departamentoId" ng-options="departamento.id as departamento.id for departamento in vm.departamentos"            >
+            <select class="form-control" id="field_departamento" name="departamento" ng-model="vm.professor.departamentoId" ng-options="departamento.id as departamento.nome for departamento in vm.departamentos"            >
                 <option value=""></option>
             </select>
         </div>

@@ -19,6 +19,7 @@
         function loadAll() {
             Documento.query(function(result) {
                 vm.documentos = result;
+                vm.searchQuery = null;
             });
         }
     }

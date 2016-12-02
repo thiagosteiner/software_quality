@@ -17,6 +17,7 @@
         function loadAll() {
             Comite.query(function(result) {
                 vm.comites = result;
+                vm.searchQuery = null;
             });
         }
     }

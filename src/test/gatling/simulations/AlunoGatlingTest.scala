@@ -67,7 +67,7 @@ class AlunoGatlingTest extends Simulation {
             .exec(http("Create new aluno")
             .post("/api/alunos")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT", "senha":"SAMPLE_TEXT", "dre":"SAMPLE_TEXT", "dataIngresso":"2020-01-01T00:00:00.000Z", "previsaoFormatura":"2020-01-01T00:00:00.000Z", "tipo":null}""")).asJSON
+            .body(StringBody("""{"id":null, "nome":"SAMPLE_TEXT", "dre":"SAMPLE_TEXT", "dataIngresso":"2020-01-01T00:00:00.000Z", "previsaoFormatura":"2020-01-01T00:00:00.000Z", "tipo":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_aluno_url"))).exitHereIfFailed
             .pause(10)

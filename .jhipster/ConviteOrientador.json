@@ -1,0 +1,43 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "orientadorconvidado",
+            "otherEntityName": "professor",
+            "otherEntityField": "codigo",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conviteOrientador"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "documento",
+            "otherEntityName": "documento",
+            "otherEntityField": "titulo",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "conviteOrientador"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alunoqueconvidou",
+            "otherEntityName": "aluno",
+            "otherEntityField": "dre"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "SituacaoConvite",
+            "fieldValues": "ACEITO,REJEITADO"
+        },
+        {
+            "fieldName": "dataCriacao",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20161202222228",
+    "entityTableName": "convite_orientador",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl"
+}

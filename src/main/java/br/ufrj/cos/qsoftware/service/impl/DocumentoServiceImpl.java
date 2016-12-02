@@ -52,7 +52,7 @@ public class DocumentoServiceImpl implements DocumentoService{
     @Transactional(readOnly = true) 
     public List<DocumentoDTO> findAll() {
         log.debug("Request to get all Documentos");
-        List<DocumentoDTO> result = documentoRepository.findAll().stream()
+        List<DocumentoDTO> result = documentoRepository.findAllWithEagerRelationships().stream()
             .map(documentoMapper::documentoToDocumentoDTO)
             .collect(Collectors.toCollection(LinkedList::new));
 
@@ -68,7 +68,7 @@ public class DocumentoServiceImpl implements DocumentoService{
     @Transactional(readOnly = true) 
     public DocumentoDTO findOne(Long id) {
         log.debug("Request to get Documento : {}", id);
-        Documento documento = documentoRepository.findOne(id);
+        Documento documento = documentoRepository.findOneWithEagerRelationships(id);
         DocumentoDTO documentoDTO = documentoMapper.documentoToDocumentoDTO(documento);
         return documentoDTO;
     }

@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span>Convite Comite</span> {{vm.conviteComite.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{vm.conviteComite.status}}</span>
+        </dd>
+        <dt><span>Data Criacao</span></dt>
+        <dd>
+            <span>{{vm.conviteComite.dataCriacao | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Professorconvidadocomite</span></dt>
+        <dd>
+            <a ui-sref="professor-detail({id:vm.conviteComite.professorconvidadocomiteId})">{{vm.conviteComite.professorconvidadocomiteCodigo}}</a>
+        </dd>
+        <dt><span>Comite</span></dt>
+        <dd>
+            <a ui-sref="comite-detail({id:vm.conviteComite.comiteId})">{{vm.conviteComite.comiteId}}</a>
+        </dd>
+        <dt><span>Documento</span></dt>
+        <dd>
+            <a ui-sref="documento-detail({id:vm.conviteComite.documentoId})">{{vm.conviteComite.documentoTitulo}}</a>
+        </dd>
+        <dt><span>Orientadorqueconvidou</span></dt>
+        <dd>
+            <a ui-sref="professor-detail({id:vm.conviteComite.orientadorqueconvidouId})">{{vm.conviteComite.orientadorqueconvidouCodigo}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="convite-comite-detail.edit({id:vm.conviteComite.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>

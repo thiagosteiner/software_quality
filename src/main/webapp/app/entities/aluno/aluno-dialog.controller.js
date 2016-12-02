@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('AlunoDialogController', AlunoDialogController);
 
-    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Aluno', 'Documento', 'Convite'];
+    AlunoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Aluno', 'User', 'Documento'];
 
-    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Aluno, Documento, Convite) {
+    function AlunoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Aluno, User, Documento) {
         var vm = this;
 
         vm.aluno = entity;
@@ -15,8 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.users = User.query();
         vm.documentos = Documento.query();
-        vm.convites = Convite.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

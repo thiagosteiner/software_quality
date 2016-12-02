@@ -11,12 +11,11 @@ import br.ufrj.cos.qsoftware.service.mapper.AlunoMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +29,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,9 +45,6 @@ public class AlunoResourceIntTest {
 
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
     private static final String UPDATED_NOME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_SENHA = "AAAAAAAAAA";
-    private static final String UPDATED_SENHA = "BBBBBBBBBB";
 
     private static final String DEFAULT_DRE = "AAAAAAAAAA";
     private static final String UPDATED_DRE = "BBBBBBBBBB";
@@ -102,7 +99,6 @@ public class AlunoResourceIntTest {
     public static Aluno createEntity(EntityManager em) {
         Aluno aluno = new Aluno()
                 .nome(DEFAULT_NOME)
-                .senha(DEFAULT_SENHA)
                 .dre(DEFAULT_DRE)
                 .dataIngresso(DEFAULT_DATA_INGRESSO)
                 .previsaoFormatura(DEFAULT_PREVISAO_FORMATURA)
@@ -124,16 +120,15 @@ public class AlunoResourceIntTest {
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
 
         restAlunoMockMvc.perform(post("/api/alunos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+            .andExpect(status().isCreated());
 
         // Validate the Aluno in the database
         List<Aluno> alunos = alunoRepository.findAll();
         assertThat(alunos).hasSize(databaseSizeBeforeCreate + 1);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(DEFAULT_NOME);
-        assertThat(testAluno.getSenha()).isEqualTo(DEFAULT_SENHA);
         assertThat(testAluno.getDre()).isEqualTo(DEFAULT_DRE);
         assertThat(testAluno.getDataIngresso()).isEqualTo(DEFAULT_DATA_INGRESSO);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(DEFAULT_PREVISAO_FORMATURA);
@@ -151,28 +146,9 @@ public class AlunoResourceIntTest {
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
 
         restAlunoMockMvc.perform(post("/api/alunos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
-                .andExpect(status().isBadRequest());
-
-        List<Aluno> alunos = alunoRepository.findAll();
-        assertThat(alunos).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkSenhaIsRequired() throws Exception {
-        int databaseSizeBeforeTest = alunoRepository.findAll().size();
-        // set the field null
-        aluno.setSenha(null);
-
-        // Create the Aluno, which fails.
-        AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
-
-        restAlunoMockMvc.perform(post("/api/alunos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+            .andExpect(status().isBadRequest());
 
         List<Aluno> alunos = alunoRepository.findAll();
         assertThat(alunos).hasSize(databaseSizeBeforeTest);
@@ -189,9 +165,9 @@ public class AlunoResourceIntTest {
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(aluno);
 
         restAlunoMockMvc.perform(post("/api/alunos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+            .andExpect(status().isBadRequest());
 
         List<Aluno> alunos = alunoRepository.findAll();
         assertThat(alunos).hasSize(databaseSizeBeforeTest);
@@ -205,15 +181,14 @@ public class AlunoResourceIntTest {
 
         // Get all the alunos
         restAlunoMockMvc.perform(get("/api/alunos?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(aluno.getId().intValue())))
-                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-                .andExpect(jsonPath("$.[*].senha").value(hasItem(DEFAULT_SENHA.toString())))
-                .andExpect(jsonPath("$.[*].dre").value(hasItem(DEFAULT_DRE.toString())))
-                .andExpect(jsonPath("$.[*].dataIngresso").value(hasItem(DEFAULT_DATA_INGRESSO.toString())))
-                .andExpect(jsonPath("$.[*].previsaoFormatura").value(hasItem(DEFAULT_PREVISAO_FORMATURA.toString())))
-                .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(aluno.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+            .andExpect(jsonPath("$.[*].dre").value(hasItem(DEFAULT_DRE.toString())))
+            .andExpect(jsonPath("$.[*].dataIngresso").value(hasItem(DEFAULT_DATA_INGRESSO.toString())))
+            .andExpect(jsonPath("$.[*].previsaoFormatura").value(hasItem(DEFAULT_PREVISAO_FORMATURA.toString())))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())));
     }
 
     @Test
@@ -228,7 +203,6 @@ public class AlunoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(aluno.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.senha").value(DEFAULT_SENHA.toString()))
             .andExpect(jsonPath("$.dre").value(DEFAULT_DRE.toString()))
             .andExpect(jsonPath("$.dataIngresso").value(DEFAULT_DATA_INGRESSO.toString()))
             .andExpect(jsonPath("$.previsaoFormatura").value(DEFAULT_PREVISAO_FORMATURA.toString()))
@@ -240,7 +214,7 @@ public class AlunoResourceIntTest {
     public void getNonExistingAluno() throws Exception {
         // Get the aluno
         restAlunoMockMvc.perform(get("/api/alunos/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -254,7 +228,6 @@ public class AlunoResourceIntTest {
         Aluno updatedAluno = alunoRepository.findOne(aluno.getId());
         updatedAluno
                 .nome(UPDATED_NOME)
-                .senha(UPDATED_SENHA)
                 .dre(UPDATED_DRE)
                 .dataIngresso(UPDATED_DATA_INGRESSO)
                 .previsaoFormatura(UPDATED_PREVISAO_FORMATURA)
@@ -262,16 +235,15 @@ public class AlunoResourceIntTest {
         AlunoDTO alunoDTO = alunoMapper.alunoToAlunoDTO(updatedAluno);
 
         restAlunoMockMvc.perform(put("/api/alunos")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(alunoDTO)))
+            .andExpect(status().isOk());
 
         // Validate the Aluno in the database
         List<Aluno> alunos = alunoRepository.findAll();
         assertThat(alunos).hasSize(databaseSizeBeforeUpdate);
         Aluno testAluno = alunos.get(alunos.size() - 1);
         assertThat(testAluno.getNome()).isEqualTo(UPDATED_NOME);
-        assertThat(testAluno.getSenha()).isEqualTo(UPDATED_SENHA);
         assertThat(testAluno.getDre()).isEqualTo(UPDATED_DRE);
         assertThat(testAluno.getDataIngresso()).isEqualTo(UPDATED_DATA_INGRESSO);
         assertThat(testAluno.getPrevisaoFormatura()).isEqualTo(UPDATED_PREVISAO_FORMATURA);
@@ -287,8 +259,8 @@ public class AlunoResourceIntTest {
 
         // Get the aluno
         restAlunoMockMvc.perform(delete("/api/alunos/{id}", aluno.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Aluno> alunos = alunoRepository.findAll();

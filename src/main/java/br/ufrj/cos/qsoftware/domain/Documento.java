@@ -1,11 +1,14 @@
 package br.ufrj.cos.qsoftware.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoPublicacao;
@@ -56,16 +59,21 @@ public class Documento implements Serializable {
     @Column(name = "arquivo_content_type")
     private String arquivoContentType;
 
-    @ManyToOne
-    private Aluno aluno;
-
     @OneToOne
     @JoinColumn(unique = true)
-    private Comite documentocomite;
+    private Comite comite;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Professor documentoorientador;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "documento_orientador",
+               joinColumns = @JoinColumn(name="documentos_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="orientadors_id", referencedColumnName="ID"))
+    private Set<Professor> orientadors = new HashSet<>();
+
+    @ManyToMany(mappedBy = "documentos")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Aluno> alunos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -179,43 +187,67 @@ public class Documento implements Serializable {
         this.arquivoContentType = arquivoContentType;
     }
 
-    public Aluno getAluno() {
-        return aluno;
+    public Comite getComite() {
+        return comite;
     }
 
-    public Documento aluno(Aluno aluno) {
-        this.aluno = aluno;
+    public Documento comite(Comite comite) {
+        this.comite = comite;
         return this;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public void setComite(Comite comite) {
+        this.comite = comite;
     }
 
-    public Comite getDocumentocomite() {
-        return documentocomite;
+    public Set<Professor> getOrientadors() {
+        return orientadors;
     }
 
-    public Documento documentocomite(Comite comite) {
-        this.documentocomite = comite;
+    public Documento orientadors(Set<Professor> professors) {
+        this.orientadors = professors;
         return this;
     }
 
-    public void setDocumentocomite(Comite comite) {
-        this.documentocomite = comite;
-    }
-
-    public Professor getDocumentoorientador() {
-        return documentoorientador;
-    }
-
-    public Documento documentoorientador(Professor professor) {
-        this.documentoorientador = professor;
+    public Documento addOrientador(Professor professor) {
+        orientadors.add(professor);
+        professor.getDocumentosorientados().add(this);
         return this;
     }
 
-    public void setDocumentoorientador(Professor professor) {
-        this.documentoorientador = professor;
+    public Documento removeOrientador(Professor professor) {
+        orientadors.remove(professor);
+        professor.getDocumentosorientados().remove(this);
+        return this;
+    }
+
+    public void setOrientadors(Set<Professor> professors) {
+        this.orientadors = professors;
+    }
+
+    public Set<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public Documento alunos(Set<Aluno> alunos) {
+        this.alunos = alunos;
+        return this;
+    }
+
+    public Documento addAluno(Aluno aluno) {
+        alunos.add(aluno);
+        aluno.getDocumentos().add(this);
+        return this;
+    }
+
+    public Documento removeAluno(Aluno aluno) {
+        alunos.remove(aluno);
+        aluno.getDocumentos().remove(this);
+        return this;
+    }
+
+    public void setAlunos(Set<Aluno> alunos) {
+        this.alunos = alunos;
     }
 
     @Override
@@ -227,7 +259,7 @@ public class Documento implements Serializable {
             return false;
         }
         Documento documento = (Documento) o;
-        if(documento.id == null || id == null) {
+        if (documento.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, documento.id);

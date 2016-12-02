@@ -35,12 +35,10 @@ public class DocumentoDTO implements Serializable {
 
     private String arquivoContentType;
 
-    private Long alunoId;
+    private Long comiteId;
     
-    private Long documentocomiteId;
-    
-    private Long documentoorientadorId;
-    
+    private Set<ProfessorDTO> orientadors = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -106,28 +104,20 @@ public class DocumentoDTO implements Serializable {
         this.arquivoContentType = arquivoContentType;
     }
 
-    public Long getAlunoId() {
-        return alunoId;
+    public Long getComiteId() {
+        return comiteId;
     }
 
-    public void setAlunoId(Long alunoId) {
-        this.alunoId = alunoId;
+    public void setComiteId(Long comiteId) {
+        this.comiteId = comiteId;
     }
 
-    public Long getDocumentocomiteId() {
-        return documentocomiteId;
+    public Set<ProfessorDTO> getOrientadors() {
+        return orientadors;
     }
 
-    public void setDocumentocomiteId(Long comiteId) {
-        this.documentocomiteId = comiteId;
-    }
-
-    public Long getDocumentoorientadorId() {
-        return documentoorientadorId;
-    }
-
-    public void setDocumentoorientadorId(Long professorId) {
-        this.documentoorientadorId = professorId;
+    public void setOrientadors(Set<ProfessorDTO> professors) {
+        this.orientadors = professors;
     }
 
     @Override

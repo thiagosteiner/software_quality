@@ -2,16 +2,32 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "orientadorconviteprofessorcomite",
-            "otherEntityName": "convite",
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "email",
+            "ownerSide": true,
             "otherEntityRelationshipName": "professor"
         },
         {
+            "relationshipType": "many-to-one",
             "relationshipName": "departamento",
             "otherEntityName": "departamento",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "comite",
+            "otherEntityName": "comite",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "professor"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "documentosorientados",
+            "otherEntityName": "documento",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "orientador"
         }
     ],
     "fields": [
@@ -23,14 +39,14 @@
             ]
         },
         {
-            "fieldName": "senha",
+            "fieldName": "codigo",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "changelogDate": "20161128043129",
+    "changelogDate": "20161202222224",
     "entityTableName": "professor",
     "dto": "mapstruct",
     "pagination": "no",

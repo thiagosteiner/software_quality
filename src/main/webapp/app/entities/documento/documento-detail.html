@@ -35,17 +35,15 @@
                 {{vm.documento.arquivoContentType}}, {{vm.byteSize(vm.documento.arquivo)}}
             </div>
         </dd>
-        <dt><span>Aluno</span></dt>
+        <dt><span>Comite</span></dt>
         <dd>
-            <a ui-sref="aluno-detail({id:vm.documento.alunoId})">{{vm.documento.alunoId}}</a>
+            <a ui-sref="comite-detail({id:vm.documento.comiteId})">{{vm.documento.comiteId}}</a>
         </dd>
-        <dt><span>Documentocomite</span></dt>
+        <dt><span>Orientador</span></dt>
         <dd>
-            <a ui-sref="comite-detail({id:vm.documento.documentocomiteId})">{{vm.documento.documentocomiteId}}</a>
-        </dd>
-        <dt><span>Documentoorientador</span></dt>
-        <dd>
-            <a ui-sref="professor-detail({id:vm.documento.documentoorientadorId})">{{vm.documento.documentoorientadorId}}</a>
+            <span ng-repeat="orientador in vm.documento.orientadors">
+                <a ui-sref="professor-detail({id: orientador.id})">{{orientador.codigo}}</a>{{$last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 

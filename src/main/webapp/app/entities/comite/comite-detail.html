@@ -20,10 +20,10 @@
         <dd>
             <span>{{vm.comite.ataComite}}</span>
         </dd>
-        <dt><span>Comiteprofessor</span></dt>
+        <dt><span>Professor</span></dt>
         <dd>
-            <span ng-repeat="comiteprofessor in vm.comite.comiteprofessors">
-                <a ui-sref="professor-detail({id: comiteprofessor.id})">{{comiteprofessor.id}}</a>{{$last ? '' : ', '}}
+            <span ng-repeat="professor in vm.comite.professors">
+                <a ui-sref="professor-detail({id: professor.id})">{{professor.codigo}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>
     </dl>

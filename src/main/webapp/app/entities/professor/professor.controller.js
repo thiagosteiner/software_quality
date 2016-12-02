@@ -17,6 +17,7 @@
         function loadAll() {
             Professor.query(function(result) {
                 vm.professors = result;
+                vm.searchQuery = null;
             });
         }
     }

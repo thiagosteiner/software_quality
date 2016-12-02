@@ -11,12 +11,11 @@ import br.ufrj.cos.qsoftware.service.mapper.ProfessorMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +27,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -43,8 +43,8 @@ public class ProfessorResourceIntTest {
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
     private static final String UPDATED_NOME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SENHA = "AAAAAAAAAA";
-    private static final String UPDATED_SENHA = "BBBBBBBBBB";
+    private static final String DEFAULT_CODIGO = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO = "BBBBBBBBBB";
 
     @Inject
     private ProfessorRepository professorRepository;
@@ -87,7 +87,7 @@ public class ProfessorResourceIntTest {
     public static Professor createEntity(EntityManager em) {
         Professor professor = new Professor()
                 .nome(DEFAULT_NOME)
-                .senha(DEFAULT_SENHA);
+                .codigo(DEFAULT_CODIGO);
         return professor;
     }
 
@@ -105,16 +105,16 @@ public class ProfessorResourceIntTest {
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
 
         restProfessorMockMvc.perform(post("/api/professors")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
-                .andExpect(status().isCreated());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isCreated());
 
         // Validate the Professor in the database
         List<Professor> professors = professorRepository.findAll();
         assertThat(professors).hasSize(databaseSizeBeforeCreate + 1);
         Professor testProfessor = professors.get(professors.size() - 1);
         assertThat(testProfessor.getNome()).isEqualTo(DEFAULT_NOME);
-        assertThat(testProfessor.getSenha()).isEqualTo(DEFAULT_SENHA);
+        assertThat(testProfessor.getCodigo()).isEqualTo(DEFAULT_CODIGO);
     }
 
     @Test
@@ -128,9 +128,9 @@ public class ProfessorResourceIntTest {
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
 
         restProfessorMockMvc.perform(post("/api/professors")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isBadRequest());
 
         List<Professor> professors = professorRepository.findAll();
         assertThat(professors).hasSize(databaseSizeBeforeTest);
@@ -138,18 +138,18 @@ public class ProfessorResourceIntTest {
 
     @Test
     @Transactional
-    public void checkSenhaIsRequired() throws Exception {
+    public void checkCodigoIsRequired() throws Exception {
         int databaseSizeBeforeTest = professorRepository.findAll().size();
         // set the field null
-        professor.setSenha(null);
+        professor.setCodigo(null);
 
         // Create the Professor, which fails.
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
 
         restProfessorMockMvc.perform(post("/api/professors")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
-                .andExpect(status().isBadRequest());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isBadRequest());
 
         List<Professor> professors = professorRepository.findAll();
         assertThat(professors).hasSize(databaseSizeBeforeTest);
@@ -163,11 +163,11 @@ public class ProfessorResourceIntTest {
 
         // Get all the professors
         restProfessorMockMvc.perform(get("/api/professors?sort=id,desc"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(professor.getId().intValue())))
-                .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-                .andExpect(jsonPath("$.[*].senha").value(hasItem(DEFAULT_SENHA.toString())));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(professor.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+            .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO.toString())));
     }
 
     @Test
@@ -182,7 +182,7 @@ public class ProfessorResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(professor.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.senha").value(DEFAULT_SENHA.toString()));
+            .andExpect(jsonPath("$.codigo").value(DEFAULT_CODIGO.toString()));
     }
 
     @Test
@@ -190,7 +190,7 @@ public class ProfessorResourceIntTest {
     public void getNonExistingProfessor() throws Exception {
         // Get the professor
         restProfessorMockMvc.perform(get("/api/professors/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -204,20 +204,20 @@ public class ProfessorResourceIntTest {
         Professor updatedProfessor = professorRepository.findOne(professor.getId());
         updatedProfessor
                 .nome(UPDATED_NOME)
-                .senha(UPDATED_SENHA);
+                .codigo(UPDATED_CODIGO);
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(updatedProfessor);
 
         restProfessorMockMvc.perform(put("/api/professors")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
-                .andExpect(status().isOk());
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(professorDTO)))
+            .andExpect(status().isOk());
 
         // Validate the Professor in the database
         List<Professor> professors = professorRepository.findAll();
         assertThat(professors).hasSize(databaseSizeBeforeUpdate);
         Professor testProfessor = professors.get(professors.size() - 1);
         assertThat(testProfessor.getNome()).isEqualTo(UPDATED_NOME);
-        assertThat(testProfessor.getSenha()).isEqualTo(UPDATED_SENHA);
+        assertThat(testProfessor.getCodigo()).isEqualTo(UPDATED_CODIGO);
     }
 
     @Test
@@ -229,8 +229,8 @@ public class ProfessorResourceIntTest {
 
         // Get the professor
         restProfessorMockMvc.perform(delete("/api/professors/{id}", professor.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Professor> professors = professorRepository.findAll();
