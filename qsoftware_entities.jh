@@ -85,16 +85,18 @@ enum TipoConvite{
 
 // Relacionamentos
 relationship OneToMany{
-	Departamento{departamentoprofessor} to Professor,
-    Aluno{alunodocumento} to Documento,
-    Professor{orientadorconviteprofessorcomite} to Convite,
-    Aluno{conviteorientardocumento} to Convite
+		Departamento{departamentoprofessor} to Professor {professordepartamento},
+    Professor{orientadorconviteprofessorcomite} to Convite{coviteorientadorcomite},
+    Aluno{alunoconviteorientardocumento} to Convite{convitealunoorientardocumento}
 }
 relationship ManyToMany{
-	Comite{comiteprofessor} to Professor
+		Comite{comiteprofessor} to Professor,
+		Aluno{alunodocumento} to Documento
 }
 relationship OneToOne{
-	Convite{conviteprofessor} to Professor,
+		Professor{professoruser} to User,
+		Aluno{alunouser} to User,
+		Convite{conviteprofessor} to Professor,
     Documento{documentocomite} to Comite,
     Documento{documentoorientador} to Professor,
     Convite{conviteComite} to Comite,
