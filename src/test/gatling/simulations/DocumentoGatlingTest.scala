@@ -67,7 +67,7 @@ class DocumentoGatlingTest extends Simulation {
             .exec(http("Create new documento")
             .post("/api/documentos")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "titulo":"SAMPLE_TEXT", "resumo":"SAMPLE_TEXT", "dataCriacao":"2020-01-01T00:00:00.000Z", "status":null, "tipoDocumento":null, "tipoMonografia":null, "arquivo":null}""")).asJSON
+            .body(StringBody("""{"id":null, "titulo":"SAMPLE_TEXT", "resumo":"SAMPLE_TEXT", "dataCriacao":"2020-01-01T00:00:00.000Z", "status":null, "tipoDocumento":null, "arquivo":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_documento_url"))).exitHereIfFailed
             .pause(10)

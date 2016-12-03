@@ -15,8 +15,6 @@ public interface ConviteComiteMapper {
     @Mapping(source = "professorconvidadocomite.id", target = "professorconvidadocomiteId")
     @Mapping(source = "professorconvidadocomite.codigo", target = "professorconvidadocomiteCodigo")
     @Mapping(source = "comite.id", target = "comiteId")
-    @Mapping(source = "documento.id", target = "documentoId")
-    @Mapping(source = "documento.titulo", target = "documentoTitulo")
     @Mapping(source = "orientadorqueconvidou.id", target = "orientadorqueconvidouId")
     @Mapping(source = "orientadorqueconvidou.codigo", target = "orientadorqueconvidouCodigo")
     ConviteComiteDTO conviteComiteToConviteComiteDTO(ConviteComite conviteComite);
@@ -25,7 +23,6 @@ public interface ConviteComiteMapper {
 
     @Mapping(source = "professorconvidadocomiteId", target = "professorconvidadocomite")
     @Mapping(source = "comiteId", target = "comite")
-    @Mapping(source = "documentoId", target = "documento")
     @Mapping(source = "orientadorqueconvidouId", target = "orientadorqueconvidou")
     ConviteComite conviteComiteDTOToConviteComite(ConviteComiteDTO conviteComiteDTO);
 
@@ -47,14 +44,5 @@ public interface ConviteComiteMapper {
         Comite comite = new Comite();
         comite.setId(id);
         return comite;
-    }
-
-    default Documento documentoFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Documento documento = new Documento();
-        documento.setId(id);
-        return documento;
     }
 }

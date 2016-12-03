@@ -16,7 +16,7 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "6d1532af6361af28bc6623d5e7a3cff097493116",
+    "rememberMeKey": "84d012af0b3f30c49c3437b60016f5d0c5b6966b",
     "useSass": true,
     "applicationType": "monolith",
     "testFrameworks": [

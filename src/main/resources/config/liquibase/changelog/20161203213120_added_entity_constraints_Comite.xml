@@ -6,8 +6,14 @@
     <!--
         Added the constraints for entity Comite.
     -->
-    <changeSet id="20161202222229-2" author="jhipster">
+    <changeSet id="20161203213120-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="documento_id"
+                                 baseTableName="comite"
+                                 constraintName="fk_comite_documento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="documento"/>
+
         <addForeignKeyConstraint baseColumnNames="comites_id"
                                  baseTableName="comite_professor"
                                  constraintName="fk_comite_professor_comites_id"

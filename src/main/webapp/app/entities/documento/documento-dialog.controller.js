@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('DocumentoDialogController', DocumentoDialogController);
 
-    DocumentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'DataUtils', 'entity', 'Documento', 'Comite', 'Professor', 'Aluno'];
+    DocumentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Documento', 'Professor', 'Comite', 'Aluno'];
 
-    function DocumentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, DataUtils, entity, Documento, Comite, Professor, Aluno) {
+    function DocumentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Documento, Professor, Comite, Aluno) {
         var vm = this;
 
         vm.documento = entity;
@@ -17,16 +17,8 @@
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
         vm.save = save;
-        vm.comites = Comite.query({filter: 'documento(titulo)-is-null'});
-        $q.all([vm.documento.$promise, vm.comites.$promise]).then(function() {
-            if (!vm.documento.comiteId) {
-                return $q.reject();
-            }
-            return Comite.get({id : vm.documento.comiteId}).$promise;
-        }).then(function(comite) {
-            vm.comites.push(comite);
-        });
         vm.professors = Professor.query();
+        vm.comites = Comite.query();
         vm.alunos = Aluno.query();
 
         $timeout(function (){

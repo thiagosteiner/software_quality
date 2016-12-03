@@ -100,7 +100,6 @@
                                 dataCriacao: null,
                                 status: null,
                                 tipoDocumento: null,
-                                tipoMonografia: null,
                                 arquivo: null,
                                 arquivoContentType: null,
                                 id: null

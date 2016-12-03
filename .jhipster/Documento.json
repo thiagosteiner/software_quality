@@ -2,20 +2,19 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "comite",
-            "otherEntityName": "comite",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "documento(titulo)"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "documentosorientados",
             "relationshipName": "orientador",
             "otherEntityName": "professor",
             "otherEntityField": "codigo",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "comite",
+            "otherEntityName": "comite",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "documento"
         },
         {
             "relationshipType": "many-to-many",
@@ -40,8 +39,8 @@
         },
         {
             "fieldName": "status",
-            "fieldType": "SituacaoPublicacao",
-            "fieldValues": "NULL,REJEITADA,APROVADA"
+            "fieldType": "SituacaoAprovacao",
+            "fieldValues": "REJEITADO,APROVADO,EM_ANDAMENTO"
         },
         {
             "fieldName": "tipoDocumento",
@@ -49,17 +48,12 @@
             "fieldValues": "MONOGRAFIA,PROPOSTAMONOGRAFIA,ARTIGO"
         },
         {
-            "fieldName": "tipoMonografia",
-            "fieldType": "TipoMonografia",
-            "fieldValues": "NULL,DISSERTACAO,TESE"
-        },
-        {
             "fieldName": "arquivo",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "any"
         }
     ],
-    "changelogDate": "20161202222226",
+    "changelogDate": "20161203213117",
     "entityTableName": "documento",
     "dto": "mapstruct",
     "pagination": "no",

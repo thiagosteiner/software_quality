@@ -24,6 +24,12 @@ public interface DocumentoService {
      *  @return the list of entities
      */
     List<DocumentoDTO> findAll();
+    /**
+     *  Get all the DocumentoDTO where Comite is null.
+     *
+     *  @return the list of entities
+     */
+    List<DocumentoDTO> findAllWhereComiteIsNull();
 
     /**
      *  Get the "id" documento.

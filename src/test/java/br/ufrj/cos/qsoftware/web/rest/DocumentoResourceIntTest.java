@@ -34,9 +34,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoPublicacao;
+import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
 import br.ufrj.cos.qsoftware.domain.enumeration.TipoDocumento;
-import br.ufrj.cos.qsoftware.domain.enumeration.TipoMonografia;
 /**
  * Test class for the DocumentoResource REST controller.
  *
@@ -55,14 +54,11 @@ public class DocumentoResourceIntTest {
     private static final LocalDate DEFAULT_DATA_CRIACAO = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA_CRIACAO = LocalDate.now(ZoneId.systemDefault());
 
-    private static final SituacaoPublicacao DEFAULT_STATUS = SituacaoPublicacao.NULL;
-    private static final SituacaoPublicacao UPDATED_STATUS = SituacaoPublicacao.REJEITADA;
+    private static final SituacaoAprovacao DEFAULT_STATUS = SituacaoAprovacao.REJEITADO;
+    private static final SituacaoAprovacao UPDATED_STATUS = SituacaoAprovacao.APROVADO;
 
     private static final TipoDocumento DEFAULT_TIPO_DOCUMENTO = TipoDocumento.MONOGRAFIA;
     private static final TipoDocumento UPDATED_TIPO_DOCUMENTO = TipoDocumento.PROPOSTAMONOGRAFIA;
-
-    private static final TipoMonografia DEFAULT_TIPO_MONOGRAFIA = TipoMonografia.NULL;
-    private static final TipoMonografia UPDATED_TIPO_MONOGRAFIA = TipoMonografia.DISSERTACAO;
 
     private static final byte[] DEFAULT_ARQUIVO = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_ARQUIVO = TestUtil.createByteArray(2, "1");
@@ -114,7 +110,6 @@ public class DocumentoResourceIntTest {
                 .dataCriacao(DEFAULT_DATA_CRIACAO)
                 .status(DEFAULT_STATUS)
                 .tipoDocumento(DEFAULT_TIPO_DOCUMENTO)
-                .tipoMonografia(DEFAULT_TIPO_MONOGRAFIA)
                 .arquivo(DEFAULT_ARQUIVO)
                 .arquivoContentType(DEFAULT_ARQUIVO_CONTENT_TYPE);
         return documento;
@@ -147,7 +142,6 @@ public class DocumentoResourceIntTest {
         assertThat(testDocumento.getDataCriacao()).isEqualTo(DEFAULT_DATA_CRIACAO);
         assertThat(testDocumento.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testDocumento.getTipoDocumento()).isEqualTo(DEFAULT_TIPO_DOCUMENTO);
-        assertThat(testDocumento.getTipoMonografia()).isEqualTo(DEFAULT_TIPO_MONOGRAFIA);
         assertThat(testDocumento.getArquivo()).isEqualTo(DEFAULT_ARQUIVO);
         assertThat(testDocumento.getArquivoContentType()).isEqualTo(DEFAULT_ARQUIVO_CONTENT_TYPE);
     }
@@ -168,7 +162,6 @@ public class DocumentoResourceIntTest {
             .andExpect(jsonPath("$.[*].dataCriacao").value(hasItem(DEFAULT_DATA_CRIACAO.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].tipoDocumento").value(hasItem(DEFAULT_TIPO_DOCUMENTO.toString())))
-            .andExpect(jsonPath("$.[*].tipoMonografia").value(hasItem(DEFAULT_TIPO_MONOGRAFIA.toString())))
             .andExpect(jsonPath("$.[*].arquivoContentType").value(hasItem(DEFAULT_ARQUIVO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].arquivo").value(hasItem(Base64Utils.encodeToString(DEFAULT_ARQUIVO))));
     }
@@ -189,7 +182,6 @@ public class DocumentoResourceIntTest {
             .andExpect(jsonPath("$.dataCriacao").value(DEFAULT_DATA_CRIACAO.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.tipoDocumento").value(DEFAULT_TIPO_DOCUMENTO.toString()))
-            .andExpect(jsonPath("$.tipoMonografia").value(DEFAULT_TIPO_MONOGRAFIA.toString()))
             .andExpect(jsonPath("$.arquivoContentType").value(DEFAULT_ARQUIVO_CONTENT_TYPE))
             .andExpect(jsonPath("$.arquivo").value(Base64Utils.encodeToString(DEFAULT_ARQUIVO)));
     }
@@ -217,7 +209,6 @@ public class DocumentoResourceIntTest {
                 .dataCriacao(UPDATED_DATA_CRIACAO)
                 .status(UPDATED_STATUS)
                 .tipoDocumento(UPDATED_TIPO_DOCUMENTO)
-                .tipoMonografia(UPDATED_TIPO_MONOGRAFIA)
                 .arquivo(UPDATED_ARQUIVO)
                 .arquivoContentType(UPDATED_ARQUIVO_CONTENT_TYPE);
         DocumentoDTO documentoDTO = documentoMapper.documentoToDocumentoDTO(updatedDocumento);
@@ -236,7 +227,6 @@ public class DocumentoResourceIntTest {
         assertThat(testDocumento.getDataCriacao()).isEqualTo(UPDATED_DATA_CRIACAO);
         assertThat(testDocumento.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testDocumento.getTipoDocumento()).isEqualTo(UPDATED_TIPO_DOCUMENTO);
-        assertThat(testDocumento.getTipoMonografia()).isEqualTo(UPDATED_TIPO_MONOGRAFIA);
         assertThat(testDocumento.getArquivo()).isEqualTo(UPDATED_ARQUIVO);
         assertThat(testDocumento.getArquivoContentType()).isEqualTo(UPDATED_ARQUIVO_CONTENT_TYPE);
     }

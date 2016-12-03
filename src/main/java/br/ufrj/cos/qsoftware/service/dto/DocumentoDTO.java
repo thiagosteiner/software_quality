@@ -7,9 +7,8 @@ import java.util.Set;
 import java.util.Objects;
 import javax.persistence.Lob;
 
-import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoPublicacao;
+import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
 import br.ufrj.cos.qsoftware.domain.enumeration.TipoDocumento;
-import br.ufrj.cos.qsoftware.domain.enumeration.TipoMonografia;
 
 /**
  * A DTO for the Documento entity.
@@ -24,19 +23,15 @@ public class DocumentoDTO implements Serializable {
 
     private LocalDate dataCriacao;
 
-    private SituacaoPublicacao status;
+    private SituacaoAprovacao status;
 
     private TipoDocumento tipoDocumento;
-
-    private TipoMonografia tipoMonografia;
 
     @Lob
     private byte[] arquivo;
 
     private String arquivoContentType;
 
-    private Long comiteId;
-    
     private Set<ProfessorDTO> orientadors = new HashSet<>();
 
     public Long getId() {
@@ -67,11 +62,11 @@ public class DocumentoDTO implements Serializable {
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    public SituacaoPublicacao getStatus() {
+    public SituacaoAprovacao getStatus() {
         return status;
     }
 
-    public void setStatus(SituacaoPublicacao status) {
+    public void setStatus(SituacaoAprovacao status) {
         this.status = status;
     }
     public TipoDocumento getTipoDocumento() {
@@ -80,13 +75,6 @@ public class DocumentoDTO implements Serializable {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
-    }
-    public TipoMonografia getTipoMonografia() {
-        return tipoMonografia;
-    }
-
-    public void setTipoMonografia(TipoMonografia tipoMonografia) {
-        this.tipoMonografia = tipoMonografia;
     }
     public byte[] getArquivo() {
         return arquivo;
@@ -102,14 +90,6 @@ public class DocumentoDTO implements Serializable {
 
     public void setArquivoContentType(String arquivoContentType) {
         this.arquivoContentType = arquivoContentType;
-    }
-
-    public Long getComiteId() {
-        return comiteId;
-    }
-
-    public void setComiteId(Long comiteId) {
-        this.comiteId = comiteId;
     }
 
     public Set<ProfessorDTO> getOrientadors() {
@@ -150,7 +130,6 @@ public class DocumentoDTO implements Serializable {
             ", dataCriacao='" + dataCriacao + "'" +
             ", status='" + status + "'" +
             ", tipoDocumento='" + tipoDocumento + "'" +
-            ", tipoMonografia='" + tipoMonografia + "'" +
             ", arquivo='" + arquivo + "'" +
             '}';
     }

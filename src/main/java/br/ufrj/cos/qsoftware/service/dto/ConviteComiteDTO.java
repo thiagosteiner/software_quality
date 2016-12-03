@@ -27,11 +27,6 @@ public class ConviteComiteDTO implements Serializable {
 
     private Long comiteId;
     
-    private Long documentoId;
-    
-
-    private String documentoTitulo;
-
     private Long orientadorqueconvidouId;
     
 
@@ -82,23 +77,6 @@ public class ConviteComiteDTO implements Serializable {
 
     public void setComiteId(Long comiteId) {
         this.comiteId = comiteId;
-    }
-
-    public Long getDocumentoId() {
-        return documentoId;
-    }
-
-    public void setDocumentoId(Long documentoId) {
-        this.documentoId = documentoId;
-    }
-
-
-    public String getDocumentoTitulo() {
-        return documentoTitulo;
-    }
-
-    public void setDocumentoTitulo(String documentoTitulo) {
-        this.documentoTitulo = documentoTitulo;
     }
 
     public Long getOrientadorqueconvidouId() {

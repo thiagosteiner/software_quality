@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Aluno.
     -->
-    <changeSet id="20161202222223-2" author="jhipster">
+    <changeSet id="20161203213114-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="aluno"

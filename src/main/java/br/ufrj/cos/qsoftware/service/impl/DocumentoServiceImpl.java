@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Documento.
@@ -57,6 +58,21 @@ public class DocumentoServiceImpl implements DocumentoService{
             .collect(Collectors.toCollection(LinkedList::new));
 
         return result;
+    }
+
+
+    /**
+     *  get all the documentos where Comite is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<DocumentoDTO> findAllWhereComiteIsNull() {
+        log.debug("Request to get all documentos where Comite is null");
+        return StreamSupport
+            .stream(documentoRepository.findAll().spliterator(), false)
+            .filter(documento -> documento.getComite() == null)
+            .map(documentoMapper::documentoToDocumentoDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

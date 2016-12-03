@@ -20,9 +20,9 @@
                 <tr>
                     <th><span>ID</span></th>
                     <th><span>Local</span></th>
-                    <th><span>Tipo</span></th>
                     <th><span>Data Ocorrencia</span></th>
                     <th><span>Ata Comite</span></th>
+                    <th><span>Documento</span></th>
                     <th><span>Professor</span></th>
                     <th></th>
                 </tr>
@@ -31,9 +31,11 @@
                 <tr ng-repeat="comite in vm.comites track by comite.id">
                     <td><a ui-sref="comite-detail({id:comite.id})">{{comite.id}}</a></td>
                     <td>{{comite.local}}</td>
-                    <td>{{comite.tipo}}</td>
                         <td>{{comite.dataOcorrencia | date:'mediumDate'}}</td>
                     <td>{{comite.ataComite}}</td>
+                    <td>
+                        <a ui-sref="documento-detail({id:comite.documentoId})">{{comite.documentoTitulo}}</a>
+                    </td>
                     <td>
                         <span ng-repeat="professor in comite.professors">
                             <a class="form-control-static" ui-sref="professor-detail({id: professor.id})">{{professor.codigo}}</a>{{$last ? '' : ', '}}

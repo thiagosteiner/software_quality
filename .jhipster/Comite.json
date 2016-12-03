@@ -2,30 +2,26 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "documento",
+            "otherEntityName": "documento",
+            "otherEntityField": "titulo",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "comite"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "comite",
             "relationshipName": "professor",
             "otherEntityName": "professor",
             "otherEntityField": "codigo",
             "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "documento",
-            "otherEntityName": "documento",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "comite"
         }
     ],
     "fields": [
         {
             "fieldName": "local",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "tipo",
-            "fieldType": "TipoComite",
-            "fieldValues": "PROPOSTA,MONOGRAFIA"
         },
         {
             "fieldName": "dataOcorrencia",
@@ -36,7 +32,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20161202222229",
+    "changelogDate": "20161203213120",
     "entityTableName": "comite",
     "dto": "mapstruct",
     "pagination": "no",

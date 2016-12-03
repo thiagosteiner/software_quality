@@ -11,11 +11,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoPublicacao;
+import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
 
 import br.ufrj.cos.qsoftware.domain.enumeration.TipoDocumento;
-
-import br.ufrj.cos.qsoftware.domain.enumeration.TipoMonografia;
 
 /**
  * A Documento.
@@ -42,15 +40,11 @@ public class Documento implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private SituacaoPublicacao status;
+    private SituacaoAprovacao status;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_monografia")
-    private TipoMonografia tipoMonografia;
 
     @Lob
     @Column(name = "arquivo")
@@ -59,16 +53,16 @@ public class Documento implements Serializable {
     @Column(name = "arquivo_content_type")
     private String arquivoContentType;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Comite comite;
-
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "documento_orientador",
                joinColumns = @JoinColumn(name="documentos_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="orientadors_id", referencedColumnName="ID"))
     private Set<Professor> orientadors = new HashSet<>();
+
+    @OneToOne(mappedBy = "documento")
+    @JsonIgnore
+    private Comite comite;
 
     @ManyToMany(mappedBy = "documentos")
     @JsonIgnore
@@ -122,16 +116,16 @@ public class Documento implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public SituacaoPublicacao getStatus() {
+    public SituacaoAprovacao getStatus() {
         return status;
     }
 
-    public Documento status(SituacaoPublicacao status) {
+    public Documento status(SituacaoAprovacao status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(SituacaoPublicacao status) {
+    public void setStatus(SituacaoAprovacao status) {
         this.status = status;
     }
 
@@ -146,19 +140,6 @@ public class Documento implements Serializable {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
-    }
-
-    public TipoMonografia getTipoMonografia() {
-        return tipoMonografia;
-    }
-
-    public Documento tipoMonografia(TipoMonografia tipoMonografia) {
-        this.tipoMonografia = tipoMonografia;
-        return this;
-    }
-
-    public void setTipoMonografia(TipoMonografia tipoMonografia) {
-        this.tipoMonografia = tipoMonografia;
     }
 
     public byte[] getArquivo() {
@@ -187,19 +168,6 @@ public class Documento implements Serializable {
         this.arquivoContentType = arquivoContentType;
     }
 
-    public Comite getComite() {
-        return comite;
-    }
-
-    public Documento comite(Comite comite) {
-        this.comite = comite;
-        return this;
-    }
-
-    public void setComite(Comite comite) {
-        this.comite = comite;
-    }
-
     public Set<Professor> getOrientadors() {
         return orientadors;
     }
@@ -223,6 +191,19 @@ public class Documento implements Serializable {
 
     public void setOrientadors(Set<Professor> professors) {
         this.orientadors = professors;
+    }
+
+    public Comite getComite() {
+        return comite;
+    }
+
+    public Documento comite(Comite comite) {
+        this.comite = comite;
+        return this;
+    }
+
+    public void setComite(Comite comite) {
+        this.comite = comite;
     }
 
     public Set<Aluno> getAlunos() {
@@ -279,7 +260,6 @@ public class Documento implements Serializable {
             ", dataCriacao='" + dataCriacao + "'" +
             ", status='" + status + "'" +
             ", tipoDocumento='" + tipoDocumento + "'" +
-            ", tipoMonografia='" + tipoMonografia + "'" +
             ", arquivo='" + arquivo + "'" +
             ", arquivoContentType='" + arquivoContentType + "'" +
             '}';

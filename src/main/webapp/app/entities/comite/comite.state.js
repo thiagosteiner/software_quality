@@ -96,7 +96,6 @@
                         entity: function () {
                             return {
                                 local: null,
-                                tipo: null,
                                 dataOcorrencia: null,
                                 ataComite: null,
                                 id: null

@@ -12,25 +12,15 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {ProfessorMapper.class, })
 public interface DocumentoMapper {
 
-    @Mapping(source = "comite.id", target = "comiteId")
     DocumentoDTO documentoToDocumentoDTO(Documento documento);
 
     List<DocumentoDTO> documentosToDocumentoDTOs(List<Documento> documentos);
 
-    @Mapping(source = "comiteId", target = "comite")
+    @Mapping(target = "comite", ignore = true)
     @Mapping(target = "alunos", ignore = true)
     Documento documentoDTOToDocumento(DocumentoDTO documentoDTO);
 
     List<Documento> documentoDTOsToDocumentos(List<DocumentoDTO> documentoDTOs);
-
-    default Comite comiteFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Comite comite = new Comite();
-        comite.setId(id);
-        return comite;
-    }
 
     default Professor professorFromId(Long id) {
         if (id == null) {

@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('ComiteDialogController', ComiteDialogController);
 
-    ComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Comite', 'Professor', 'Documento'];
+    ComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Comite', 'Documento', 'Professor'];
 
-    function ComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Comite, Professor, Documento) {
+    function ComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Comite, Documento, Professor) {
         var vm = this;
 
         vm.comite = entity;
@@ -15,8 +15,16 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.documentos = Documento.query({filter: 'comite-is-null'});
+        $q.all([vm.comite.$promise, vm.documentos.$promise]).then(function() {
+            if (!vm.comite.documentoId) {
+                return $q.reject();
+            }
+            return Documento.get({id : vm.comite.documentoId}).$promise;
+        }).then(function(documento) {
+            vm.documentos.push(documento);
+        });
         vm.professors = Professor.query();
-        vm.documentos = Documento.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

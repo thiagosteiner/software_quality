@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('ConviteComiteDialogController', ConviteComiteDialogController);
 
-    ConviteComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ConviteComite', 'Professor', 'Comite', 'Documento'];
+    ConviteComiteDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'ConviteComite', 'Professor', 'Comite'];
 
-    function ConviteComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ConviteComite, Professor, Comite, Documento) {
+    function ConviteComiteDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, ConviteComite, Professor, Comite) {
         var vm = this;
 
         vm.conviteComite = entity;
@@ -32,15 +32,6 @@
             return Comite.get({id : vm.conviteComite.comiteId}).$promise;
         }).then(function(comite) {
             vm.comites.push(comite);
-        });
-        vm.documentos = Documento.query({filter: 'convitecomite-is-null'});
-        $q.all([vm.conviteComite.$promise, vm.documentos.$promise]).then(function() {
-            if (!vm.conviteComite.documentoId) {
-                return $q.reject();
-            }
-            return Documento.get({id : vm.conviteComite.documentoId}).$promise;
-        }).then(function(documento) {
-            vm.documentos.push(documento);
         });
         vm.professors = Professor.query();
 

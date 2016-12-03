@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import br.ufrj.cos.qsoftware.domain.enumeration.TipoComite;
 
 /**
  * A DTO for the Comite entity.
@@ -17,12 +16,15 @@ public class ComiteDTO implements Serializable {
 
     private String local;
 
-    private TipoComite tipo;
-
     private LocalDate dataOcorrencia;
 
     private String ataComite;
 
+
+    private Long documentoId;
+    
+
+    private String documentoTitulo;
 
     private Set<ProfessorDTO> professors = new HashSet<>();
 
@@ -40,13 +42,6 @@ public class ComiteDTO implements Serializable {
     public void setLocal(String local) {
         this.local = local;
     }
-    public TipoComite getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoComite tipo) {
-        this.tipo = tipo;
-    }
     public LocalDate getDataOcorrencia() {
         return dataOcorrencia;
     }
@@ -60,6 +55,23 @@ public class ComiteDTO implements Serializable {
 
     public void setAtaComite(String ataComite) {
         this.ataComite = ataComite;
+    }
+
+    public Long getDocumentoId() {
+        return documentoId;
+    }
+
+    public void setDocumentoId(Long documentoId) {
+        this.documentoId = documentoId;
+    }
+
+
+    public String getDocumentoTitulo() {
+        return documentoTitulo;
+    }
+
+    public void setDocumentoTitulo(String documentoTitulo) {
+        this.documentoTitulo = documentoTitulo;
     }
 
     public Set<ProfessorDTO> getProfessors() {
@@ -96,7 +108,6 @@ public class ComiteDTO implements Serializable {
         return "ComiteDTO{" +
             "id=" + id +
             ", local='" + local + "'" +
-            ", tipo='" + tipo + "'" +
             ", dataOcorrencia='" + dataOcorrencia + "'" +
             ", ataComite='" + ataComite + "'" +
             '}';

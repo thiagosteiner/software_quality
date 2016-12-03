@@ -20,13 +20,6 @@
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_tipo">Tipo</label>
-            <select class="form-control" name="tipo" ng-model="vm.comite.tipo" id="field_tipo">
-                <option value="PROPOSTA">PROPOSTA</option>
-                <option value="MONOGRAFIA">MONOGRAFIA</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label class="control-label" for="field_dataOcorrencia">Data Ocorrencia</label>
                 <div class="input-group">
                     <input id="field_dataOcorrencia" type="text" class="form-control" name="dataOcorrencia" uib-datepicker-popup="{{dateformat}}" ng-model="vm.comite.dataOcorrencia" is-open="vm.datePickerOpenStatus.dataOcorrencia"
@@ -43,6 +36,12 @@
                      />
         </div>
 
+        <div class="form-group">
+            <label for="field_documento">Documento</label>
+            <select class="form-control" id="field_documento" name="documento" ng-model="vm.comite.documentoId" ng-options="documento.id as documento.titulo for documento in vm.documentos | orderBy:'id'">
+                <option value=""></option>
+            </select>
+        </div>
         <div class="form-group">
             <label for="field_professor">Professor</label>
             <select class="form-control" id="field_professor" multiple name="professor" ng-model="vm.comite.professors" ng-options="professor as professor.codigo for professor in vm.professors track by professor.id"></select>

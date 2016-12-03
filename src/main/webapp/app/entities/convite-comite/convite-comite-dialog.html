@@ -44,12 +44,6 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="field_documento">Documento</label>
-            <select class="form-control" id="field_documento" name="documento" ng-model="vm.conviteComite.documentoId" ng-options="documento.id as documento.titulo for documento in vm.documentos | orderBy:'id'">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="field_orientadorqueconvidou">Orientadorqueconvidou</label>
             <select class="form-control" id="field_orientadorqueconvidou" name="orientadorqueconvidou" ng-model="vm.conviteComite.orientadorqueconvidouId" ng-options="professor.id as professor.codigo for professor in vm.professors"            >
                 <option value=""></option>

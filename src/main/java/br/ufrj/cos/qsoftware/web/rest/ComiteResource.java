@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Comite.
@@ -77,16 +76,11 @@ public class ComiteResource {
     /**
      * GET  /comites : get all the comites.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of comites in body
      */
     @GetMapping("/comites")
     @Timed
-    public List<ComiteDTO> getAllComites(@RequestParam(required = false) String filter) {
-        if ("documento-is-null".equals(filter)) {
-            log.debug("REST request to get all Comites where documento is null");
-            return comiteService.findAllWhereDocumentoIsNull();
-        }
+    public List<ComiteDTO> getAllComites() {
         log.debug("REST request to get all Comites");
         return comiteService.findAll();
     }

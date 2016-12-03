@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity ConviteComite.
     -->
-    <changeSet id="20161202222227-2" author="jhipster">
+    <changeSet id="20161203213118-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="professorconvidadocomite_id"
                                  baseTableName="convite_comite"
@@ -19,12 +19,6 @@
                                  constraintName="fk_convite_comite_comite_id"
                                  referencedColumnNames="id"
                                  referencedTableName="comite"/>
-
-        <addForeignKeyConstraint baseColumnNames="documento_id"
-                                 baseTableName="convite_comite"
-                                 constraintName="fk_convite_comite_documento_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="documento"/>
 
         <addForeignKeyConstraint baseColumnNames="orientadorqueconvidou_id"
                                  baseTableName="convite_comite"

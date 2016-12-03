@@ -24,20 +24,12 @@
         <dd>
             <span>{{vm.documento.tipoDocumento}}</span>
         </dd>
-        <dt><span>Tipo Monografia</span></dt>
-        <dd>
-            <span>{{vm.documento.tipoMonografia}}</span>
-        </dd>
         <dt><span>Arquivo</span></dt>
         <dd>
             <div ng-if="vm.documento.arquivo">
                 <a ng-click="vm.openFile(vm.documento.arquivoContentType, vm.documento.arquivo)">open</a>
                 {{vm.documento.arquivoContentType}}, {{vm.byteSize(vm.documento.arquivo)}}
             </div>
-        </dd>
-        <dt><span>Comite</span></dt>
-        <dd>
-            <a ui-sref="comite-detail({id:vm.documento.comiteId})">{{vm.documento.comiteId}}</a>
         </dd>
         <dt><span>Orientador</span></dt>
         <dd>

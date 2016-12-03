@@ -39,10 +39,6 @@ public class ConviteComite implements Serializable {
     @JoinColumn(unique = true)
     private Comite comite;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Documento documento;
-
     @ManyToOne
     private Professor orientadorqueconvidou;
 
@@ -104,19 +100,6 @@ public class ConviteComite implements Serializable {
 
     public void setComite(Comite comite) {
         this.comite = comite;
-    }
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public ConviteComite documento(Documento documento) {
-        this.documento = documento;
-        return this;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
     }
 
     public Professor getOrientadorqueconvidou() {

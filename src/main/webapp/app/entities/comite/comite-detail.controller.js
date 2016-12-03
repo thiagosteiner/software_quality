@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('ComiteDetailController', ComiteDetailController);
 
-    ComiteDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Comite', 'Professor', 'Documento'];
+    ComiteDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Comite', 'Documento', 'Professor'];
 
-    function ComiteDetailController($scope, $rootScope, $stateParams, previousState, entity, Comite, Professor, Documento) {
+    function ComiteDetailController($scope, $rootScope, $stateParams, previousState, entity, Comite, Documento, Professor) {
         var vm = this;
 
         vm.comite = entity;

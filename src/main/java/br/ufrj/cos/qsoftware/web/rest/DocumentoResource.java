@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Documento.
@@ -76,11 +77,16 @@ public class DocumentoResource {
     /**
      * GET  /documentos : get all the documentos.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of documentos in body
      */
     @GetMapping("/documentos")
     @Timed
-    public List<DocumentoDTO> getAllDocumentos() {
+    public List<DocumentoDTO> getAllDocumentos(@RequestParam(required = false) String filter) {
+        if ("comite-is-null".equals(filter)) {
+            log.debug("REST request to get all Documentos where comite is null");
+            return documentoService.findAllWhereComiteIsNull();
+        }
         log.debug("REST request to get all Documentos");
         return documentoService.findAll();
     }

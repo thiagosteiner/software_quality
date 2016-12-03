@@ -14,10 +14,10 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Departamento.
+        Added the entity Professor.
     -->
-    <changeSet id="20161202222225-1" author="jhipster">
-        <createTable tableName="departamento">
+    <changeSet id="20161203213115-1" author="jhipster">
+        <createTable tableName="professor">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -25,6 +25,16 @@
                 <constraints nullable="false" />
             </column>
             
+            <column name="codigo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+                        <column name="user_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
+            <column name="departamento_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

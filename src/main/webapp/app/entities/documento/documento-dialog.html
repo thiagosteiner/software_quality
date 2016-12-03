@@ -38,9 +38,9 @@
         <div class="form-group">
             <label class="control-label" for="field_status">Status</label>
             <select class="form-control" name="status" ng-model="vm.documento.status" id="field_status">
-                <option value="NULL">NULL</option>
-                <option value="REJEITADA">REJEITADA</option>
-                <option value="APROVADA">APROVADA</option>
+                <option value="REJEITADO">REJEITADO</option>
+                <option value="APROVADO">APROVADO</option>
+                <option value="EM_ANDAMENTO" data-translate="qsoftwareApp.SituacaoAprovacao.EM_ANDAMENTO">EM_ANDAMENTO</option>
             </select>
         </div>
         <div class="form-group">
@@ -49,14 +49,6 @@
                 <option value="MONOGRAFIA">MONOGRAFIA</option>
                 <option value="PROPOSTAMONOGRAFIA">PROPOSTAMONOGRAFIA</option>
                 <option value="ARTIGO">ARTIGO</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_tipoMonografia">Tipo Monografia</label>
-            <select class="form-control" name="tipoMonografia" ng-model="vm.documento.tipoMonografia" id="field_tipoMonografia">
-                <option value="NULL">NULL</option>
-                <option value="DISSERTACAO">DISSERTACAO</option>
-                <option value="TESE">TESE</option>
             </select>
         </div>
         <div class="form-group" ngf-drop ngf-change="vm.setArquivo($file, vm.documento)">
@@ -82,12 +74,6 @@
                     ng-model="vm.documento.arquivoContentType" />
         </div>
 
-        <div class="form-group">
-            <label for="field_comite">Comite</label>
-            <select class="form-control" id="field_comite" name="comite" ng-model="vm.documento.comiteId" ng-options="comite.id as comite.id for comite in vm.comites | orderBy:'id'">
-                <option value=""></option>
-            </select>
-        </div>
         <div class="form-group">
             <label for="field_orientador">Orientador</label>
             <select class="form-control" id="field_orientador" multiple name="orientador" ng-model="vm.documento.orientadors" ng-options="professor as professor.codigo for professor in vm.professors track by professor.id"></select>

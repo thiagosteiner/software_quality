@@ -1,6 +1,5 @@
 package br.ufrj.cos.qsoftware.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,8 +9,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
-import br.ufrj.cos.qsoftware.domain.enumeration.TipoComite;
 
 /**
  * A Comite.
@@ -30,15 +27,15 @@ public class Comite implements Serializable {
     @Column(name = "local")
     private String local;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private TipoComite tipo;
-
     @Column(name = "data_ocorrencia")
     private LocalDate dataOcorrencia;
 
     @Column(name = "ata_comite")
     private String ataComite;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Documento documento;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -46,10 +43,6 @@ public class Comite implements Serializable {
                joinColumns = @JoinColumn(name="comites_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="professors_id", referencedColumnName="ID"))
     private Set<Professor> professors = new HashSet<>();
-
-    @OneToOne(mappedBy = "comite")
-    @JsonIgnore
-    private Documento documento;
 
     public Long getId() {
         return id;
@@ -70,19 +63,6 @@ public class Comite implements Serializable {
 
     public void setLocal(String local) {
         this.local = local;
-    }
-
-    public TipoComite getTipo() {
-        return tipo;
-    }
-
-    public Comite tipo(TipoComite tipo) {
-        this.tipo = tipo;
-        return this;
-    }
-
-    public void setTipo(TipoComite tipo) {
-        this.tipo = tipo;
     }
 
     public LocalDate getDataOcorrencia() {
@@ -111,6 +91,19 @@ public class Comite implements Serializable {
         this.ataComite = ataComite;
     }
 
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public Comite documento(Documento documento) {
+        this.documento = documento;
+        return this;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
+
     public Set<Professor> getProfessors() {
         return professors;
     }
@@ -134,19 +127,6 @@ public class Comite implements Serializable {
 
     public void setProfessors(Set<Professor> professors) {
         this.professors = professors;
-    }
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public Comite documento(Documento documento) {
-        this.documento = documento;
-        return this;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
     }
 
     @Override
@@ -174,7 +154,6 @@ public class Comite implements Serializable {
         return "Comite{" +
             "id=" + id +
             ", local='" + local + "'" +
-            ", tipo='" + tipo + "'" +
             ", dataOcorrencia='" + dataOcorrencia + "'" +
             ", ataComite='" + ataComite + "'" +
             '}';

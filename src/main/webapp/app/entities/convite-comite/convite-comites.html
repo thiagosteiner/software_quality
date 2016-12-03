@@ -23,7 +23,6 @@
                     <th><span>Data Criacao</span></th>
                     <th><span>Professorconvidadocomite</span></th>
                     <th><span>Comite</span></th>
-                    <th><span>Documento</span></th>
                     <th><span>Orientadorqueconvidou</span></th>
                     <th></th>
                 </tr>
@@ -38,9 +37,6 @@
                     </td>
                     <td>
                         <a ui-sref="comite-detail({id:conviteComite.comiteId})">{{conviteComite.comiteId}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="documento-detail({id:conviteComite.documentoId})">{{conviteComite.documentoTitulo}}</a>
                     </td>
                     <td>
                         <a ui-sref="professor-detail({id:conviteComite.orientadorqueconvidouId})">{{conviteComite.orientadorqueconvidouCodigo}}</a>

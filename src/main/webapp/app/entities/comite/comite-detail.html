@@ -8,10 +8,6 @@
         <dd>
             <span>{{vm.comite.local}}</span>
         </dd>
-        <dt><span>Tipo</span></dt>
-        <dd>
-            <span>{{vm.comite.tipo}}</span>
-        </dd>
         <dt><span>Data Ocorrencia</span></dt>
         <dd>
             <span>{{vm.comite.dataOcorrencia | date:'mediumDate'}}</span>
@@ -19,6 +15,10 @@
         <dt><span>Ata Comite</span></dt>
         <dd>
             <span>{{vm.comite.ataComite}}</span>
+        </dd>
+        <dt><span>Documento</span></dt>
+        <dd>
+            <a ui-sref="documento-detail({id:vm.comite.documentoId})">{{vm.comite.documentoTitulo}}</a>
         </dd>
         <dt><span>Professor</span></dt>
         <dd>

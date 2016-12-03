@@ -18,14 +18,6 @@
             "otherEntityRelationshipName": "conviteComite"
         },
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "documento",
-            "otherEntityName": "documento",
-            "otherEntityField": "titulo",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "conviteComite"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "orientadorqueconvidou",
             "otherEntityName": "professor",
@@ -43,7 +35,7 @@
             "fieldType": "LocalDate"
         }
     ],
-    "changelogDate": "20161202222227",
+    "changelogDate": "20161203213118",
     "entityTableName": "convite_comite",
     "dto": "mapstruct",
     "pagination": "no",

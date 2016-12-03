@@ -23,9 +23,7 @@ entity Documento{
     resumo String,
     dataCriacao LocalDate,
 	status SituacaoAprovacao,
-    status SituacaoPublicacao,
     tipoDocumento TipoDocumento,
-    tipoMonografia TipoMonografia,
     arquivo Blob
 }
 
@@ -42,7 +40,6 @@ entity ConviteOrientador{
 
 entity Comite{
     local String,
-	tipo TipoComite,
     dataOcorrencia LocalDate,
     ataComite String
 }
@@ -52,25 +49,10 @@ enum SituacaoAprovacao{
 	REJEITADO, APROVADO, EM_ANDAMENTO
 }
 
-enum SituacaoPublicacao{
-	NULL, REJEITADA, APROVADA
-}
-
-enum TipoComite{
-	PROPOSTA,
-    MONOGRAFIA
-}
-
 enum TipoDocumento{
 	MONOGRAFIA,
     PROPOSTAMONOGRAFIA,
     ARTIGO
-}
-
-enum TipoMonografia{
-	NULL,
-	DISSERTACAO,
-    TESE
 }
 
 enum TipoAluno{
@@ -83,23 +65,21 @@ enum SituacaoConvite{
 }
 
 
-
 // Relacionamentos
 relationship ManyToMany{
-		Comite{professor(codigo)} to Professor{comite},
-        Documento{orientador(codigo)} to Professor{documentosorientados(titulo)},
-		Aluno{documento} to Documento{aluno(dre)}
+	Comite{professor(codigo)} to Professor{comite},
+    Documento{orientador(codigo)} to Professor{documentosorientados(titulo)},
+	Aluno{documento} to Documento{aluno(dre)}
 }
 relationship OneToOne{
 	Professor{user(email)} to User,
 	Aluno{user(email)} to User,
 	ConviteOrientador{orientadorconvidado(codigo)} to Professor,
 	ConviteComite{professorconvidadocomite(codigo)} to Professor,
-    Documento{comite} to Comite{documento(titulo)},
+    Comite{documento(titulo)} to Documento{comite},
     ConviteComite{comite} to Comite,
-    ConviteOrientador{documento(titulo)} to Documento,
-	ConviteComite{documento(titulo)} to Documento
-    }
+    ConviteOrientador{documento(titulo)} to Documento
+	}
 
 relationship ManyToOne{
 	ConviteComite{orientadorqueconvidou(codigo)} to Professor ,
