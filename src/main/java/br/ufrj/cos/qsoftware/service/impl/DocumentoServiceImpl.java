@@ -104,7 +104,7 @@ public class DocumentoServiceImpl implements DocumentoService{
         log.debug("Request to get all documentos where Aluno is "+userName);
         return StreamSupport
             .stream(documentoRepository.findAll().spliterator(), false)
-            .filter(documento -> documento.getAluno().equals(userName))
+            .filter(documento -> documento.getAluno().getNome().equals(userName))
             .map(documentoMapper::documentoToDocumentoDTO)
             .collect(Collectors.toCollection(LinkedList::new));
     }
