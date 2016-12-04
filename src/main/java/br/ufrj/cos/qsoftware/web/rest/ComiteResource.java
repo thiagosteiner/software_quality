@@ -1,17 +1,24 @@
 package br.ufrj.cos.qsoftware.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
 import br.ufrj.cos.qsoftware.service.ComiteService;
 import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
 import br.ufrj.cos.qsoftware.service.dto.ComiteDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -41,6 +48,23 @@ public class ComiteResource {
     @PostMapping("/comites")
     @Timed
     public ResponseEntity<ComiteDTO> createComite(@RequestBody ComiteDTO comiteDTO) throws URISyntaxException {
+    	 SecurityContext securityContext = SecurityContextHolder.getContext();
+         Authentication authentication = securityContext.getAuthentication();
+         String userName = null;
+         if (authentication != null) {
+             if (authentication.getPrincipal() instanceof UserDetails) {
+                 UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                 userName = springSecurityUser.getUsername();
+             } else if (authentication.getPrincipal() instanceof String) {
+                 userName = (String) authentication.getPrincipal();
+             }
+         }
+    	
+        log.debug("=====================================================================");
+    	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Solicitar formação de Comitê");
+    	log.debug("=====================================================================");
+    	
+    	
         log.debug("REST request to save Comite : {}", comiteDTO);
         if (comiteDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("comite", "idexists", "A new comite cannot already have an ID")).body(null);
