@@ -71,7 +71,7 @@ public class ComiteResource {
         log.debug("=====================================================================");
     	log.debug(df.format(date)
     			+ " Usuario: " + userName 
-    			+ " efetuou o caso de Uso - Solicitar formação de Comitê");
+    			+ " efetuou o caso de Uso UC4 - Solicitar formação de Comitê");
     	log.debug("=====================================================================");
     	
     	

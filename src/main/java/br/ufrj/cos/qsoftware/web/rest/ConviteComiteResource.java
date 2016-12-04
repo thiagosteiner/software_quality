@@ -100,7 +100,7 @@ public class ConviteComiteResource {
         	log.debug("=====================================================================");        	
         	log.debug(df.format(date)
         			+ " Usuario: " + userName 
-        			+ " efetuou o caso de Uso - Confirmar participação em Comitê");
+        			+ " efetuou o caso de Uso UC5 - Confirmar participação em Comitê");
         	log.debug("=====================================================================");
         }
         

@@ -66,10 +66,13 @@ public class ConviteOrientadorResource {
             } else if (authentication.getPrincipal() instanceof String) {
                 userName = (String) authentication.getPrincipal();
             }
-        }
-    	     	
+        }  
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	Date date = new Date();
     	log.debug("=====================================================================");
-    	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Solicitar cadastro de Orientador");
+    	log.debug(df.format(date)
+    			+ "Usuario: " + userName 
+    			+ " efetuou o caso de Uso UC1 - Solicitar cadastro de Orientador");
     	log.debug("=====================================================================");
     	
     	
@@ -113,7 +116,7 @@ public class ConviteOrientadorResource {
         	log.debug("=====================================================================");
         	log.debug(df.format(date)
         			+ " Usuario: " + userName 
-        			+ " efetuou o caso de Uso - Aprovar cadastro de Orientador");
+        			+ " efetuou o caso de Uso UC2 - Aprovar cadastro de Orientador");
         	log.debug("=====================================================================");
         }
     	
