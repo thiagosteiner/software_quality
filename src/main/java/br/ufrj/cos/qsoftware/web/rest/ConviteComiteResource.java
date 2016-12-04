@@ -2,6 +2,9 @@ package br.ufrj.cos.qsoftware.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,9 +95,12 @@ public class ConviteComiteResource {
                     userName = (String) authentication.getPrincipal();
                 }
             }
-        	     	
-        	log.debug("=====================================================================");
-        	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Confirmar participação em Comitê");
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        	Date date = new Date();     	
+        	log.debug("=====================================================================");        	
+        	log.debug(df.format(date)
+        			+ " Usuario: " + userName 
+        			+ " efetuou o caso de Uso - Confirmar participação em Comitê");
         	log.debug("=====================================================================");
         }
         

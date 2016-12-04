@@ -2,6 +2,9 @@ package br.ufrj.cos.qsoftware.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,9 +108,12 @@ public class ConviteOrientadorResource {
                     userName = (String) authentication.getPrincipal();
                 }
             }
-        	     	
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        	Date date = new Date();
         	log.debug("=====================================================================");
-        	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Aprovar cadastro de Orientador");
+        	log.debug(df.format(date)
+        			+ " Usuario: " + userName 
+        			+ " efetuou o caso de Uso - Aprovar cadastro de Orientador");
         	log.debug("=====================================================================");
         }
     	
