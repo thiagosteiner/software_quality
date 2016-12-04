@@ -1,0 +1,62 @@
+
+<div>
+    <h2><span>Documento</span> {{vm.documento.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span>Titulo</span></dt>
+        <dd>
+            <span>{{vm.documento.titulo}}</span>
+        </dd>
+        <dt><span>Resumo</span></dt>
+        <dd>
+            <span>{{vm.documento.resumo}}</span>
+        </dd>
+        <dt><span>Data Criacao</span></dt>
+        <dd>
+            <span>{{vm.documento.dataCriacao | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{vm.documento.status}}</span>
+        </dd>
+        <dt><span>Tipo Documento</span></dt>
+        <dd>
+            <span>{{vm.documento.tipoDocumento}}</span>
+        </dd>
+        <dt><span>Tipo Monografia</span></dt>
+        <dd>
+            <span>{{vm.documento.tipoMonografia}}</span>
+        </dd>
+        <dt><span>Arquivo</span></dt>
+        <dd>
+            <div ng-if="vm.documento.arquivo">
+                <a ng-click="vm.openFile(vm.documento.arquivoContentType, vm.documento.arquivo)">open</a>
+                {{vm.documento.arquivoContentType}}, {{vm.byteSize(vm.documento.arquivo)}}
+            </div>
+        </dd>
+        <dt><span>Aluno</span></dt>
+        <dd>
+            <a ui-sref="aluno-detail({id:vm.documento.alunoId})">{{vm.documento.alunoId}}</a>
+        </dd>
+        <dt><span>Documentocomite</span></dt>
+        <dd>
+            <a ui-sref="comite-detail({id:vm.documento.documentocomiteId})">{{vm.documento.documentocomiteId}}</a>
+        </dd>
+        <dt><span>Documentoorientador</span></dt>
+        <dd>
+            <a ui-sref="professor-detail({id:vm.documento.documentoorientadorId})">{{vm.documento.documentoorientadorId}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button" ui-sref="documento-detail.edit({id:vm.documento.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm"> Edit</span>
+    </button>
+</div>
