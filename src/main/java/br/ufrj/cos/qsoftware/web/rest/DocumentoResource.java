@@ -130,6 +130,23 @@ public class DocumentoResource {
     @GetMapping("/documentos")
     @Timed
     public List<DocumentoDTO> getAllDocumentos(@RequestParam(required = false) String filter) {
+    	SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String userName = null;
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                userName = springSecurityUser.getUsername();
+            } else if (authentication.getPrincipal() instanceof String) {
+                userName = (String) authentication.getPrincipal();
+            }
+        }
+        if(userName.contains("aluno")){
+        	return documentoService.findAllWhereAlunoIs(userName);
+        }
+      
+    	
+    	
         if ("comite-is-null".equals(filter)) {
             log.debug("REST request to get all Documentos where comite is null");
             return documentoService.findAllWhereComiteIsNull();

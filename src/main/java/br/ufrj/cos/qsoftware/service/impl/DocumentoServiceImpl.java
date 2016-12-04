@@ -98,4 +98,16 @@ public class DocumentoServiceImpl implements DocumentoService{
         log.debug("Request to delete Documento : {}", id);
         documentoRepository.delete(id);
     }
+    
+    @Transactional(readOnly = true) 
+    public List<DocumentoDTO> findAllWhereAlunoIs(String userName) {
+        log.debug("Request to get all documentos where Aluno is "+userName);
+        return StreamSupport
+            .stream(documentoRepository.findAll().spliterator(), false)
+            .filter(documento -> documento.getAluno().equals(userName))
+            .map(documentoMapper::documentoToDocumentoDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+    
+    
 }
