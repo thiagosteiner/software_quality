@@ -3,6 +3,7 @@ package br.ufrj.cos.qsoftware.web.rest;
 import com.codahale.metrics.annotation.Timed;
 
 import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
+import br.ufrj.cos.qsoftware.security.SecurityUtils;
 import br.ufrj.cos.qsoftware.service.DocumentoService;
 import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
 import br.ufrj.cos.qsoftware.service.dto.DocumentoDTO;
@@ -132,18 +133,23 @@ public class DocumentoResource {
     public List<DocumentoDTO> getAllDocumentos(@RequestParam(required = false) String filter) {
     	SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
+
         String userName = null;
         if (authentication != null) {
             if (authentication.getPrincipal() instanceof UserDetails) {
                 UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
                 userName = springSecurityUser.getUsername();
+               
             } else if (authentication.getPrincipal() instanceof String) {
                 userName = (String) authentication.getPrincipal();
             }
         }
+
+        /*
         if(userName.contains("aluno")){
         	return documentoService.findAllWhereAlunoIs(userName);
-        }
+        } 
+        */
       
     	
     	
@@ -152,7 +158,12 @@ public class DocumentoResource {
             return documentoService.findAllWhereComiteIsNull();
         }
         log.debug("REST request to get all Documentos");
-        return documentoService.findAll();
+        
+        if( SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
+            return documentoService.findAll();
+        
+        }
+        return documentoService.findAllWhereAlunoIs(userName);
     }
 
     /**
