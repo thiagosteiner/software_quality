@@ -33,7 +33,7 @@
 
         <div class="form-group">
             <label for="field_orientadorconvidado">Orientadorconvidado</label>
-            <select class="form-control" id="field_orientadorconvidado" name="orientadorconvidado" ng-model="vm.conviteOrientador.orientadorconvidadoId" ng-options="professor.id as professor.codigo for professor in vm.orientadorconvidados | orderBy:'id'">
+            <select class="form-control" id="field_orientadorconvidado" name="orientadorconvidado" ng-model="vm.conviteOrientador.orientadorconvidadoId" ng-options="professor.id as professor.nome for professor in vm.orientadorconvidados | orderBy:'id'">
                 <option value=""></option>
             </select>
         </div>
@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <label for="field_alunoqueconvidou">Alunoqueconvidou</label>
-            <select class="form-control" id="field_alunoqueconvidou" name="alunoqueconvidou" ng-model="vm.conviteOrientador.alunoqueconvidouId" ng-options="aluno.id as aluno.dre for aluno in vm.alunos"            >
+            <select class="form-control" id="field_alunoqueconvidou" name="alunoqueconvidou" ng-model="vm.conviteOrientador.alunoqueconvidouId" ng-options="aluno.id as aluno.nome for aluno in vm.alunos"            >
                 <option value=""></option>
             </select>
         </div>

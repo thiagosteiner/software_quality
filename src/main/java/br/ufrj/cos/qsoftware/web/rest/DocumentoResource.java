@@ -2,6 +2,7 @@ package br.ufrj.cos.qsoftware.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 
+import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
 import br.ufrj.cos.qsoftware.service.DocumentoService;
 import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
 import br.ufrj.cos.qsoftware.service.dto.DocumentoDTO;
@@ -49,6 +50,24 @@ public class DocumentoResource {
     @PostMapping("/documentos")
     @Timed
     public ResponseEntity<DocumentoDTO> createDocumento(@RequestBody DocumentoDTO documentoDTO) throws URISyntaxException {
+    	SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String userName = null;
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                userName = springSecurityUser.getUsername();
+            } else if (authentication.getPrincipal() instanceof String) {
+                userName = (String) authentication.getPrincipal();
+            }
+        }
+    	     	
+    	log.debug("=====================================================================");
+    	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Enviar Documento");
+    	log.debug("=====================================================================");
+    	
+    	
+    	
         log.debug("REST request to save Documento : {}", documentoDTO);
         if (documentoDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("documento", "idexists", "A new documento cannot already have an ID")).body(null);
@@ -71,10 +90,31 @@ public class DocumentoResource {
     @PutMapping("/documentos")
     @Timed
     public ResponseEntity<DocumentoDTO> updateDocumento(@RequestBody DocumentoDTO documentoDTO) throws URISyntaxException {
+    	
         log.debug("REST request to update Documento : {}", documentoDTO);
         if (documentoDTO.getId() == null) {
             return createDocumento(documentoDTO);
         }
+        
+        if(documentoDTO.getStatus()==SituacaoAprovacao.APROVADO||documentoDTO.getStatus()==SituacaoAprovacao.REJEITADO){        	
+        	SecurityContext securityContext = SecurityContextHolder.getContext();
+            Authentication authentication = securityContext.getAuthentication();
+            String userName = null;
+            if (authentication != null) {
+                if (authentication.getPrincipal() instanceof UserDetails) {
+                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                    userName = springSecurityUser.getUsername();
+                } else if (authentication.getPrincipal() instanceof String) {
+                    userName = (String) authentication.getPrincipal();
+                }
+            }
+        	     	
+        	log.debug("=====================================================================");
+        	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Aprovar Documento");
+        	log.debug("=====================================================================");
+        }
+        
+        
         DocumentoDTO result = documentoService.save(documentoDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("documento", documentoDTO.getId().toString()))

@@ -1,23 +1,35 @@
 package br.ufrj.cos.qsoftware.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import br.ufrj.cos.qsoftware.service.ConviteOrientadorService;
-import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
-import br.ufrj.cos.qsoftware.service.dto.ConviteOrientadorDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoConvite;
+import br.ufrj.cos.qsoftware.service.ConviteOrientadorService;
+import br.ufrj.cos.qsoftware.service.dto.ConviteOrientadorDTO;
+import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
+
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing ConviteOrientador.
@@ -41,6 +53,23 @@ public class ConviteOrientadorResource {
     @PostMapping("/convite-orientadors")
     @Timed
     public ResponseEntity<ConviteOrientadorDTO> createConviteOrientador(@RequestBody ConviteOrientadorDTO conviteOrientadorDTO) throws URISyntaxException {
+    	SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        String userName = null;
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                userName = springSecurityUser.getUsername();
+            } else if (authentication.getPrincipal() instanceof String) {
+                userName = (String) authentication.getPrincipal();
+            }
+        }
+    	     	
+    	log.debug("=====================================================================");
+    	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Solicitar cadastro de Orientador");
+    	log.debug("=====================================================================");
+    	
+    	
         log.debug("REST request to save ConviteOrientador : {}", conviteOrientadorDTO);
         if (conviteOrientadorDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("conviteOrientador", "idexists", "A new conviteOrientador cannot already have an ID")).body(null);
@@ -63,7 +92,28 @@ public class ConviteOrientadorResource {
     @PutMapping("/convite-orientadors")
     @Timed
     public ResponseEntity<ConviteOrientadorDTO> updateConviteOrientador(@RequestBody ConviteOrientadorDTO conviteOrientadorDTO) throws URISyntaxException {
-        log.debug("REST request to update ConviteOrientador : {}", conviteOrientadorDTO);
+        
+    	if(conviteOrientadorDTO.getStatus()==SituacaoConvite.ACEITO||conviteOrientadorDTO.getStatus()==SituacaoConvite.REJEITADO){        	
+        	SecurityContext securityContext = SecurityContextHolder.getContext();
+            Authentication authentication = securityContext.getAuthentication();
+            String userName = null;
+            if (authentication != null) {
+                if (authentication.getPrincipal() instanceof UserDetails) {
+                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                    userName = springSecurityUser.getUsername();
+                } else if (authentication.getPrincipal() instanceof String) {
+                    userName = (String) authentication.getPrincipal();
+                }
+            }
+        	     	
+        	log.debug("=====================================================================");
+        	log.debug("Usuario: "+userName+" efetuou o caso de Uso - Aprovar cadastro de Orientador");
+        	log.debug("=====================================================================");
+        }
+    	
+    	
+    	
+    	log.debug("REST request to update ConviteOrientador : {}", conviteOrientadorDTO);
         if (conviteOrientadorDTO.getId() == null) {
             return createConviteOrientador(conviteOrientadorDTO);
         }
