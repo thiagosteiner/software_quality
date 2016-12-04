@@ -28,12 +28,6 @@
         <dd>
             {{vm.aluno.userEmail}}
         </dd>
-        <dt><span>Documento</span></dt>
-        <dd>
-            <span ng-repeat="documento in vm.aluno.documentos">
-                <a ui-sref="documento-detail({id: documento.id})">{{documento.id}}</a>{{$last ? '' : ', '}}
-            </span>
-        </dd>
     </dl>
 
     <button type="submit"

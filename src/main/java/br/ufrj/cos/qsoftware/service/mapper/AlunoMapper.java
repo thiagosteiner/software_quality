@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Mapper for the entity Aluno and its DTO AlunoDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, DocumentoMapper.class, })
+@Mapper(componentModel = "spring", uses = {UserMapper.class, })
 public interface AlunoMapper {
 
     @Mapping(source = "user.id", target = "userId")
@@ -19,16 +19,8 @@ public interface AlunoMapper {
     List<AlunoDTO> alunosToAlunoDTOs(List<Aluno> alunos);
 
     @Mapping(source = "userId", target = "user")
+    @Mapping(target = "documentos", ignore = true)
     Aluno alunoDTOToAluno(AlunoDTO alunoDTO);
 
     List<Aluno> alunoDTOsToAlunos(List<AlunoDTO> alunoDTOs);
-
-    default Documento documentoFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Documento documento = new Documento();
-        documento.setId(id);
-        return documento;
-    }
 }

@@ -67,9 +67,9 @@ enum SituacaoConvite{
 
 // Relacionamentos
 relationship ManyToMany{
-	Comite{professor(codigo)} to Professor{comite},
-    Documento{orientador(codigo)} to Professor{documentosorientados(titulo)},
-	Aluno{documento} to Documento{aluno(dre)}
+	Comite{professor(codigo)} to Professor{comite}
+    
+	
 }
 relationship OneToOne{
 	Professor{user(email)} to User,
@@ -84,8 +84,11 @@ relationship OneToOne{
 relationship ManyToOne{
 	ConviteComite{orientadorqueconvidou(codigo)} to Professor ,
 	ConviteOrientador{alunoqueconvidou(dre)} to Aluno,
-	Professor{departamento(nome)} to Departamento
+	Professor{departamento(nome)} to Departamento,
+	Documento{orientador(nome)} to Professor{documentosorientados(titulo)},
+	Documento{aluno(nome)} to Aluno{documento}
 }
+
 
 dto * with mapstruct
 

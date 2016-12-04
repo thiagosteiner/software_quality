@@ -14,40 +14,37 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Comite.
+        Added the entity Aluno.
     -->
-    <changeSet id="20161203213120-1" author="jhipster">
-        <createTable tableName="comite">
+    <changeSet id="20161204151258-1" author="jhipster">
+        <createTable tableName="aluno">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="local" type="varchar(255)">
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            
+            <column name="dre" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            
+            <column name="data_ingresso" type="date">
                 <constraints nullable="true" />
             </column>
             
-            <column name="data_ocorrencia" type="date">
+            <column name="previsao_formatura" type="date">
                 <constraints nullable="true" />
             </column>
             
-            <column name="ata_comite" type="varchar(255)">
+            <column name="tipo" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-                        <column name="documento_id" type="bigint">
+                        <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
-        <createTable tableName="comite_professor">
-            <column name="professors_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="comites_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="comites_id, professors_id" tableName="comite_professor"/>
         
     </changeSet>
 </databaseChangeLog>

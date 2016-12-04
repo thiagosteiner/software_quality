@@ -16,18 +16,17 @@
             "otherEntityField": "nome"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "documentosorientados",
+            "otherEntityName": "documento",
+            "otherEntityRelationshipName": "orientador"
+        },
+        {
             "relationshipType": "many-to-many",
             "relationshipName": "comite",
             "otherEntityName": "comite",
             "ownerSide": false,
             "otherEntityRelationshipName": "professor"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "documentosorientados",
-            "otherEntityName": "documento",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "orientador"
         }
     ],
     "fields": [
@@ -46,7 +45,7 @@
             ]
         }
     ],
-    "changelogDate": "20161203213115",
+    "changelogDate": "20161204151259",
     "entityTableName": "professor",
     "dto": "mapstruct",
     "pagination": "no",

@@ -2,24 +2,21 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "documentosorientados",
+            "relationshipType": "many-to-one",
             "relationshipName": "orientador",
             "otherEntityName": "professor",
-            "otherEntityField": "codigo",
-            "ownerSide": true
+            "otherEntityField": "nome"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "aluno",
+            "otherEntityName": "aluno",
+            "otherEntityField": "nome"
         },
         {
             "relationshipType": "one-to-one",
             "relationshipName": "comite",
             "otherEntityName": "comite",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "documento"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "aluno",
-            "otherEntityName": "aluno",
             "ownerSide": false,
             "otherEntityRelationshipName": "documento"
         }
@@ -53,7 +50,7 @@
             "fieldTypeBlobContent": "any"
         }
     ],
-    "changelogDate": "20161203213117",
+    "changelogDate": "20161204151201",
     "entityTableName": "documento",
     "dto": "mapstruct",
     "pagination": "no",

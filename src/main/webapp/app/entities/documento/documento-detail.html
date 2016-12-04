@@ -33,9 +33,11 @@
         </dd>
         <dt><span>Orientador</span></dt>
         <dd>
-            <span ng-repeat="orientador in vm.documento.orientadors">
-                <a ui-sref="professor-detail({id: orientador.id})">{{orientador.codigo}}</a>{{$last ? '' : ', '}}
-            </span>
+            <a ui-sref="professor-detail({id:vm.documento.orientadorId})">{{vm.documento.orientadorNome}}</a>
+        </dd>
+        <dt><span>Aluno</span></dt>
+        <dd>
+            <a ui-sref="aluno-detail({id:vm.documento.alunoId})">{{vm.documento.alunoNome}}</a>
         </dd>
     </dl>
 

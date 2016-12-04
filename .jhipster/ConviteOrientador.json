@@ -35,7 +35,7 @@
             "fieldType": "LocalDate"
         }
     ],
-    "changelogDate": "20161203213119",
+    "changelogDate": "20161204151203",
     "entityTableName": "convite_orientador",
     "dto": "mapstruct",
     "pagination": "no",

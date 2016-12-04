@@ -22,8 +22,8 @@ public interface ProfessorMapper {
 
     @Mapping(source = "userId", target = "user")
     @Mapping(source = "departamentoId", target = "departamento")
-    @Mapping(target = "comites", ignore = true)
     @Mapping(target = "documentosorientados", ignore = true)
+    @Mapping(target = "comites", ignore = true)
     Professor professorDTOToProfessor(ProfessorDTO professorDTO);
 
     List<Professor> professorDTOsToProfessors(List<ProfessorDTO> professorDTOs);

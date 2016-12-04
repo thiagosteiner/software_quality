@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('DocumentoDetailController', DocumentoDetailController);
 
-    DocumentoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Documento', 'Professor', 'Comite', 'Aluno'];
+    DocumentoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Documento', 'Professor', 'Aluno', 'Comite'];
 
-    function DocumentoDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Documento, Professor, Comite, Aluno) {
+    function DocumentoDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Documento, Professor, Aluno, Comite) {
         var vm = this;
 
         vm.documento = entity;

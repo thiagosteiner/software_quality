@@ -10,7 +10,7 @@
             ]
         }
     ],
-    "changelogDate": "20161203213116",
+    "changelogDate": "20161204151200",
     "entityTableName": "departamento",
     "dto": "mapstruct",
     "pagination": "no",

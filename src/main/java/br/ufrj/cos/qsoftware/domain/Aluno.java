@@ -1,5 +1,6 @@
 package br.ufrj.cos.qsoftware.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -49,11 +50,9 @@ public class Aluno implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "aluno")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "aluno_documento",
-               joinColumns = @JoinColumn(name="alunos_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="documentos_id", referencedColumnName="ID"))
     private Set<Documento> documentos = new HashSet<>();
 
     public Long getId() {
@@ -153,13 +152,13 @@ public class Aluno implements Serializable {
 
     public Aluno addDocumento(Documento documento) {
         documentos.add(documento);
-        documento.getAlunos().add(this);
+        documento.setAluno(this);
         return this;
     }
 
     public Aluno removeDocumento(Documento documento) {
         documentos.remove(documento);
-        documento.getAlunos().remove(this);
+        documento.setAluno(null);
         return this;
     }
 

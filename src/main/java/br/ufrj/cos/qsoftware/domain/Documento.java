@@ -7,8 +7,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoAprovacao;
@@ -53,21 +51,15 @@ public class Documento implements Serializable {
     @Column(name = "arquivo_content_type")
     private String arquivoContentType;
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "documento_orientador",
-               joinColumns = @JoinColumn(name="documentos_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="orientadors_id", referencedColumnName="ID"))
-    private Set<Professor> orientadors = new HashSet<>();
+    @ManyToOne
+    private Professor orientador;
+
+    @ManyToOne
+    private Aluno aluno;
 
     @OneToOne(mappedBy = "documento")
     @JsonIgnore
     private Comite comite;
-
-    @ManyToMany(mappedBy = "documentos")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Aluno> alunos = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -168,29 +160,30 @@ public class Documento implements Serializable {
         this.arquivoContentType = arquivoContentType;
     }
 
-    public Set<Professor> getOrientadors() {
-        return orientadors;
+    public Professor getOrientador() {
+        return orientador;
     }
 
-    public Documento orientadors(Set<Professor> professors) {
-        this.orientadors = professors;
+    public Documento orientador(Professor professor) {
+        this.orientador = professor;
         return this;
     }
 
-    public Documento addOrientador(Professor professor) {
-        orientadors.add(professor);
-        professor.getDocumentosorientados().add(this);
+    public void setOrientador(Professor professor) {
+        this.orientador = professor;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public Documento aluno(Aluno aluno) {
+        this.aluno = aluno;
         return this;
     }
 
-    public Documento removeOrientador(Professor professor) {
-        orientadors.remove(professor);
-        professor.getDocumentosorientados().remove(this);
-        return this;
-    }
-
-    public void setOrientadors(Set<Professor> professors) {
-        this.orientadors = professors;
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
     public Comite getComite() {
@@ -204,31 +197,6 @@ public class Documento implements Serializable {
 
     public void setComite(Comite comite) {
         this.comite = comite;
-    }
-
-    public Set<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public Documento alunos(Set<Aluno> alunos) {
-        this.alunos = alunos;
-        return this;
-    }
-
-    public Documento addAluno(Aluno aluno) {
-        alunos.add(aluno);
-        aluno.getDocumentos().add(this);
-        return this;
-    }
-
-    public Documento removeAluno(Aluno aluno) {
-        alunos.remove(aluno);
-        aluno.getDocumentos().remove(this);
-        return this;
-    }
-
-    public void setAlunos(Set<Aluno> alunos) {
-        this.alunos = alunos;
     }
 
     @Override

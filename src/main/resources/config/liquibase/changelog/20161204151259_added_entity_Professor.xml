@@ -14,10 +14,10 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Aluno.
+        Added the entity Professor.
     -->
-    <changeSet id="20161203213114-1" author="jhipster">
-        <createTable tableName="aluno">
+    <changeSet id="20161204151259-1" author="jhipster">
+        <createTable tableName="professor">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -25,37 +25,18 @@
                 <constraints nullable="false" />
             </column>
             
-            <column name="dre" type="varchar(255)">
+            <column name="codigo" type="varchar(255)">
                 <constraints nullable="false" />
-            </column>
-            
-            <column name="data_ingresso" type="date">
-                <constraints nullable="true" />
-            </column>
-            
-            <column name="previsao_formatura" type="date">
-                <constraints nullable="true" />
-            </column>
-            
-            <column name="tipo" type="varchar(255)">
-                <constraints nullable="true" />
             </column>
                         <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
+            <column name="departamento_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
-        <createTable tableName="aluno_documento">
-            <column name="documentos_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="alunos_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="alunos_id, documentos_id" tableName="aluno_documento"/>
         
     </changeSet>
 </databaseChangeLog>

@@ -3,7 +3,6 @@ package br.ufrj.cos.qsoftware.repository;
 import br.ufrj.cos.qsoftware.domain.Aluno;
 
 import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,11 +11,5 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface AlunoRepository extends JpaRepository<Aluno,Long> {
-
-    @Query("select distinct aluno from Aluno aluno left join fetch aluno.documentos")
-    List<Aluno> findAllWithEagerRelationships();
-
-    @Query("select aluno from Aluno aluno left join fetch aluno.documentos where aluno.id =:id")
-    Aluno findOneWithEagerRelationships(@Param("id") Long id);
 
 }

@@ -34,8 +34,6 @@ public class AlunoDTO implements Serializable {
 
     private String userEmail;
 
-    private Set<DocumentoDTO> documentos = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -94,14 +92,6 @@ public class AlunoDTO implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
-    }
-
-    public Set<DocumentoDTO> getDocumentos() {
-        return documentos;
-    }
-
-    public void setDocumentos(Set<DocumentoDTO> documentos) {
-        this.documentos = documentos;
     }
 
     @Override

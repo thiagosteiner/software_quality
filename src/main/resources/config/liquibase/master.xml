@@ -5,19 +5,19 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213114_added_entity_Aluno.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213115_added_entity_Professor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213116_added_entity_Departamento.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213117_added_entity_Documento.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213118_added_entity_ConviteComite.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213119_added_entity_ConviteOrientador.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213120_added_entity_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151200_added_entity_Departamento.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151201_added_entity_Documento.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151202_added_entity_ConviteComite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151203_added_entity_ConviteOrientador.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151204_added_entity_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151258_added_entity_Aluno.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151259_added_entity_Professor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="classpath:config/liquibase/changelog/20161203213114_added_entity_constraints_Aluno.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213115_added_entity_constraints_Professor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213117_added_entity_constraints_Documento.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213118_added_entity_constraints_ConviteComite.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213119_added_entity_constraints_ConviteOrientador.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20161203213120_added_entity_constraints_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151201_added_entity_constraints_Documento.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151202_added_entity_constraints_ConviteComite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151203_added_entity_constraints_ConviteOrientador.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151204_added_entity_constraints_Comite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151258_added_entity_constraints_Aluno.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20161204151259_added_entity_constraints_Professor.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

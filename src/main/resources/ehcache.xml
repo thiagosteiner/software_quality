@@ -20,23 +20,9 @@
 
     <cache alias="br.ufrj.cos.qsoftware.domain.User.persistentTokens" uses-template="simple"/>
 
-    <cache alias="br.ufrj.cos.qsoftware.domain.Aluno" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Aluno.documentos" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Professor" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Professor.comites" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Professor.documentosorientados" uses-template="simple"/>
-
     <cache alias="br.ufrj.cos.qsoftware.domain.Departamento" uses-template="simple"/>
 
     <cache alias="br.ufrj.cos.qsoftware.domain.Documento" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Documento.orientadors" uses-template="simple"/>
-
-    <cache alias="br.ufrj.cos.qsoftware.domain.Documento.alunos" uses-template="simple"/>
 
     <cache alias="br.ufrj.cos.qsoftware.domain.ConviteComite" uses-template="simple"/>
 
@@ -45,6 +31,16 @@
     <cache alias="br.ufrj.cos.qsoftware.domain.Comite" uses-template="simple"/>
 
     <cache alias="br.ufrj.cos.qsoftware.domain.Comite.professors" uses-template="simple"/>
+
+    <cache alias="br.ufrj.cos.qsoftware.domain.Aluno" uses-template="simple"/>
+
+    <cache alias="br.ufrj.cos.qsoftware.domain.Aluno.documentos" uses-template="simple"/>
+
+    <cache alias="br.ufrj.cos.qsoftware.domain.Professor" uses-template="simple"/>
+
+    <cache alias="br.ufrj.cos.qsoftware.domain.Professor.documentosorientados" uses-template="simple"/>
+
+    <cache alias="br.ufrj.cos.qsoftware.domain.Professor.comites" uses-template="simple"/>
 
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

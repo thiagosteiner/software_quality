@@ -76,7 +76,15 @@
 
         <div class="form-group">
             <label for="field_orientador">Orientador</label>
-            <select class="form-control" id="field_orientador" multiple name="orientador" ng-model="vm.documento.orientadors" ng-options="professor as professor.codigo for professor in vm.professors track by professor.id"></select>
+            <select class="form-control" id="field_orientador" name="orientador" ng-model="vm.documento.orientadorId" ng-options="professor.id as professor.nome for professor in vm.professors"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_aluno">Aluno</label>
+            <select class="form-control" id="field_aluno" name="aluno" ng-model="vm.documento.alunoId" ng-options="aluno.id as aluno.nome for aluno in vm.alunos"            >
+                <option value=""></option>
+            </select>
         </div>
     </div>
     <div class="modal-footer">

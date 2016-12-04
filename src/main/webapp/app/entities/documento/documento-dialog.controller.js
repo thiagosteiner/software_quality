@@ -5,9 +5,9 @@
         .module('qsoftwareApp')
         .controller('DocumentoDialogController', DocumentoDialogController);
 
-    DocumentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Documento', 'Professor', 'Comite', 'Aluno'];
+    DocumentoDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Documento', 'Professor', 'Aluno', 'Comite'];
 
-    function DocumentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Documento, Professor, Comite, Aluno) {
+    function DocumentoDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Documento, Professor, Aluno, Comite) {
         var vm = this;
 
         vm.documento = entity;
@@ -18,8 +18,8 @@
         vm.openFile = DataUtils.openFile;
         vm.save = save;
         vm.professors = Professor.query();
-        vm.comites = Comite.query();
         vm.alunos = Aluno.query();
+        vm.comites = Comite.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -10,12 +10,10 @@
             "otherEntityRelationshipName": "aluno"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "aluno",
+            "relationshipType": "one-to-many",
             "relationshipName": "documento",
             "otherEntityName": "documento",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "otherEntityRelationshipName": "aluno"
         }
     ],
     "fields": [
@@ -47,7 +45,7 @@
             "fieldValues": "MESTRADO,DOUTORADO"
         }
     ],
-    "changelogDate": "20161203213114",
+    "changelogDate": "20161204151258",
     "entityTableName": "aluno",
     "dto": "mapstruct",
     "pagination": "no",

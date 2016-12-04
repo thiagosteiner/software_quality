@@ -40,15 +40,15 @@ public class Professor implements Serializable {
     @ManyToOne
     private Departamento departamento;
 
+    @OneToMany(mappedBy = "orientador")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Documento> documentosorientados = new HashSet<>();
+
     @ManyToMany(mappedBy = "professors")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Comite> comites = new HashSet<>();
-
-    @ManyToMany(mappedBy = "orientadors")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Documento> documentosorientados = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -110,6 +110,31 @@ public class Professor implements Serializable {
         this.departamento = departamento;
     }
 
+    public Set<Documento> getDocumentosorientados() {
+        return documentosorientados;
+    }
+
+    public Professor documentosorientados(Set<Documento> documentos) {
+        this.documentosorientados = documentos;
+        return this;
+    }
+
+    public Professor addDocumentosorientados(Documento documento) {
+        documentosorientados.add(documento);
+        documento.setOrientador(this);
+        return this;
+    }
+
+    public Professor removeDocumentosorientados(Documento documento) {
+        documentosorientados.remove(documento);
+        documento.setOrientador(null);
+        return this;
+    }
+
+    public void setDocumentosorientados(Set<Documento> documentos) {
+        this.documentosorientados = documentos;
+    }
+
     public Set<Comite> getComites() {
         return comites;
     }
@@ -133,31 +158,6 @@ public class Professor implements Serializable {
 
     public void setComites(Set<Comite> comites) {
         this.comites = comites;
-    }
-
-    public Set<Documento> getDocumentosorientados() {
-        return documentosorientados;
-    }
-
-    public Professor documentosorientados(Set<Documento> documentos) {
-        this.documentosorientados = documentos;
-        return this;
-    }
-
-    public Professor addDocumentosorientados(Documento documento) {
-        documentosorientados.add(documento);
-        documento.getOrientadors().add(this);
-        return this;
-    }
-
-    public Professor removeDocumentosorientados(Documento documento) {
-        documentosorientados.remove(documento);
-        documento.getOrientadors().remove(this);
-        return this;
-    }
-
-    public void setDocumentosorientados(Set<Documento> documentos) {
-        this.documentosorientados = documentos;
     }
 
     @Override

@@ -14,19 +14,40 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity Departamento.
+        Added the entity Comite.
     -->
-    <changeSet id="20161203213116-1" author="jhipster">
-        <createTable tableName="departamento">
+    <changeSet id="20161204151204-1" author="jhipster">
+        <createTable tableName="comite">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nome" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="local" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             
+            <column name="data_ocorrencia" type="date">
+                <constraints nullable="true" />
+            </column>
+            
+            <column name="ata_comite" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+                        <column name="documento_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        
+        <createTable tableName="comite_professor">
+            <column name="professors_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comites_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="comites_id, professors_id" tableName="comite_professor"/>
         
     </changeSet>
 </databaseChangeLog>

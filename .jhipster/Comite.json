@@ -32,7 +32,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20161203213120",
+    "changelogDate": "20161204151204",
     "entityTableName": "comite",
     "dto": "mapstruct",
     "pagination": "no",
