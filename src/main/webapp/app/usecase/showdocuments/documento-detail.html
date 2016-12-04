@@ -24,10 +24,6 @@
         <dd>
             <span>{{vm.documento.tipoDocumento}}</span>
         </dd>
-        <dt><span>Tipo Monografia</span></dt>
-        <dd>
-            <span>{{vm.documento.tipoMonografia}}</span>
-        </dd>
         <dt><span>Arquivo</span></dt>
         <dd>
             <div ng-if="vm.documento.arquivo">
@@ -35,17 +31,13 @@
                 {{vm.documento.arquivoContentType}}, {{vm.byteSize(vm.documento.arquivo)}}
             </div>
         </dd>
+        <dt><span>Orientador</span></dt>
+        <dd>
+            <a ui-sref="professor-detail({id:vm.documento.orientadorId})">{{vm.documento.orientadorNome}}</a>
+        </dd>
         <dt><span>Aluno</span></dt>
         <dd>
-            <a ui-sref="aluno-detail({id:vm.documento.alunoId})">{{vm.documento.alunoId}}</a>
-        </dd>
-        <dt><span>Documentocomite</span></dt>
-        <dd>
-            <a ui-sref="comite-detail({id:vm.documento.documentocomiteId})">{{vm.documento.documentocomiteId}}</a>
-        </dd>
-        <dt><span>Documentoorientador</span></dt>
-        <dd>
-            <a ui-sref="professor-detail({id:vm.documento.documentoorientadorId})">{{vm.documento.documentoorientadorId}}</a>
+            <a ui-sref="aluno-detail({id:vm.documento.alunoId})">{{vm.documento.alunoNome}}</a>
         </dd>
     </dl>
 
@@ -55,8 +47,5 @@
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
     </button>
 
-    <button type="button" ui-sref="documento-detail.edit({id:vm.documento.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm"> Edit</span>
-    </button>
 </div>
+

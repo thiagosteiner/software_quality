@@ -12,11 +12,9 @@
                     <th><span>Data Criacao</span></th>
                     <th><span>Status</span></th>
                     <th><span>Tipo Documento</span></th>
-                    <th><span>Tipo Monografia</span></th>
                     <th><span>Arquivo</span></th>
                     <th><span>Aluno</span></th>
-                    <th><span>Documentocomite</span></th>
-                    <th><span>Documentoorientador</span></th>
+                    <th><span>Orientador</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,19 +26,15 @@
                         <td>{{documento.dataCriacao | date:'mediumDate'}}</td>
                     <td>{{documento.status}}</td>
                     <td>{{documento.tipoDocumento}}</td>
-                    <td>{{documento.tipoMonografia}}</td>
                     <td>
                         <a ng-if="documento.arquivo" ng-click="vm.openFile(documento.arquivoContentType, documento.arquivo)">open</a>
                         <span ng-if="documento.arquivo">{{documento.arquivoContentType}}, {{vm.byteSize(documento.arquivo)}}</span>
                     </td>
                     <td>
-                        <a ui-sref="aluno-detail({id:documento.alunoId})">{{documento.alunoId}}</a>
+                        <a ui-sref="aluno-detail({id:documento.alunoId})">{{documento.alunoNome}}</a>
                     </td>
                     <td>
-                        <a ui-sref="comite-detail({id:documento.documentocomiteId})">{{documento.documentocomiteId}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="professor-detail({id:documento.documentoorientadorId})">{{documento.documentoorientadorId}}</a>
+                        <a ui-sref="comite-detail({id:documento.documentocomiteId})">{{documento.orientadorNome}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
