@@ -107,6 +107,10 @@ public class DocumentoDTO implements Serializable {
     public void setOrientadorId(Long professorId) {
         this.orientadorId = professorId;
     }
+    
+    public void setOrientadorNull() {
+        this.orientadorId = null;
+    }
 
 
     public String getOrientadorNome() {

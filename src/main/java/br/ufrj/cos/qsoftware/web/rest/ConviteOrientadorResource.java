@@ -1,5 +1,6 @@
 package br.ufrj.cos.qsoftware.web.rest;
 
+import br.ufrj.cos.qsoftware.domain.Documento;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
@@ -33,6 +34,14 @@ import br.ufrj.cos.qsoftware.service.dto.ConviteOrientadorDTO;
 import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
 import br.ufrj.cos.qsoftware.security.SecurityUtils;
 
+import br.ufrj.cos.qsoftware.service.DocumentoService;
+import br.ufrj.cos.qsoftware.service.ProfessorService;
+import br.ufrj.cos.qsoftware.service.dto.DocumentoDTO;
+import br.ufrj.cos.qsoftware.service.dto.ProfessorDTO;
+
+import br.ufrj.cos.qsoftware.repository.DocumentoRepository;
+import br.ufrj.cos.qsoftware.service.mapper.DocumentoMapper;
+
 import com.codahale.metrics.annotation.Timed;
 
 /**
@@ -46,6 +55,18 @@ public class ConviteOrientadorResource {
 
     @Inject
     private ConviteOrientadorService conviteOrientadorService;
+    
+    @Inject
+    private DocumentoService documentoService;
+    
+    @Inject
+    private ProfessorService professorService;
+    
+    @Inject
+    private DocumentoRepository documentoRepository;
+    
+    @Inject
+    private DocumentoMapper documentoMapper;
 
     /**
      * POST  /convite-orientadors : Create a new conviteOrientador.
@@ -101,18 +122,38 @@ public class ConviteOrientadorResource {
     public ResponseEntity<ConviteOrientadorDTO> updateConviteOrientador(@RequestBody ConviteOrientadorDTO conviteOrientadorDTO) throws URISyntaxException {
 
     	if(conviteOrientadorDTO.getStatus()==SituacaoConvite.ACEITO||conviteOrientadorDTO.getStatus()==SituacaoConvite.REJEITADO){
-        	SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = securityContext.getAuthentication();
-            String userName = null;
-            if (authentication != null) {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                    userName = springSecurityUser.getUsername();
-                } else if (authentication.getPrincipal() instanceof String) {
-                    userName = (String) authentication.getPrincipal();
-                }
+
+          String userName = null;
+          userName=SecurityUtils.getCurrentUserLogin();
+                    
+
+          if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN") &&(conviteOrientadorDTO.getOrientadorconvidadoId()!=null)){        
+    
+            if((conviteOrientadorDTO.getStatus()==SituacaoConvite.ACEITO) && (conviteOrientadorDTO.getDocumentoId()!= null)){
+            Long id = conviteOrientadorDTO.getDocumentoId();
+
+            DocumentoDTO documentoDTO =documentoService.findOne(id);
+
+            documentoDTO.setOrientadorId(conviteOrientadorDTO.getOrientadorconvidadoId());
+
+            DocumentoDTO doc= documentoService.save(documentoDTO);
+
+            }            
+            
+            if((conviteOrientadorDTO.getStatus()==SituacaoConvite.REJEITADO) && (conviteOrientadorDTO.getDocumentoId()!= null)){
+            Long id = conviteOrientadorDTO.getDocumentoId();
+
+             DocumentoDTO documentoDTO =documentoService.findOne(id);
+
+            documentoDTO.setOrientadorNull();
+
+            DocumentoDTO doc= documentoService.save(documentoDTO);
+
             }
-            DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            
+          }
+          DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         	Date date = new Date();
         	log.debug("=====================================================================");
         	log.debug(df.format(date)
@@ -149,7 +190,7 @@ public class ConviteOrientadorResource {
     		return conviteOrientadorService.findAllWhereAlunoIs(SecurityUtils.getCurrentUserLogin());
     	}
 
-      
+
 
     /**
      * GET  /convite-orientadors/:id : get the "id" conviteOrientador.

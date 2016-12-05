@@ -20,7 +20,7 @@ public interface ProfessorService {
 
     /**
      *  Get all the professors.
-     *  
+     *
      *  @return the list of entities
      */
     List<ProfessorDTO> findAll();
@@ -32,6 +32,14 @@ public interface ProfessorService {
      *  @return the entity
      */
     ProfessorDTO findOne(Long id);
+
+    /**
+     *  Get the "userName" professor.
+     *
+     *  @param userName the userName of the entity
+     *  @return the entity
+     */
+    ProfessorDTO findOneByUser(String userName);
 
     /**
      *  Delete the "id" professor.

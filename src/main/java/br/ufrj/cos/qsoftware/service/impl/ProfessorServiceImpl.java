@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProfessorServiceImpl implements ProfessorService{
 
     private final Logger log = LoggerFactory.getLogger(ProfessorServiceImpl.class);
-    
+
     @Inject
     private ProfessorRepository professorRepository;
 
@@ -46,10 +46,10 @@ public class ProfessorServiceImpl implements ProfessorService{
 
     /**
      *  Get all the professors.
-     *  
+     *
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<ProfessorDTO> findAll() {
         log.debug("Request to get all Professors");
         List<ProfessorDTO> result = professorRepository.findAll().stream()
@@ -65,13 +65,36 @@ public class ProfessorServiceImpl implements ProfessorService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public ProfessorDTO findOne(Long id) {
         log.debug("Request to get Professor : {}", id);
         Professor professor = professorRepository.findOne(id);
         ProfessorDTO professorDTO = professorMapper.professorToProfessorDTO(professor);
         return professorDTO;
     }
+
+
+    @Transactional(readOnly = true)
+    public ProfessorDTO findOneByUser(String userName) {
+
+
+        log.debug("Request to get Professor : {}", userName);
+
+
+        List<ProfessorDTO> result = professorRepository.findAll().stream()
+            .filter(professor -> professor.getUser().getLogin().equals(userName))
+            .map(professorMapper::professorToProfessorDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+            
+        
+        ProfessorDTO professorDTO=result.get(0);
+
+
+
+        return professorDTO;
+    }
+
+
 
     /**
      *  Delete the  professor by id.
