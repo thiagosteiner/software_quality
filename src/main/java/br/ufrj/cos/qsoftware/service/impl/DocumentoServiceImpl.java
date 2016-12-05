@@ -24,7 +24,7 @@ import java.util.stream.StreamSupport;
 public class DocumentoServiceImpl implements DocumentoService{
 
     private final Logger log = LoggerFactory.getLogger(DocumentoServiceImpl.class);
-    
+
     @Inject
     private DocumentoRepository documentoRepository;
 
@@ -47,10 +47,10 @@ public class DocumentoServiceImpl implements DocumentoService{
 
     /**
      *  Get all the documentos.
-     *  
+     *
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<DocumentoDTO> findAll() {
         log.debug("Request to get all Documentos");
         List<DocumentoDTO> result = documentoRepository.findAll().stream()
@@ -65,7 +65,7 @@ public class DocumentoServiceImpl implements DocumentoService{
      *  get all the documentos where Comite is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<DocumentoDTO> findAllWhereComiteIsNull() {
         log.debug("Request to get all documentos where Comite is null");
         return StreamSupport
@@ -81,7 +81,7 @@ public class DocumentoServiceImpl implements DocumentoService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public DocumentoDTO findOne(Long id) {
         log.debug("Request to get Documento : {}", id);
         Documento documento = documentoRepository.findOne(id);
@@ -98,16 +98,21 @@ public class DocumentoServiceImpl implements DocumentoService{
         log.debug("Request to delete Documento : {}", id);
         documentoRepository.delete(id);
     }
-    
-    @Transactional(readOnly = true) 
+
+
+    @Transactional(readOnly = true)
     public List<DocumentoDTO> findAllWhereAlunoIs(String userName) {
-        log.debug("Request to get all documentos where Aluno is "+userName);
+        log.debug("Request to get all documentos where AlunoEmail is "+userName);
         return StreamSupport
             .stream(documentoRepository.findAll().spliterator(), false)
-            .filter(documento -> documento.getAluno().getNome().equals(userName))
+            .filter(documento -> documento.getAluno().getUser().getLogin().equals(userName))
             .map(documentoMapper::documentoToDocumentoDTO)
             .collect(Collectors.toCollection(LinkedList::new));
     }
-    
-    
+
+
+
+
+
+
 }

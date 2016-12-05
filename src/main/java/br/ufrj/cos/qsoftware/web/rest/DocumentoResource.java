@@ -163,11 +163,6 @@ public class DocumentoResource {
 			}
 		}
 
-		/*
-		 * if(userName.contains("aluno")){ return
-		 * documentoService.findAllWhereAlunoIs(userName); }
-		 */
-
 		if ("comite-is-null".equals(filter)) {
 			log.debug("REST request to get all Documentos where comite is null");
 			return documentoService.findAllWhereComiteIsNull();
@@ -176,7 +171,6 @@ public class DocumentoResource {
 
 		if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
 			return documentoService.findAll();
-
 		}
 		return documentoService.findAllWhereAlunoIs(userName);
 	}
@@ -231,7 +225,7 @@ public class DocumentoResource {
 		Date date = new Date();
 		log.debug("=====================================================================");
 		log.debug(df.format(date)
-				+ " Usuario: " + userName 
+				+ " Usuario: " + userName
 				+ " efetuou o caso de Uso UC7 - Consultar Documentos");
 		log.debug("=====================================================================");
 		return documentoService.findAll();
