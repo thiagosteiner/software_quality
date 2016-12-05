@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing ConviteOrientador.
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class ConviteOrientadorServiceImpl implements ConviteOrientadorService{
 
     private final Logger log = LoggerFactory.getLogger(ConviteOrientadorServiceImpl.class);
-    
+
     @Inject
     private ConviteOrientadorRepository conviteOrientadorRepository;
 
@@ -46,10 +47,10 @@ public class ConviteOrientadorServiceImpl implements ConviteOrientadorService{
 
     /**
      *  Get all the conviteOrientadors.
-     *  
+     *
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<ConviteOrientadorDTO> findAll() {
         log.debug("Request to get all ConviteOrientadors");
         List<ConviteOrientadorDTO> result = conviteOrientadorRepository.findAll().stream()
@@ -60,12 +61,29 @@ public class ConviteOrientadorServiceImpl implements ConviteOrientadorService{
     }
 
     /**
+     *  Get all the conviteOrientadors associated to userName.
+     *
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<ConviteOrientadorDTO> findAllWhereAlunoIs(String userName) {
+        log.debug("Request to get all ConviteOrientadors");
+        return StreamSupport
+            .stream(conviteOrientadorRepository.findAll().spliterator(), false)
+              .filter(conviteOrientador -> conviteOrientador.getAlunoqueconvidou().getUser().getLogin().equals(userName))
+            .map(conviteOrientadorMapper::conviteOrientadorToConviteOrientadorDTO)
+            .collect(Collectors.toCollection(LinkedList::new));
+
+    }
+
+
+    /**
      *  Get one conviteOrientador by id.
      *
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public ConviteOrientadorDTO findOne(Long id) {
         log.debug("Request to get ConviteOrientador : {}", id);
         ConviteOrientador conviteOrientador = conviteOrientadorRepository.findOne(id);

@@ -31,6 +31,7 @@ import br.ufrj.cos.qsoftware.domain.enumeration.SituacaoConvite;
 import br.ufrj.cos.qsoftware.service.ConviteOrientadorService;
 import br.ufrj.cos.qsoftware.service.dto.ConviteOrientadorDTO;
 import br.ufrj.cos.qsoftware.web.rest.util.HeaderUtil;
+import br.ufrj.cos.qsoftware.security.SecurityUtils;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -42,7 +43,7 @@ import com.codahale.metrics.annotation.Timed;
 public class ConviteOrientadorResource {
 
     private final Logger log = LoggerFactory.getLogger(ConviteOrientadorResource.class);
-        
+
     @Inject
     private ConviteOrientadorService conviteOrientadorService;
 
@@ -66,16 +67,16 @@ public class ConviteOrientadorResource {
             } else if (authentication.getPrincipal() instanceof String) {
                 userName = (String) authentication.getPrincipal();
             }
-        }  
+        }
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     	Date date = new Date();
     	log.debug("=====================================================================");
     	log.debug(df.format(date)
-    			+ " Usuario: " + userName 
+    			+ " Usuario: " + userName
     			+ " efetuou o caso de Uso UC1 - Solicitar cadastro de Orientador");
     	log.debug("=====================================================================");
-    	
-    	
+
+
         log.debug("REST request to save ConviteOrientador : {}", conviteOrientadorDTO);
         if (conviteOrientadorDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("conviteOrientador", "idexists", "A new conviteOrientador cannot already have an ID")).body(null);
@@ -98,8 +99,8 @@ public class ConviteOrientadorResource {
     @PutMapping("/convite-orientadors")
     @Timed
     public ResponseEntity<ConviteOrientadorDTO> updateConviteOrientador(@RequestBody ConviteOrientadorDTO conviteOrientadorDTO) throws URISyntaxException {
-        
-    	if(conviteOrientadorDTO.getStatus()==SituacaoConvite.ACEITO||conviteOrientadorDTO.getStatus()==SituacaoConvite.REJEITADO){        	
+
+    	if(conviteOrientadorDTO.getStatus()==SituacaoConvite.ACEITO||conviteOrientadorDTO.getStatus()==SituacaoConvite.REJEITADO){
         	SecurityContext securityContext = SecurityContextHolder.getContext();
             Authentication authentication = securityContext.getAuthentication();
             String userName = null;
@@ -115,13 +116,13 @@ public class ConviteOrientadorResource {
         	Date date = new Date();
         	log.debug("=====================================================================");
         	log.debug(df.format(date)
-        			+ " Usuario: " + userName 
+        			+ " Usuario: " + userName
         			+ " efetuou o caso de Uso UC2 - Aprovar cadastro de Orientador");
         	log.debug("=====================================================================");
         }
-    	
-    	
-    	
+
+
+
     	log.debug("REST request to update ConviteOrientador : {}", conviteOrientadorDTO);
         if (conviteOrientadorDTO.getId() == null) {
             return createConviteOrientador(conviteOrientadorDTO);
@@ -141,8 +142,14 @@ public class ConviteOrientadorResource {
     @Timed
     public List<ConviteOrientadorDTO> getAllConviteOrientadors() {
         log.debug("REST request to get all ConviteOrientadors");
-        return conviteOrientadorService.findAll();
-    }
+
+        if (SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
+    			return conviteOrientadorService.findAll();
+    		}
+    		return conviteOrientadorService.findAllWhereAlunoIs(SecurityUtils.getCurrentUserLogin());
+    	}
+
+      
 
     /**
      * GET  /convite-orientadors/:id : get the "id" conviteOrientador.

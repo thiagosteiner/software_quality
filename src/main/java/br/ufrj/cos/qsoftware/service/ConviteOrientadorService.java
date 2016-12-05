@@ -20,10 +20,18 @@ public interface ConviteOrientadorService {
 
     /**
      *  Get all the conviteOrientadors.
-     *  
+     *
      *  @return the list of entities
      */
     List<ConviteOrientadorDTO> findAll();
+
+
+    /**
+     *  Get all the conviteOrientadors associated to userName.
+     *
+     *  @return the list of entities
+     */
+    List<ConviteOrientadorDTO> findAllWhereAlunoIs(String userName);
 
     /**
      *  Get the "id" conviteOrientador.
