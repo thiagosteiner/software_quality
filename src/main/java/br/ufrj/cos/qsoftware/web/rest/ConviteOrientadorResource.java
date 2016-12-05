@@ -71,7 +71,7 @@ public class ConviteOrientadorResource {
     	Date date = new Date();
     	log.debug("=====================================================================");
     	log.debug(df.format(date)
-    			+ "Usuario: " + userName 
+    			+ " Usuario: " + userName 
     			+ " efetuou o caso de Uso UC1 - Solicitar cadastro de Orientador");
     	log.debug("=====================================================================");
     	

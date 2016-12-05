@@ -129,7 +129,7 @@ public class DocumentoResource {
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			log.debug("=====================================================================");
-			log.debug(df.format(date) + "Usuario: " + userName + " efetuou o caso de Uso UC6 - Aprovar Documento");
+			log.debug(df.format(date) + " Usuario: " + userName + " efetuou o caso de Uso UC6 - Aprovar Documento");
 			log.debug("=====================================================================");
 		}
 
@@ -231,7 +231,7 @@ public class DocumentoResource {
 		Date date = new Date();
 		log.debug("=====================================================================");
 		log.debug(df.format(date)
-				+ "Usuario: " + userName 
+				+ " Usuario: " + userName 
 				+ " efetuou o caso de Uso UC7 - Consultar Documentos");
 		log.debug("=====================================================================");
 		return documentoService.findAll();
